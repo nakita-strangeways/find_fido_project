@@ -1,0 +1,15 @@
+1|Apricot/Beige
+2|Bicolor
+3|Black
+4|Brindle
+5|Brown/Chocolate
+6|Golden
+7|Gray/Blue/Silver
+8|Harlequin
+9|Merle (Blue)
+10|Merle (Red)
+11|Red/Chestnut/Orange
+12|Sable
+13|Tricolor (Brown, Black, & White)
+14|White/Cream
+15|Yellow/Tan/Blond

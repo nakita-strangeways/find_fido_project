@@ -1,0 +1,29 @@
+1|Black
+2|Black & White / Tuxedo
+3|Blue Cream
+4|Blue Point
+5|Brown/Chocolate
+6|Buff & White
+7|Buff/Tan/Fawn
+8|Calico
+9|Chocolate Point
+10|Cream/Ivory
+11|Dilute Calico
+12|Dilute Tortoiseshell
+13|Flame Point
+14|Gray & White
+15|Gray/Blue/Silver
+16|Lilac Point
+17|Orange & White
+18|Orange/Red
+19|Seal Point
+20|Smoke
+21|Tabby (Brown/Chocolate)
+22|Tabby (Buff/Tan/Fawn)
+23|Tabby (Gray/Blue/Silver)
+24|Tabby (Leopard/Spotted)
+25|Tabby (Orange/Red)
+26|Tabby (Tiger Striped)
+27|Torbie
+28|Tortoiseshell
+29|White
