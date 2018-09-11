@@ -1,4 +1,4 @@
-"""Models and database functions for Ratings project."""
+"""Models and database functions for Find_Fido project."""
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -47,7 +47,7 @@ class Color(db.Model):
     __tablename__ = "colors"
 
     color_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    color = db.Column(db.Integer, nullable=False)
+    color = db.Column(db.String(30), nullable=False)
     
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -80,7 +80,7 @@ class Species(db.Model):
     __tablename__ = "species"
 
     species_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    species = db.Column(db.Integer, nullable=False)
+    species = db.Column(db.String(10), nullable=False)
     
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -93,7 +93,7 @@ class Breed(db.Model):
     __tablename__ = "breeds"
 
     breed_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    breed = db.Column(db.Integer, nullable=False)
+    breed = db.Column(db.String(64), nullable=False)
     species_id = db.Column(db.Integer, 
                         db.ForeignKey('species.species_id'),
                         nullable=False)
@@ -110,7 +110,7 @@ class Size(db.Model):
     __tablename__ = "sizes"
 
     size_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    size = db.Column(db.Integer, nullable=False)
+    size = db.Column(db.String(10), nullable=False)
     
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -140,7 +140,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ratings'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///animals'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
