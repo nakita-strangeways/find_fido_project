@@ -42,13 +42,13 @@ function initMap() {
             anchor: new google.maps.Point(0,0)
         };
 
-        // const cat_icon = {
-        //     url:"/static/icons/cat-pin.png",
-        //     scaledSize: new google.maps.Size(50,75),
-        //     origin: new google.maps.Point(0,0),
-        //     anchor: new google.maps.Point(0,0)
-        // };
-        
+        const cat_icon = {
+            url:"/static/icons/cat-pin.png",
+            scaledSize: new google.maps.Size(50,75),
+            origin: new google.maps.Point(0,0),
+            anchor: new google.maps.Point(0,0)
+        };
+
     // Define the marker - add if statement to use cat or dog pin
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
@@ -56,6 +56,24 @@ function initMap() {
             title: 'Seen: ' + animal.species_id,
             icon: dog_icon
         });
+        
+      // if (animal.species_id=='1'){
+      //   marker = new google.maps.Marker({
+      //       position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
+      //       map: map,
+      //       title: 'Seen: ' + animal.species_id,
+      //       icon: cat_icon
+      //   });
+      // }
+
+      // if (animal.species_id=='2'){
+      //   marker = new google.maps.Marker({
+      //       position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
+      //       map: map,
+      //       title: 'Seen: ' + animal.species_id,
+      //       icon: dog_icon
+      //   });
+      // }
 
             // Define the content of the infoWindow - add individual photos to marker
             html = (
