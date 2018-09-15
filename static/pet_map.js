@@ -32,7 +32,6 @@ function initMap() {
       let animal, marker, html;
 
       for (let key in lost_pets) {
-
             animal = lost_pets[key];
 
         const dog_icon = {
@@ -56,7 +55,7 @@ function initMap() {
             title: 'Seen: ' + animal.species_id,
             icon: dog_icon
         });
-        
+
       // if (animal.species_id=='1'){
       //   marker = new google.maps.Marker({
       //       position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
