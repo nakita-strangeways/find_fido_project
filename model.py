@@ -28,9 +28,11 @@ class Animal(db.Model):
                         db.ForeignKey('sizes.size_id'),
                         nullable=False)
     user_id = db.Column(db.String(64), nullable=False) #currently users IP address
-    address_seen_at = db.Column(db.String(70), nullable=False)
+    seen_at_lat = db.Column(db.String(15), nullable=False)
+    seen_at_long = db.Column(db.String(15), nullable=False)
     timestamp_seen_at = db.Column(db.DateTime, nullable=False)
     photo = db.Column(db.String(64), nullable=False)
+    notes = db.Column(db.String(150), nullable=False)
 
     colors = db.relationship("Color",
                             secondary="animal_colors",

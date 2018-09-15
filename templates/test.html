@@ -1,0 +1,71 @@
+<!-- nav bar -->
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find Fido</title>
+
+  <!-- Load Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- Load CSS file -->
+  <!-- <link href="/static/project.css" rel="stylesheet"> -->
+
+  <!-- Load Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <style>
+.navbar-brand
+{
+  font-size: 40px;
+  margin: 0px;
+}
+</style>
+
+
+<!-- Load our stylesheet -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <!-- Using placeholder image for now -->
+    <img src="/static/icons/dog-pin.png" width="40" height="55" class="d-inline-block align-top" alt="">
+    Find Fido </a>
+
+<!--     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#">Log In
+      <a class="nav-item nav-link" href="#">Profile</a> -->
+    </div>
+  </div>
+</nav>
+</head>
+
+<body>
+
+    <div class="container">
+
+      <!-- Show flashed messages -->
+      {% with messages = get_flashed_messages() %}
+          {% for message in messages %}
+              <div class="alert alert-warning">{{ message }}</div>
+          {% endfor %}
+      {% endwith %}
+
+      <!-- This is where the main content goes. -->
+      {% block body %}
+          BODY OF PAGE GOES HERE VIA INHERITANCE
+      {% endblock %}
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
