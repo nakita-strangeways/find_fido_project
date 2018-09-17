@@ -38,6 +38,9 @@ class Animal(db.Model):
                             secondary="animal_colors",
                             backref="animals")
 
+    species = db.relationship("Species")
+    size = db.relationship("Size")
+
     def __repr__(self):
         """Provide helpful representation when printed."""
 

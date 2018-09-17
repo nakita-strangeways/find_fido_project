@@ -22,14 +22,14 @@ def map():
     return render_template("pet_map.html")
 
 @app.route('/lost.json')
-def bear_info():
+def lost_pet_info():
     """JSON information about lost pets from lost_pets_data file."""
 
     lost = {
         animal.animal_id: {
             "animal_id": animal.animal_id,
-            "species": animal.species_id,
-            "size": animal.size_id,
+            "species_id": animal.species.species,
+            "size_id": animal.size.size,
             "seen_at_lat": animal.seen_at_lat,
             "seen_at_long": animal.seen_at_long,
             "timestamp_seen_at": animal.timestamp_seen_at,
@@ -37,7 +37,8 @@ def bear_info():
             "notes": animal.notes
         }
 
-        for animal in Animal.query}
+        for animal in Animal.query
+    }
 
     return jsonify(lost)
     

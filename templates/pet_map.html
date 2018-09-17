@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block head %}
 <script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=Google_API_KEY">
+//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY">
 </script>
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="/static/mapstyles.js"></script>
@@ -12,5 +12,94 @@
 
 
 {% block body %}
-   <div id="pet-map"></div>
+    <div id="pet-map"></div>
+    <div id="seen_form">  
+        <form>
+            <h2>Animal Seen Form: </h2>
+            <h4>Species<span id="required">*</span>:</h4>
+                &nbsp;&nbsp;&nbsp;<input type="radio" name="species_quest" value="dog" required> Dog 
+                <input type="radio" name="species_quest" value="cat"> Cat 
+            <br>
+
+            <h4>Breed:</h4>
+                &nbsp;&nbsp;&nbsp;<select name="breed_quest">
+                <option value="" selected disabled hidden>Select one</option>
+                <option value="breed1">B1</option>
+                <option value="breed2">B2</option>
+                <option value="breed3">B3</option>
+                <option value="breed4">B4</option>
+                </select>
+            <br>
+
+            <h4>Size<span id="required">*</span>:</h4>
+                &nbsp;&nbsp;&nbsp;<input type="radio" name="size_quest" value="X-Small" required> X-Small 
+                <input type="radio" name="size_quest" value="Small"> Small 
+                <input type="radio" name="size_quest" value="Medium"> Medium 
+                <input type="radio" name="size_quest" value="Large"> Large 
+                <input type="radio" name="size_quest" value="X-Large"> X-Large 
+            <br>
+
+           <h4>Color<span id="required">*</span>:</h4>
+                    &nbsp;&nbsp;&nbsp;<select name="color1_quest" required>
+                    <option value="" selected disabled hidden>Select one</option>
+                    <option value="color1">color1</option>
+                    <option value="color2">color2</option>
+                    <option value="color3">color3</option>
+                    <option value="color4">color4</option>
+                    </select>
+                <br>
+
+            Other Colors:<br>
+                &nbsp;&nbsp;&nbsp;<select name="color2_quest">
+                <option value="" selected disabled hidden>Select one</option>
+                <option value="color1">color1</option>
+                <option value="color2">color2</option>
+                <option value="color3">color3</option>
+                <option value="color4">color4</option>
+                </select>
+                <select name="color3_quest">
+                <option value="" selected disabled hidden>Select one</option>
+                <option value="color1">color1</option>
+                <option value="color2">color2</option>
+                <option value="color3">color3</option>
+                <option value="color4">color4</option>
+                </select>
+            <br>
+
+            <h4>Notes about the animal:</h4>
+                &nbsp;&nbsp;&nbsp;<textarea name="notes" rows="2" cols="45" maxlength="150"></textarea><br>
+                &nbsp;&nbsp;&nbsp;Max 150 characters
+            <br>
+
+            <h4>Upload Image<span id="required">*</span>:</h4>
+                <input type="file" name="animal_pic" accept="image/*" >
+
+            <h4>Location Seen<span id="required">*</span>:</h4>
+                &nbsp;&nbsp;&nbsp;<input type="radio" name="Loc_quest" value="currentLoc_quest"required> Use Current Location <br>
+                &nbsp;&nbsp;&nbsp;<input type="radio" name="Loc_quest" value="submittedAdd_guest"> Enter Address
+                <input type="text" name="submittedAdd" maxlength="150" size="30">
+            <br>
+
+            <input type="submit">
+        </form>
+    </div>  
+    
 {% endblock %}
+
+
+<!-- Alternate to colors question -->
+<!-- 
+            <h4>Color(s):</h4>
+                <input type="checkbox" name="color1_quest" value="color1"> color1
+                <input type="checkbox" name="color1_quest" value="color2"> color2
+                <input type="checkbox" name="color1_quest" value="color3"> color3
+                <input type="checkbox" name="color1_quest" value="color4"> color4
+            <br>  
+                <input type="checkbox" name="color1_quest" value="color5"> color5
+                <input type="checkbox" name="color1_quest" value="color6"> color6
+                <input type="checkbox" name="color1_quest" value="color7"> color7
+                <input type="checkbox" name="color1_quest" value="color8"> color8
+            <br>
+ -->
+
+
