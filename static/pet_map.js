@@ -33,7 +33,6 @@ function initMap() {
 
       for (let key in lost_pets) {
             animal = lost_pets[key];
-            console.log(animal)
 
         const dog_icon = {
             url:"/static/icons/dog-pin.png",

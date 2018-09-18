@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block head %}
 <script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY">
+//       src="https://maps.googleapis.com/maps/api/js?key=GoogleAPIkey">
 </script>
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="/static/mapstyles.js"></script>
 
   <script src="/static/pet_map.js"></script>
+  <script src="/static/lost_pet_form.js"></script>
 
 {% endblock %}
 
@@ -16,19 +17,26 @@
     <div id="seen_form">  
         <form>
             <h2>Animal Seen Form: </h2>
+
             <h4>Species<span id="required">*</span>:</h4>
-                &nbsp;&nbsp;&nbsp;<input type="radio" name="species_quest" value="dog" required> Dog 
-                <input type="radio" name="species_quest" value="cat"> Cat 
+
+                &nbsp;&nbsp;&nbsp;<input id="dog_breed" type="radio" name="species_quest" value="dog" required> Dog 
+                <input id="cat_breed" type="radio" name="species_quest" value="cat"> Cat 
+
             <br>
 
             <h4>Breed:</h4>
                 &nbsp;&nbsp;&nbsp;<select name="breed_quest">
                 <option value="" selected disabled hidden>Select one</option>
-                <option value="breed1">B1</option>
-                <option value="breed2">B2</option>
-                <option value="breed3">B3</option>
-                <option value="breed4">B4</option>
+
+                    {% for breed in breeds %}
+                <option class="{% if breed.species_id == 1%}cat_opt{%else%}dog_opt{%endif%}">
+                    {{breed.breed}} </option>
+
+                    {% endfor %}
+
                 </select>
+
             <br>
 
             <h4>Size<span id="required">*</span>:</h4>
@@ -37,34 +45,33 @@
                 <input type="radio" name="size_quest" value="Medium"> Medium 
                 <input type="radio" name="size_quest" value="Large"> Large 
                 <input type="radio" name="size_quest" value="X-Large"> X-Large 
+
             <br>
 
            <h4>Color<span id="required">*</span>:</h4>
-                    &nbsp;&nbsp;&nbsp;<select name="color1_quest" required>
-                    <option value="" selected disabled hidden>Select one</option>
-                    <option value="color1">color1</option>
-                    <option value="color2">color2</option>
-                    <option value="color3">color3</option>
-                    <option value="color4">color4</option>
+                &nbsp;&nbsp;&nbsp;<select name="color1_quest" required>
+                <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
                     </select>
                 <br>
 
             Other Colors:<br>
                 &nbsp;&nbsp;&nbsp;<select name="color2_quest">
                 <option value="" selected disabled hidden>Select one</option>
-                <option value="color1">color1</option>
-                <option value="color2">color2</option>
-                <option value="color3">color3</option>
-                <option value="color4">color4</option>
-                </select>
+                    {% for color in colors %}
+                <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                
                 <select name="color3_quest">
                 <option value="" selected disabled hidden>Select one</option>
-                <option value="color1">color1</option>
-                <option value="color2">color2</option>
-                <option value="color3">color3</option>
-                <option value="color4">color4</option>
-                </select>
-            <br>
+                    {% for color in colors %}
+                <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                <br>
 
             <h4>Notes about the animal:</h4>
                 &nbsp;&nbsp;&nbsp;<textarea name="notes" rows="2" cols="45" maxlength="150"></textarea><br>
@@ -75,8 +82,8 @@
                 <input type="file" name="animal_pic" accept="image/*" >
 
             <h4>Location Seen<span id="required">*</span>:</h4>
-                &nbsp;&nbsp;&nbsp;<input type="radio" name="Loc_quest" value="currentLoc_quest"required> Use Current Location <br>
-                &nbsp;&nbsp;&nbsp;<input type="radio" name="Loc_quest" value="submittedAdd_guest"> Enter Address
+                &nbsp;&nbsp;&nbsp;<input type="radio" name="loc_quest" value="currentLoc_quest"required> Use Current Location <br>
+                &nbsp;&nbsp;&nbsp;<input type="radio" name="loc_quest" value="submittedAdd_guest"> Enter Address
                 <input type="text" name="submittedAdd" maxlength="150" size="30">
             <br>
 
