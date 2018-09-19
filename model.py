@@ -53,6 +53,11 @@ class Color(db.Model):
 
     color_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     color = db.Column(db.String(30), nullable=False)
+    # species_id = db.Column(db.Integer, 
+    #                     db.ForeignKey('species.species_id'),
+    #                     nullable=False)
+
+    # species = db.relationship("Species")
     
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -71,6 +76,9 @@ class AnimalColor(db.Model):
     color_id = db.Column(db.Integer, 
                         db.ForeignKey('colors.color_id'),
                         nullable=False)
+
+    animals = db.relationship("Animal")
+    colors = db.relationship("Color")
     
     def __repr__(self):
         """Provide helpful representation when printed."""

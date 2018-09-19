@@ -140,6 +140,32 @@ def load_animals(animal_filename):
     print("Animals inserted")
 
 
+def load_animalColors(animalColors_filename):
+    """Load animalColors from seed_data/animalColors into database."""
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    AnimalColor.query.delete()
+
+    #Read animalColors file and insert data
+    for row in open(animalColors_filename):
+        row = row.rstrip()
+        animal_color_id, animal_id, color_id = row.split("|")
+
+        animalColors = AnimalColor(animal_color_id=animal_color_id,
+                                    animal_id=animal_id,
+                                    color_id=color_id)
+
+        # We need to add to the session or it won't ever be stored
+        db.session.add(animalColors)
+
+    # Once we're done, we should commit our work
+    db.session.commit()
+
+    #finished the function
+    print("Animal Colors inserted")
+
+
 if __name__ == "__main__":
     connect_to_db(app)
 
@@ -152,9 +178,11 @@ if __name__ == "__main__":
     species_filename = "seed_data/species"
     sizes_filename = "seed_data/sizes"
     breeds_filename  = "seed_data/all_breeds"
+    animalColors_filename = "seed_data/animalColors"
 
     load_colors(color_filename)
     load_species(species_filename)
     load_sizes(sizes_filename)
     load_breeds(breeds_filename)
     load_animals(animal_filename)
+    load_animalColors(animalColors_filename)

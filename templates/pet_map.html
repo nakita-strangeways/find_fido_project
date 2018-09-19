@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block head %}
 <script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=GoogleAPIkey">
-</script>
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="/static/mapstyles.js"></script>
+//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLEAPIKEY"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/static/mapstyles.js"></script>
 
-  <script src="/static/pet_map.js"></script>
-  <script src="/static/lost_pet_form.js"></script>
+<script src="/static/pet_map.js"></script>
+<script src="/static/lost_pet_form.js"></script>
 
 {% endblock %}
 
@@ -20,8 +19,8 @@
 
             <h4>Species<span id="required">*</span>:</h4>
 
-                &nbsp;&nbsp;&nbsp;<input id="dog_breed" type="radio" name="species_quest" value="dog" required> Dog 
-                <input id="cat_breed" type="radio" name="species_quest" value="cat"> Cat 
+                &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="dog" required> Dog 
+                <input id="cat_species" type="radio" name="species_quest" value="cat"> Cat 
 
             <br>
 
@@ -30,7 +29,7 @@
                 <option value="" selected disabled hidden>Select one</option>
 
                     {% for breed in breeds %}
-                <option class="{% if breed.species_id == 1%}cat_opt{%else%}dog_opt{%endif%}">
+                <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
                     {{breed.breed}} </option>
 
                     {% endfor %}
@@ -79,17 +78,20 @@
             <br>
 
             <h4>Upload Image<span id="required">*</span>:</h4>
-                <input type="file" name="animal_pic" accept="image/*" >
+                <input type="file" name="animal_pic" accept="image/*" required>
 
             <h4>Location Seen<span id="required">*</span>:</h4>
-                &nbsp;&nbsp;&nbsp;<input type="radio" name="loc_quest" value="currentLoc_quest"required> Use Current Location <br>
+ <!--                &nbsp;&nbsp;&nbsp;<input type="radio" name="loc_quest" value="currentLoc_quest"required> Use Current Location <br>
                 &nbsp;&nbsp;&nbsp;<input type="radio" name="loc_quest" value="submittedAdd_guest"> Enter Address
-                <input type="text" name="submittedAdd" maxlength="150" size="30">
-            <br>
+                <input type="text" name="address" maxlength="150" size="30"> -->
 
-            <input type="submit">
+                Enter Address
+                <input type="text" id="address" name="address" maxlength="150" size="30">
+
+            <input id=submitBtn type="submit">
         </form>
     </div>  
+
     
 {% endblock %}
 

@@ -48,19 +48,19 @@ def lost_pet_info():
     return jsonify(lost)
 
 
-@app.route('/lost', methods=['POST'])
-def lost_pet_form(): 
-    """Adds a lost pet."""
+# @app.route('/lost', methods=['POST'])
+# def lost_pet_form(): 
+#     """Adds a lost pet."""
 
-    species = request.form.get('species_quest')
-    breed = request.form.get('breed_quest')
-    size = request.form.get('size_quest')
-    color1 = request.form.get('color1_quest')
-    color2 = request.form.get('color2_quest')
-    color3 = request.form.get('color3_quest')
-    notes = request.form.get('notes')
-    picture = request.form.get('animal_pic')
-    address = request.form.get('loc_quest')
+#     species = request.form.get('species_quest')
+#     breed = request.form.get('breed_quest')
+#     size = request.form.get('size_quest')
+#     color1 = request.form.get('color1_quest')
+#     color2 = request.form.get('color2_quest')
+#     color3 = request.form.get('color3_quest')
+#     notes = request.form.get('notes')
+#     picture = request.form.get('animal_pic')
+#     address = request.form.get('loc_quest')
 
 
     # model.make_new_student(first_name, last_name, github)
@@ -71,7 +71,7 @@ def lost_pet_form():
 
     # html = render_template('student_add.html', first=first_name, last=last_name, github=github)
 
-    return html
+    # return html
 
 if __name__ == "__main__":
     app.debug = True
