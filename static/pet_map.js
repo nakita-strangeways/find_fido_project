@@ -1,3 +1,4 @@
+// Get map on webpage
 function initMap() {
     // Specify where the map is centered
     // Defining this variable outside of the map optios markers
@@ -13,7 +14,7 @@ function initMap() {
         zoomControl: true,
         panControl: false,
         streetViewControl: false,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        
     });
 
     // Define global infoWindow
@@ -25,6 +26,29 @@ function initMap() {
     let infoWindow = new google.maps.InfoWindow({
         width: 150
     });
+
+           if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            $('#current_location').data('current_location',pos)
+ 
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('You are here');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+
+        }
 
     // Retrieving the information with AJAX
     $.get('/lost.json', function (lost_pets) {
@@ -58,7 +82,7 @@ function initMap() {
 
       if (animal.species_id=='Cat'){
         marker = new google.maps.Marker({
-            position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
+            position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
             title: 'Seen: ' + animal.species_id,
             icon: cat_icon
@@ -67,7 +91,7 @@ function initMap() {
 
       if (animal.species_id=='Dog'){
         marker = new google.maps.Marker({
-            position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
+            position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
             title: 'Seen: ' + animal.species_id,
             icon: dog_icon
@@ -80,8 +104,9 @@ function initMap() {
                     '<img src="/static/seed_photos/' + animal.photo + '" alt="photo" style="width:150px;" class="thumbnail">' +
                     '<p><b>Species: </b>' + animal.species_id + '</p>' +
                     '<p><b>Size: </b>' + animal.size_id + '</p>' +
-                    '<p><b>Time seen at: </b>' + animal.timestamp_seen_at + '</p>' +
+                    '<p><b>Time seen at: </b>' + animal.timestamp + '</p>' +
                     '<p><b>Notes: </b>' + animal.notes + '</p>' +
+                    // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
 
@@ -106,3 +131,7 @@ function initMap() {
 }
 
 google.maps.event.addDomListener(window, 'load', initMap);
+
+
+
+

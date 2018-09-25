@@ -13,7 +13,9 @@
     color: red;
 }
 
-
+.user_entered_address {
+  display: none;
+}
 /*--------------------------------*/
 /*Maps*/
 /*--------------------------------*/
@@ -21,10 +23,11 @@
 #pet-map {
   display: inline-block; 
   height: 800px;
-  width: 75%;
+  width: 100%;
 }
 
 .window-content {
   color: #04162b;
   width: 150px;
 }
+

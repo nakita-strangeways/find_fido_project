@@ -117,16 +117,16 @@ def load_animals(animal_filename):
     #Read generic_colors file and insert data
     for row in open(animal_filename):
         row = row.rstrip()
-        animal_id, species_id, breed_id, size_id, user_id, seen_at_lat, seen_at_long, timestamp, photo, notes = row.split("|")
+        animal_id, species_id, breed_id, size_id, user_id, latitude, longitude, timestamp, photo, notes = row.split("|")
 
         animals = Animal(animal_id=animal_id,
                         species_id=species_id,
                         breed_id=breed_id,
                         size_id=size_id,
                         user_id=user_id,
-                        seen_at_lat=seen_at_lat,
-                        seen_at_long=seen_at_long,
-                        timestamp_seen_at=timestamp,
+                        latitude=latitude,
+                        longitude=longitude,
+                        timestamp=timestamp,
                         photo=photo,
                         notes=notes)
 
