@@ -16,15 +16,31 @@
 .user_entered_address {
   display: none;
 }
+
+.submitted_form_class {
+  display: none;
+}
+
+
 /*--------------------------------*/
 /*Maps*/
 /*--------------------------------*/
+#container {
+  width:100%;
+}
 
 #pet-map {
+  padding: 20px;
   display: inline-block; 
   height: 800px;
-  width: 100%;
+  width: 75%;
 }
+
+#seen_form {
+  display: inline-block; 
+  height: 800px;
+}
+
 
 .window-content {
   color: #04162b;

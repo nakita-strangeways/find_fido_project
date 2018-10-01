@@ -19,8 +19,7 @@ def load_colors(color_filename):
         row = row.rstrip()
         color_id, color = row.split("|")
 
-        colors = Color(color_id=color_id,
-                        color=color)
+        colors = Color(color=color)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(colors)
@@ -44,8 +43,7 @@ def load_species(species_filename):
         row = row.rstrip()
         species_id, species = row.split("|")
 
-        the_species = Species(species_id=species_id,
-                    species=species)
+        the_species = Species(species=species)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(the_species)
@@ -71,8 +69,7 @@ def load_sizes(sizes_filename):
         row = row.rstrip()
         size_id, size = row.split("|")
 
-        sizes = Size(size_id=size_id,
-                    size=size)
+        sizes = Size(size=size)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(sizes)
@@ -119,8 +116,7 @@ def load_animals(animal_filename):
         row = row.rstrip()
         animal_id, species_id, breed_id, size_id, user_id, latitude, longitude, timestamp, photo, notes = row.split("|")
 
-        animals = Animal(animal_id=animal_id,
-                        species_id=species_id,
+        animals = Animal(species_id=species_id,
                         breed_id=breed_id,
                         size_id=size_id,
                         user_id=user_id,
@@ -152,8 +148,7 @@ def load_animalColors(animalColors_filename):
         row = row.rstrip()
         animal_color_id, animal_id, color_id = row.split("|")
 
-        animalColors = AnimalColor(animal_color_id=animal_color_id,
-                                    animal_id=animal_id,
+        animalColors = AnimalColor(animal_id=animal_id,
                                     color_id=color_id)
 
         # We need to add to the session or it won't ever be stored

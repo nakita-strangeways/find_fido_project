@@ -29,10 +29,11 @@ class Animal(db.Model):
                         db.ForeignKey('sizes.size_id'),
                         nullable=False)
     user_id = db.Column(db.String(64), nullable=False) #currently users IP address
-    latitude = db.Column(db.String(15), nullable=False)
-    longitude = db.Column(db.String(15), nullable=False)
+    latitude = db.Column(db.String(20), nullable=False)
+    longitude = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
     photo = db.Column(db.String(64), nullable=False)
+
     notes = db.Column(db.String(150), nullable=False)
 
     colors = db.relationship("Color",
@@ -131,6 +132,7 @@ class Size(db.Model):
         """Provide helpful representation when printed."""
 
         return f"<Size size_id={self.size_id} size={self.size}>"
+
 
 # class User(db.Model):
 #     """User of website."""

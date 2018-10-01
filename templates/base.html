@@ -1,9 +1,7 @@
+
 <!doctype html>
 <html>
   <head>
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href='http://fonts.googleapis.com/css?family=Raleway:100,700'
           rel='stylesheet'>
     <link href="/static/lost_pets.css" rel="stylesheet">
@@ -14,12 +12,30 @@
 
   </head>
   <body>
+    <div class="container">
+      <h1>
+      Find Fido
+      </h1>
+      {% for msg in get_flashed_messages() %}
+      <div class="alert alert-info">{{ msg }}</div>
+      {% endfor %}
+    </div>
 
   {% block body %}
   {% endblock %}
 
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 

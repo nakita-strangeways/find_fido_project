@@ -3,6 +3,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 
+
 from model import Animal, Color, AnimalColor, Species, Breed, Size, connect_to_db, db
 
 from datetime import datetime, date, time
@@ -13,10 +14,12 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
+
 @app.route('/')
 def index():
     """Homepage."""
     return render_template('homepage.html')
+
 
 @app.route('/lost')
 def map():
@@ -42,10 +45,12 @@ def lost_pet_info():
             "longitude": animal.longitude,
             "timestamp": animal.timestamp,
             "photo": animal.photo,
-            "notes": animal.notes
+            "notes": animal.notes,
+            "colors": [color.color for color in animal.colors]
         }
 
         for animal in Animal.query
+
     }
 
     return jsonify(lost)
@@ -54,61 +59,72 @@ def lost_pet_info():
 @app.route('/add_lost_animal', methods=['POST'])
 def lost_pet_form(): 
     """Adds a lost pet."""
+    colors = []
+    queried_colors = []
 
-    submitted_species = request.form.get('species')
-    submitted_breed = request.form.get('breed')
-    submitted_size = request.form.get('size')
-    # submitted_color1 = request.form.get('color1_quest')
-    # submitted_color2 = request.form.get('color2_quest')
-    # submitted_color3 = request.form.get('color3_quest')
+    f = request.files['animal_photo']
+    f.save('static/seed_photos/' + f.filename)
+
+    submitted_species = request.form.get('species_quest')
+    submitted_breed = request.form.get('breed_question')
+    submitted_size = request.form.get('size_quest')
+    submitted_color1 = request.form.get('color1_question')
+    if submitted_color1:
+        print(submitted_color1)
+        colors.append(submitted_color1)
+    submitted_color2 = request.form.get('color2_question')
+    if submitted_color2:    
+        colors.append(submitted_color2)
+    submitted_color3 = request.form.get('color3_question')
+    if submitted_color3:
+        colors.append(submitted_color3)
     submitted_notes = request.form.get('notes')
-    submitted_photo = request.form.get('photo')
     submitted_latitude = request.form.get('lat')
     submitted_longitude = request.form.get('lng')
     submitted_email = request.form.get('email')
-
     timestamp = datetime.now()
 
+    # print(f)
+    # print(request.form)
+    # print(submitted_latitude)
 
-    species_id = Species.query.filter(Species.species == submitted_species).one()
-    breed_id = Breed.query.filter(Breed.breed == submitted_breed).one()
-    size_id = Size.query.filter(Size.size == submitted_size).one()
+    species = Species.query.filter(Species.species == submitted_species).one()
+    breed = Breed.query.filter(Breed.breed == submitted_breed).one()
+    size = Size.query.filter(Size.size == submitted_size).one()
+    for color in colors:
+        queried_colors.append(Color.query.filter(Color.color == color).one())
 
-    animal = Animal(species_id = species_id,
-                     breed_id = breed_id,
-                     size_id = size_id, 
+
+    animal = Animal(species = species,
+                     breed = breed,
+                     size = size, 
                      notes = submitted_notes, 
-                     photo = submitted_photo, 
+                     photo = str(f.filename),
                      latitude = submitted_latitude, 
                      longitude = submitted_longitude, 
                      user_id = submitted_email, 
-                     timestamp = timestamp)
+                     timestamp = timestamp,
+                     colors = queried_colors
+                     )
 
     db.session.add(animal)
     db.session.commit()
-    print("committed")
-
-    # print(submitted_species, submitted_breed, submitted_size, submitted_notes,submitted_photo,submitted_latitude,submitted_longitude,submitted_email,timestamp, species_id, breed_id, size_id)
+    return("it worked. yay")
 
 
-    # return render_template('testing.html', species = submitted_species,
-    #                                     breed = submitted_breed,
-    #                                     size = submitted_size,
-    #                                     notes = submitted_notes,
-    #                                     photo = submitted_photo,
-    #                                     latitude = submitted_latitude,
-    #                                     longitude = submitted_longitude,
-    #                                     email = submitted_email,
-    #                                     timestamp = timestamp,
-    #                                     species_id = species_id,
-    #                                     breed_id = breed_id,
-    #                                     size_id = size_id)
 
-# @app.route('/test')
-# def testing():
-#     """Homepage."""
+#FIIIIX THIS IMAGE THIIIING
+@app.route('/images/<int:animal_id>.jpg')
+def get_image(animal_id):
+    image_binary = read_image(animal_id)
+    return send_file(
+        io.BytesIO(image_binary),
+        mimetype='image/jpeg',
+        as_attachment=True,
+        attachment_filename='%s.jpg' % animal_id)
 
-#     return render_template('testing.html')
+
+
 
 
 if __name__ == "__main__":

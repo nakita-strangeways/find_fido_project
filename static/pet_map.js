@@ -13,8 +13,7 @@ function initMap() {
         zoom: 17,
         zoomControl: true,
         panControl: false,
-        streetViewControl: false,
-        
+        streetViewControl: false
     });
 
     // Define global infoWindow
@@ -27,9 +26,9 @@ function initMap() {
         width: 150
     });
 
-           if (navigator.geolocation) {
+        if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            const pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
@@ -50,6 +49,13 @@ function initMap() {
 
         }
 
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        }
+
     // Retrieving the information with AJAX
     $.get('/lost.json', function (lost_pets) {
       // Attach markers to each pet location in returned JSON
@@ -62,23 +68,16 @@ function initMap() {
             url:"/static/icons/dog-pin.png",
             scaledSize: new google.maps.Size(50,75),
             origin: new google.maps.Point(0,0),
-            anchor: new google.maps.Point(0,0)
+            anchor: new google.maps.Point(25,80)
         };
 
         const cat_icon = {
             url:"/static/icons/cat-pin.png",
             scaledSize: new google.maps.Size(50,75),
             origin: new google.maps.Point(0,0),
-            anchor: new google.maps.Point(0,0)
+            anchor: new google.maps.Point(25,80)
         };
 
-    // Define the marker - add if statement to use cat or dog pin
-        // marker = new google.maps.Marker({
-        //     position: new google.maps.LatLng(animal.seen_at_lat, animal.seen_at_long),
-        //     map: map,
-        //     title: 'Seen: ' + animal.species_id,
-        //     icon: dog_icon
-        // });
 
       if (animal.species_id=='Cat'){
         marker = new google.maps.Marker({
@@ -106,6 +105,7 @@ function initMap() {
                     '<p><b>Size: </b>' + animal.size_id + '</p>' +
                     '<p><b>Time seen at: </b>' + animal.timestamp + '</p>' +
                     '<p><b>Notes: </b>' + animal.notes + '</p>' +
+                    '<p><b>Colors: </b>' + animal.colors.join(', ') + '</p>' +
                     // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
@@ -115,6 +115,23 @@ function initMap() {
             bindInfoWindow(marker, map, infoWindow, html);
       }
 
+    });
+
+    //drop a new marker on right click 
+    let pin_on = false
+
+    google.maps.event.addListener(map, 'click', function(event) {
+        if (pin_on == false) {
+            pin_on = true
+
+            const marker = new google.maps.Marker({
+                position: event.latLng, //map Coordinates where user clicked
+                map: map,
+                draggable:true, //set marker draggable 
+                animation: google.maps.Animation.DROP, //bounce animation
+                // title:"Lost animal seen here"
+            });
+        }
     });
 
     // This function is outside the for loop.
@@ -128,6 +145,7 @@ function initMap() {
             infoWindow.open(map, marker);
         });
     }
+    window.myMap = map
 }
 
 google.maps.event.addDomListener(window, 'load', initMap);

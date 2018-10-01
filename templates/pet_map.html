@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block head %}
 <script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY"></script>
+//       src="https://maps.googleapis.com/maps/api/js?key=Google-API-key"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 
@@ -12,47 +12,47 @@
 
 
 {% block body %}
+    <div id='container'>
 
-    <div id="pet-map"></div>
-    <div id="seen_form">  
-        <form id='lost_form' action="/add_lost_animal" method="POST">
+      <form id='address_bar' action="/address_bar" method="GET">
+        <span class=address_bar> Enter Address <input id="address" type="text" name="address">
+        <input id=address_bar_submit type="submit">
+        </span>
+      </form>
+    </div>
+
+    <div id='container'>
+        <div id="pet-map" ></div>
+
+
+        <div id="seen_form" class="seen_form_class">  
+          <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" >
             <h2>Animal Seen Form: </h2>
 
             <h4>Location Seen<span id="required">*</span>:</h4>
-            &nbsp;&nbsp;&nbsp;<input id=current_location type="radio" name="location_quest" value="currentLocation_question"required> Use Current Location 
-<!--             &nbsp;&nbsp;&nbsp;<input id=enter_location type="radio" name="location_quest" value="submittedAddress_guestion"> Manually enter address <br>
-
-            &nbsp;&nbsp;&nbsp;<span class=user_entered_address> Address <input id="address" type="text" name="address"><br>
-            &nbsp;&nbsp;&nbsp; City &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="city" type="text" name="city"><br>
-            &nbsp;&nbsp;&nbsp; State &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="state" type="text" name="state"><br>
-            &nbsp;&nbsp;&nbsp; Zipcode <input id="zipcode" type="text" name="zipcode"><br>
-            </span> -->
-
-
+            &nbsp;&nbsp;&nbsp;<input id=current_location type="radio" name="location_quest" value="currentLocation_question"> Use Current Location 
 
             <h4>Species<span id="required">*</span>:</h4>
-
-                &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="Dog"> Dog 
-                <input id="cat_species" type="radio" name="species_quest" value="Cat"> Cat 
+            &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="Dog"> Dog 
+                              <input id="cat_species" type="radio" name="species_quest" value="Cat"> Cat 
 
             <br>
 
             <h4>Breed:</h4>
-                &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question">
-                <option value="" selected disabled hidden>Select one</option>
+            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question">
+            <option value="" selected disabled hidden>Select one</option>
 
-                    {% for breed in breeds %}
+                {% for breed in breeds %}
                 <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
-                    {{breed.breed}} </option>
-
-                    {% endfor %}
-
+                {{breed.breed}} 
+                </option>
+                {% endfor %}
                 </select>
 
             <br>
 
             <h4>Size<span id="required">*</span>:</h4>
-                &nbsp;&nbsp;&nbsp;<input id=size_quest type="radio" name="size_quest" value="X-Small" required> X-Small 
+            &nbsp;&nbsp;&nbsp;<input id=size_quest type="radio" name="size_quest" value="X-Small" > X-Small 
                 <input type="radio" name="size_quest" value="Small"> Small 
                 <input type="radio" name="size_quest" value="Medium"> Medium 
                 <input type="radio" name="size_quest" value="Large"> Large 
@@ -60,46 +60,55 @@
 
             <br>
 
-           <h4>Color<span id="required">*</span>:</h4>
-                &nbsp;&nbsp;&nbsp;<select id="color1_quest" name="color1_question" required>
+            <h4>Color<span id="required">*</span>:</h4>
+                &nbsp;&nbsp;&nbsp;<select id="color1_quest" name="color1_question" >
                 <option value="" selected disabled hidden>Select one</option>
                     {% for color in colors %}
-                <option value="{{ color.color }}">{{ color.color }}</option>
+                    <option value="{{ color.color }}">{{ color.color }}</option>
                     {% endfor %}
                     </select>
                 <br>
 
-            Other Colors:<br>
+                Other Colors:<br>
                 &nbsp;&nbsp;&nbsp;<select id="color2_quest" name="color2_question">
-                <option value="" selected disabled hidden>Select one</option>
+                    <option value="" selected disabled hidden>Select one</option>
                     {% for color in colors %}
-                <option value="{{ color.color }}">{{ color.color }}</option>
+                    <option value="{{ color.color }}">{{ color.color }}</option>
                     {% endfor %}
                     </select>
-                
-                <select id="color3_quest" name="color3_question">
-                <option value="" selected disabled hidden>Select one</option>
+                    
+                    <select id="color3_quest" name="color3_question">
+                    <option value="" selected disabled hidden>Select one</option>
                     {% for color in colors %}
-                <option value="{{ color.color }}">{{ color.color }}</option>
+                    <option value="{{ color.color }}">{{ color.color }}</option>
                     {% endfor %}
                     </select>
+
                 <br>
 
-            <h4>Notes about the animal:</h4>
+                <h4>Notes about the animal:</h4>
                 &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
                 &nbsp;&nbsp;&nbsp;Max 150 characters
 
-            <h4>Upload Image<span id="required">*</span>:</h4>
-                <input id="photo" type="file" name="animal_pic" accept="image/*" required>
-   
-            <h4>How to contact you for questions:<span id="required">*</span>:</h4>
-            &nbsp;&nbsp;&nbsp;Email: <input id="email" type="text" name="email"></span>
-            <br>
-            <br>
+                <h4>Upload Image<span id="required">*</span>:</h4>
+                <input type="file" name="animal_photo" accept="image/*">
+       
+                <h4>How to contact you for questions:<span id="required">*</span>:</h4>
+                &nbsp;&nbsp;&nbsp;Email: <input id="email" type="text" name="email"></span>
+                
+                <br>
+                <br>
 
-             &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
-        </form>
-    </div>  
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
+          </form>
+        </div>  
+
+
+        <div id="submitted_form" class="submitted_form_class">
+            <h1> Thank you for submitting a lost animal! </h1>
+            <h3> You will need to refresh the page to see your submission. </h3>
+        </div>
+    </div>
 
     
 {% endblock %}
