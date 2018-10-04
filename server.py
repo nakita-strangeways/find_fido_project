@@ -61,12 +61,20 @@ def lost_pet_form():
     """Adds a lost pet."""
     colors = []
     queried_colors = []
+    breeds = []
 
     f = request.files['animal_photo']
     f.save('static/seed_photos/' + f.filename)
 
     submitted_species = request.form.get('species_quest')
     submitted_breed = request.form.get('breed_question')
+    if submitted_breed:
+        print(submitted_breed)
+        breeds.append(submitted_breed)
+    else:
+        breeds.append('Unknown')
+        print(breeds)
+
     submitted_size = request.form.get('size_quest')
     submitted_color1 = request.form.get('color1_question')
     if submitted_color1:
@@ -87,12 +95,15 @@ def lost_pet_form():
     # print(f)
     # print(request.form)
     # print(submitted_latitude)
+    print(breed)
 
     species = Species.query.filter(Species.species == submitted_species).one()
-    breed = Breed.query.filter(Breed.breed == submitted_breed).one()
+    breed = Breed.query.filter(Breed.breed == breeds).one()
     size = Size.query.filter(Size.size == submitted_size).one()
     for color in colors:
         queried_colors.append(Color.query.filter(Color.color == color).one())
+
+
 
 
     animal = Animal(species = species,
@@ -110,19 +121,6 @@ def lost_pet_form():
     db.session.add(animal)
     db.session.commit()
     return("it worked. yay")
-
-
-
-#FIIIIX THIS IMAGE THIIIING
-@app.route('/images/<int:animal_id>.jpg')
-def get_image(animal_id):
-    image_binary = read_image(animal_id)
-    return send_file(
-        io.BytesIO(image_binary),
-        mimetype='image/jpeg',
-        as_attachment=True,
-        attachment_filename='%s.jpg' % animal_id)
-
 
 
 

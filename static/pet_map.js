@@ -37,7 +37,7 @@ function initMap() {
  
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('You are here');
+            infoWindow.setContent('Click where you saw the animal');
             infoWindow.open(map);
             map.setCenter(pos);
           }, function() {
@@ -118,20 +118,35 @@ function initMap() {
     });
 
     //drop a new marker on right click 
-    let pin_on = false
+    let pin_on = false;
+    let marker = null;
 
     google.maps.event.addListener(map, 'click', function(event) {
-        if (pin_on == false) {
-            pin_on = true
+        if (marker) {
+            marker.setMap(null)
 
-            const marker = new google.maps.Marker({
-                position: event.latLng, //map Coordinates where user clicked
-                map: map,
-                draggable:true, //set marker draggable 
-                animation: google.maps.Animation.DROP, //bounce animation
-                // title:"Lost animal seen here"
-            });
         }
+            // pin_on = true
+
+    marker = new google.maps.Marker({
+        position: event.latLng, //map Coordinates where user clicked
+        map: map,
+        draggable:true, //set marker draggable 
+        // animation: google.maps.Animation.DROP, //bounce animation
+        title:"Drag me to change location!"
+    });
+
+    function updatePosition() {
+        const pos = {
+            lat: marker.position.lat(),
+            lng: marker.position.lng() 
+        };
+        $('#current_location').data('current_location',pos);
+        console.log($('#current_location').data('current_location'));
+    };
+
+    updatePosition();
+    marker.addListener('drag', updatePosition);
     });
 
     // This function is outside the for loop.
@@ -144,12 +159,8 @@ function initMap() {
             infoWindow.setContent(html);
             infoWindow.open(map, marker);
         });
-    }
+    };
     window.myMap = map
-}
+};
 
 google.maps.event.addDomListener(window, 'load', initMap);
-
-
-
-

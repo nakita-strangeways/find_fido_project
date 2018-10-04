@@ -23,14 +23,12 @@ $('#current_location' ).on('click', function(){
    console.log($('#current_location').data('current_location'))
 });
 
-// Get Pin location
-
 // Move map to address using address bar
+console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
-    evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = "Google-API-key"
+    const key = "GOOGLE_API_KEY"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;
@@ -41,8 +39,12 @@ $('#address_bar').on('submit', function(evt){
 });
 
 // get information from lost pets form to database
+console.log("information from lost pets form to database ready")
 $('#lost_form').submit(function(e) {
     e.preventDefault();    
+    $( '.submitted_form_class' ).show();
+    $( '.seen_form_class' ).hide();
+
     var formData = new FormData(this);
 
     formData.set('lat', $('#current_location').data( 'current_location').lat);

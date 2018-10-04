@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block head %}
 <script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=Google-API-key"></script>
+//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 
@@ -20,13 +20,11 @@
         </span>
       </form>
     </div>
-
-    <div id='container'>
-        <div id="pet-map" ></div>
-
-
-        <div id="seen_form" class="seen_form_class">  
-          <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" >
+    
+    <div id="pet-map" ></div>
+    
+    <div id="seen_form" class="seen_form_class">  
+        <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" >
             <h2>Animal Seen Form: </h2>
 
             <h4>Location Seen<span id="required">*</span>:</h4>
@@ -86,22 +84,22 @@
 
                 <br>
 
-                <h4>Notes about the animal:</h4>
+            <h4>Notes about the animal:</h4>
                 &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
                 &nbsp;&nbsp;&nbsp;Max 150 characters
 
-                <h4>Upload Image<span id="required">*</span>:</h4>
+            <h4>Upload Image<span id="required">*</span>:</h4>
                 <input type="file" name="animal_photo" accept="image/*">
        
-                <h4>How to contact you for questions:<span id="required">*</span>:</h4>
+            <h4>How to contact you for questions:<span id="required">*</span>:</h4>
                 &nbsp;&nbsp;&nbsp;Email: <input id="email" type="text" name="email"></span>
                 
                 <br>
                 <br>
 
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
-          </form>
-        </div>  
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
+        </form>
+    </div>  
 
 
         <div id="submitted_form" class="submitted_form_class">
@@ -109,6 +107,13 @@
             <h3> You will need to refresh the page to see your submission. </h3>
         </div>
     </div>
+
+    <div id="More_Info" class="More_Info">
+        <h1> More Information </h1>
+        <p> When you click on a marker, this div becomes unhidden and populated with that markers info, a larger photo, and a chat box maaaybe?</p>
+    </div>
+
+
 
     
 {% endblock %}
