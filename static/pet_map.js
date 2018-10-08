@@ -1,3 +1,8 @@
+//for filter option
+var markers = []
+// var filters = {Cat:false, Dog:false}
+
+
 // Get map on webpage
 function initMap() {
     // Specify where the map is centered
@@ -84,6 +89,7 @@ function initMap() {
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
             title: 'Seen: ' + animal.species_id,
+            animal:animal,
             icon: cat_icon
         });
       }
@@ -93,6 +99,7 @@ function initMap() {
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
             title: 'Seen: ' + animal.species_id,
+            animal:animal,
             icon: dog_icon
         });
       }
@@ -101,11 +108,12 @@ function initMap() {
             html = (
               '<div class="window-content">' +
                     '<img src="/static/seed_photos/' + animal.photo + '" alt="photo" style="width:150px;" class="thumbnail">' +
-                    '<p><b>Species: </b>' + animal.species_id + '</p>' +
-                    '<p><b>Size: </b>' + animal.size_id + '</p>' +
-                    '<p><b>Time seen at: </b>' + animal.timestamp + '</p>' +
-                    '<p><b>Notes: </b>' + animal.notes + '</p>' +
-                    '<p><b>Colors: </b>' + animal.colors.join(', ') + '</p>' +
+                    '<p><b>Species: </b>' + animal.species_id  + '<br>' +
+                    '<b>Size: </b>' + animal.size_id  + '<br>' +
+                    '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
+                    '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
+                    '<p><b>Seen By: </b>' + animal.user_id + '<br>' +
+                    '<b>Time seen at: </b>' + animal.timestamp  +
                     // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
@@ -113,9 +121,91 @@ function initMap() {
             // Inside the loop we call bindInfoWindow passing it the marker,
             // map, infoWindow and contentString
             bindInfoWindow(marker, map, infoWindow, html);
+            if (marker) {markers.push(marker)}
       }
 
     });
+
+// Filter Form Click Events
+  //Cat checkbox
+    $( '#speciesBox-Cat' ).on( 'change', function(){
+        for (i = 0; i < markers.length; i++) {
+            marker = markers[i];
+            if(this.checked === true){
+                if (marker.animal.species_id == "Cat") {
+                marker.setVisible(true)
+            }
+            else {
+                marker.setVisible(false)
+            }
+        }
+            if(this.checked != true){
+                if (marker.animal.species_id == "Cat") {
+                marker.setVisible(true)
+
+            }
+            else {
+                marker.setVisible(true)
+            }
+        }
+    }
+
+});
+  //Dog checkbox
+    $( '#speciesBox-Dog' ).on( 'change', function(){
+        for (i = 0; i < markers.length; i++) {
+            marker = markers[i];
+            if(this.checked === true){
+                if (marker.animal.species_id == "Dog") {
+                marker.setVisible(true)
+            }
+            else {
+                marker.setVisible(false)
+            }
+        }
+            if(this.checked != true){
+                if (marker.animal.species_id == "Dog") {
+                marker.setVisible(true)
+
+            }
+            else {
+                marker.setVisible(true)
+            }
+        }
+    }
+
+});
+  //Colors checkboxes
+  //Black
+
+  //Go through animals list and find the color in the list colors
+
+
+    $( '#colorBox-black' ).on( 'change', function(){
+        for (i = 0; i < markers.length; i++) {
+            marker = markers[i];
+            console.log(marker)
+            if(this.checked === true){
+                if (marker.animal.colors == "Black") {
+                marker.setVisible(true)
+            }
+            else {
+                marker.setVisible(false)
+            }
+        }
+            if(this.checked != true){
+                if (marker.animal.colors == "Black") {
+                marker.setVisible(true)
+
+            }
+            else {
+                marker.setVisible(true)
+            }
+        }
+    }
+
+});
+
 
     //drop a new marker on right click 
     let pin_on = false;
@@ -126,7 +216,7 @@ function initMap() {
             marker.setMap(null)
 
         }
-            // pin_on = true
+    
 
     marker = new google.maps.Marker({
         position: event.latLng, //map Coordinates where user clicked
@@ -135,6 +225,7 @@ function initMap() {
         // animation: google.maps.Animation.DROP, //bounce animation
         title:"Drag me to change location!"
     });
+
 
     function updatePosition() {
         const pos = {
@@ -148,6 +239,8 @@ function initMap() {
     updatePosition();
     marker.addListener('drag', updatePosition);
     });
+
+
 
     // This function is outside the for loop.
     // When a marker is clicked it closes any currently open infowindows

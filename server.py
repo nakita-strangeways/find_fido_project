@@ -46,7 +46,8 @@ def lost_pet_info():
             "timestamp": animal.timestamp,
             "photo": animal.photo,
             "notes": animal.notes,
-            "colors": [color.color for color in animal.colors]
+            "colors": [color.color for color in animal.colors],
+            "user_id": animal.user_id
         }
 
         for animal in Animal.query
@@ -56,12 +57,20 @@ def lost_pet_info():
     return jsonify(lost)
 
 
+# @app.route('/filter_lost_animals')
+# def filter_lost_animals_form():
+#     """Filters lost animals on map according to user input"""
+
+#     filter_species = request.form.get('species_quest')
+
+
+
 @app.route('/add_lost_animal', methods=['POST'])
 def lost_pet_form(): 
     """Adds a lost pet."""
     colors = []
     queried_colors = []
-    breeds = []
+    queried_breed = []
 
     f = request.files['animal_photo']
     f.save('static/seed_photos/' + f.filename)
@@ -69,16 +78,12 @@ def lost_pet_form():
     submitted_species = request.form.get('species_quest')
     submitted_breed = request.form.get('breed_question')
     if submitted_breed:
-        print(submitted_breed)
-        breeds.append(submitted_breed)
+        submitted_breed = submitted_breed
     else:
-        breeds.append('Unknown')
-        print(breeds)
-
+        submitted_breed = 'Unknown'
     submitted_size = request.form.get('size_quest')
     submitted_color1 = request.form.get('color1_question')
     if submitted_color1:
-        print(submitted_color1)
         colors.append(submitted_color1)
     submitted_color2 = request.form.get('color2_question')
     if submitted_color2:    
@@ -92,31 +97,27 @@ def lost_pet_form():
     submitted_email = request.form.get('email')
     timestamp = datetime.now()
 
-    # print(f)
-    # print(request.form)
-    # print(submitted_latitude)
-    print(breed)
 
     species = Species.query.filter(Species.species == submitted_species).one()
-    breed = Breed.query.filter(Breed.breed == breeds).one()
+    # breed = Breed.query.filter(Breed.breed == submitted_breed).one()
     size = Size.query.filter(Size.size == submitted_size).one()
     for color in colors:
         queried_colors.append(Color.query.filter(Color.color == color).one())
 
-
-
+    breed = Breed.query.filter(Breed.breed == submitted_breed,
+                                 Breed.species_id == species.species_id).one()
 
     animal = Animal(species = species,
-                     breed = breed,
-                     size = size, 
-                     notes = submitted_notes, 
-                     photo = str(f.filename),
-                     latitude = submitted_latitude, 
-                     longitude = submitted_longitude, 
-                     user_id = submitted_email, 
-                     timestamp = timestamp,
-                     colors = queried_colors
-                     )
+                    breed = breed,
+                    size = size, 
+                    notes = submitted_notes, 
+                    photo = str(f.filename),
+                    latitude = submitted_latitude, 
+                    longitude = submitted_longitude, 
+                    user_id = submitted_email, 
+                    timestamp = timestamp,
+                    colors = queried_colors
+                    )
 
     db.session.add(animal)
     db.session.commit()
