@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block head %}
 <script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLE-API-KEY"></script>
+//       src="https://maps.googleapis.com/maps/api/js?key=Google_API_KEY"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 
@@ -27,8 +27,8 @@
         <form id='filter_form' action="/filter_lost_animals">
             <h2>Filter Map: </h2>
             <h5>Species:</h5>
-                &nbsp;&nbsp;&nbsp;<input id="speciesBox-Dog" type="checkbox" name="speciesBox" value="Dog"> Dog
-                &nbsp;&nbsp;&nbsp;<input id="speciesBox-Cat" type="checkbox" name="speciesBox" value="Cat"> Cat
+                &nbsp;&nbsp;&nbsp;<input id="speciesBox-dog" type="checkbox" name="speciesBox" value="Dog"> Dog
+                &nbsp;&nbsp;&nbsp;<input id="speciesBox-cat" type="checkbox" name="speciesBox" value="Cat"> Cat
 
             <h5>Colors:</h5>
                 &nbsp;&nbsp;&nbsp;<input id="colorBox-black" type="checkbox" name="colorBox" value="black"> Black
