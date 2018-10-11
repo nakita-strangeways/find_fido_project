@@ -28,7 +28,9 @@ class Animal(db.Model):
     size_id = db.Column(db.Integer, 
                         db.ForeignKey('sizes.size_id'),
                         nullable=False)
-    user_id = db.Column(db.String(64), nullable=False) #currently users IP address
+    user_id = db.Column(db.Integer, 
+                        db.ForeignKey('users.user_id'),
+                        nullable=False) 
     latitude = db.Column(db.String(20), nullable=False)
     longitude = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
@@ -134,20 +136,29 @@ class Size(db.Model):
         return f"<Size size_id={self.size_id} size={self.size}>"
 
 
-# class User(db.Model):
-#     """User of website."""
+class User(db.Model):
+    """User of website."""
 
-#     __tablename__ = "users"
+    __tablename__ = "users"
 
-#     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     email = db.Column(db.String(64), nullable=True)
-#     password = db.Column(db.String(64), nullable=True)
-#     ip_address = db.Column(db.String(15), nullable=True)
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    username = db.Column(db.String(64), nullable=True)
+    email = db.Column(db.String(64), nullable=True)
+    password = db.Column(db.String(64), nullable=True)
 
-#     def __repr__(self):
-#         """Provide helpful representation when printed."""
+    def __repr__(self):
+        """Provide helpful representation when printed."""
 
-#         return f"<User user_id={self.user_id} email={self.email}>"
+        return f"<User user_id={self.user_id} email={self.email}>"
+
+
+
+def get_by_email(email):
+    """Given an email address, return matching user."""
+
+    # This relies on access to the global dictionary `customers`
+
+    return users[email]
 
 
 ##############################################################################

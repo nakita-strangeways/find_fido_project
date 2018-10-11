@@ -1,7 +1,7 @@
 """Utility file to seed ratings database from MovieLens data in seed_data/"""
 
 from sqlalchemy import func
-from model import Animal, Color, AnimalColor, Species, Size, Breed, connect_to_db, db
+from model import Animal, Color, AnimalColor, Species, Size, Breed, User, connect_to_db, db
 from server import app
 
 
@@ -104,6 +104,32 @@ def load_breeds(breeds_filename):
     #finished the function
     print("Breeds inserted")
 
+def load_users(users_filename):
+    """Load load_users from seed_data/load_users into database."""
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    User.query.delete()
+
+    #Read load_users file and insert data
+    for row in open(users_filename):
+        row = row.rstrip()
+        username, email, password = row.split("|")
+
+        users = User(username=username,
+                        email=email,
+                        password=password)
+
+        # We need to add to the session or it won't ever be stored
+        db.session.add(users)
+
+    # Once we're done, we should commit our work
+    db.session.commit()
+
+    #finished the function
+    print("Users inserted")
+
+
 def load_animals(animal_filename):
     """Load colors from seed_data/generic_colors into database."""
 
@@ -149,7 +175,7 @@ def load_animalColors(animalColors_filename):
         animal_color_id, animal_id, color_id = row.split("|")
 
         animalColors = AnimalColor(animal_id=animal_id,
-                                    color_id=color_id)
+                                        color_id=color_id)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(animalColors)
@@ -159,6 +185,8 @@ def load_animalColors(animalColors_filename):
 
     #finished the function
     print("Animal Colors inserted")
+
+
 
 
 if __name__ == "__main__":
@@ -174,10 +202,12 @@ if __name__ == "__main__":
     sizes_filename = "seed_data/sizes"
     breeds_filename  = "seed_data/all_breeds"
     animalColors_filename = "seed_data/animalColors"
+    users_filename = "seed_data/users"
 
     load_colors(color_filename)
     load_species(species_filename)
     load_sizes(sizes_filename)
     load_breeds(breeds_filename)
+    load_users(users_filename)
     load_animals(animal_filename)
     load_animalColors(animalColors_filename)

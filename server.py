@@ -4,7 +4,7 @@ from flask import (Flask, render_template, redirect, request, flash,
 from flask_debugtoolbar import DebugToolbarExtension
 
 
-from model import Animal, Color, AnimalColor, Species, Breed, Size, connect_to_db, db
+from model import Animal, Color, AnimalColor, Species, Breed, Size, User, connect_to_db, db
 
 from datetime import datetime, date, time
 
@@ -14,25 +14,18 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
-
 @app.route('/')
 def index():
     """Homepage."""
-    return render_template('homepage.html')
-
-
-@app.route('/lost')
-def map():
-    """Show map of lost pets."""
 
     colors = db.session.query(Color)
     breeds = db.session.query(Breed)
 
-    return render_template("pet_map.html", 
+    return render_template("homepage.html", 
                                     colors=colors,
                                     breeds=breeds)
 
-@app.route('/lost.json')
+@app.route('/.json')
 def lost_pet_info():
     """JSON information about lost pets from lost_pets_data file."""
 
@@ -56,14 +49,68 @@ def lost_pet_info():
 
     return jsonify(lost)
 
+@app.route("/login", methods=["GET"])
+def show_login():
+    """Show login form."""
 
-# @app.route('/filter_lost_animals')
-# def filter_lost_animals_form():
-#     """Filters lost animals on map according to user input"""
-
-#     filter_species = request.form.get('species_quest')
+    return render_template("login.html")
 
 
+@app.route("/login", methods=["POST"])
+def process_login():
+    """Log user into site."""
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = User.query.filter(User.email == email).one()
+
+    if not user:
+        flash("No such email address.")
+        return redirect('/login')
+
+    if user.password != password:
+        flash("Incorrect password.")
+        return redirect("/login")
+
+    session["logged_in_user_email"] = user.email
+    flash("Logged in.")
+    return redirect("/")
+
+
+@app.route("/logout")
+def process_logout():
+    """Log user out."""
+
+    del session["logged_in_user_email"]
+    flash("Logged out.")
+    return redirect("/")
+
+
+@app.route("/create_user", methods=["GET"])
+def show_create_user():
+    """Show create_user form."""
+
+    return render_template("create_user.html")
+
+
+@app.route('/create_user', methods=['POST'])
+def create_user_form(): 
+    """Adds a new user."""
+
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    new_user = User(username = username,
+                    email = email,
+                    password = password)
+
+    db.session.add(new_user)
+    db.session.commit()
+    print("submitted new user to database!")
+    flash("Account Created! Please sign in.")
+    return redirect("/login")
 
 @app.route('/add_lost_animal', methods=['POST'])
 def lost_pet_form(): 
@@ -94,8 +141,8 @@ def lost_pet_form():
     submitted_notes = request.form.get('notes')
     submitted_latitude = request.form.get('lat')
     submitted_longitude = request.form.get('lng')
-    submitted_email = request.form.get('email')
     timestamp = datetime.now()
+    user_email = session.get('logged_in_user_email')
 
 
     species = Species.query.filter(Species.species == submitted_species).one()
@@ -107,6 +154,8 @@ def lost_pet_form():
     breed = Breed.query.filter(Breed.breed == submitted_breed,
                                  Breed.species_id == species.species_id).one()
 
+    user = User.query.filter(User.email == user_email).one()
+
     animal = Animal(species = species,
                     breed = breed,
                     size = size, 
@@ -114,16 +163,15 @@ def lost_pet_form():
                     photo = str(f.filename),
                     latitude = submitted_latitude, 
                     longitude = submitted_longitude, 
-                    user_id = submitted_email, 
+                    user_id = user.user_id, 
                     timestamp = timestamp,
                     colors = queried_colors
                     )
 
     db.session.add(animal)
     db.session.commit()
+    print("submitted lost animal to database!")
     return("it worked. yay")
-
-
 
 
 if __name__ == "__main__":

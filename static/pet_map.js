@@ -62,7 +62,7 @@ function initMap() {
         }
 
     // Retrieving the information with AJAX
-    $.get('/lost.json', function (lost_pets) {
+    $.get('/.json', function (lost_pets) {
       // Attach markers to each pet location in returned JSON
       let animal, marker, html;
 
@@ -127,35 +127,40 @@ function initMap() {
     });
 
 // Filter Form Click Events
-let filtered_species = []
-let filtered_colors = []
-let filtered_sizes = []
-let filtered_breeds = []
+// let filtered_species = []
+// let filtered_colors = []
+// let filtered_sizes = []
+// let filtered_breeds = []
 
-  //All checkbox
-    $( '#speciesBox-all' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.species_id == "Cat") {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.species_id == "Cat") {
-                marker.setVisible(true)
 
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
+
+// bind a change handler to all filter checkboxes, collect values, group by respective names
+var $filterCheckboxes = $( '.filter-checkboxes' );
+
+$filterCheckboxes.on( 'change', function() {
+
+  var selectedFilters = {};
+
+  $filterCheckboxes.filter( ':checked' ).each( function() {
+
+    if ( ! selectedFilters.hasOwnProperty( this.name ) ) {
+      selectedFilters[ this.name ] = [];
     }
 
-});
+    selectedFilters[ this.name ].push( this.value );
+
+  } );
+
+} );
+
+ // create a collection containing all of the filterable elements
+  // var $filteredResults = $(animal); //<<< Would this be marker or animal? 
+
+  // console.log(filteredResults)
+
+
+
+
   //Cat checkbox
     $( '#speciesBox-cat' ).on( 'change', function(){
         for (i = 0; i < markers.length; i++) {

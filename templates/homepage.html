@@ -1,10 +1,152 @@
 {% extends 'base.html' %}
+{% block head %}
+<script async defer
+//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLEAPIKEY"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/static/mapstyles.js"></script>
+
+<script src="/static/pet_map.js"></script>
+<script src="/static/lost_pet_form.js"></script>
+
+{% endblock %}
+
 {% block body %}
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      <form id='address_bar' action="#">
+        <span class=address_bar> Enter Address <input id="address" type="text" name="address">
+        <input id=address_bar_submit type="submit">
+        </span>
+      </form>
+    </div>
+</div>
+<br>
 
-<body>
-  <h1> HERES SOME HOMEPAGE </h1>
+<div class="row">
+    <div id="filter_form_div" class="col">
+        <form id='filter_form' action="/filter_lost_animals">
+            <h2>Filter Map: </h2>
+            <h5>Species:</h5>
+                &nbsp;&nbsp;&nbsp;<input id="speciesBox-dog" type="checkbox" name="speciesBox" value="Dog"> Dog
+                &nbsp;&nbsp;&nbsp;<input id="speciesBox-cat" type="checkbox" name="speciesBox" value="Cat"> Cat
+
+            <h5>Colors:</h5>
+                &nbsp;&nbsp;&nbsp;<input id="colorBox-black" type="checkbox" name="colorBox" value="black"> Black
+                &nbsp;<input id="colorBox-blue" type="checkbox" name="colorBox" value="blue"> Blue<br>
+                &nbsp;&nbsp;&nbsp;<input id="colorBox-brown" type="checkbox" name="colorBox" value="brown"> Brown 
+                &nbsp;<input id="colorBox-cream" type="checkbox" name="colorBox" value="cream"> Cream<br>
+                &nbsp;&nbsp;&nbsp;<input id="colorBox-gray" type="checkbox" name="colorBox" value="gray"> Gray
+                &nbsp;<input id="colorBox-orange" type="checkbox" name="colorBox" value="orange"> Orange<br>
+                &nbsp;&nbsp;&nbsp;<input id="colorBox-red" type="checkbox" name="colorBox" value="red"> Red
+                &nbsp;<input id="colorBox-white" type="checkbox" name="colorBox" value="white"> White<br>
+                &nbsp;&nbsp;&nbsp;<input id="colorBox-yellow" type="checkbox" name="colorBox" value="yellow"> Yellow
+
+                <h5>Sizes:</h5>
+                &nbsp;&nbsp;&nbsp;<input id="sizeBox-xSmall" type="checkbox" name="sizeBox" value="xSmall"> X-Small
+                &nbsp;<input id="sizeBox-small" type="checkbox" name="sizeBox" value="small"> Small<br>
+                &nbsp;&nbsp;&nbsp;<input id="sizeBox-medium" type="checkbox" name="sizeBox" value="medium"> Medium 
+                &nbsp;<input id="sizeBox-large" type="checkbox" name="sizeBox" value="large"> Large<br>
+                &nbsp;&nbsp;&nbsp;<input id="sizeBox-xLarge" type="checkbox" name="sizeBox" value="xLarge"> X-Large
+
+        </form>
+    </div>
+    <div id="pet-map" class="col-6"></div>
 
 
-</body>
+    {% if session.get('logged_in_user_email') %}
+    <div id="seen_form" class="col">  
+        <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" class="seen_form_class">
+            <h2>Animal Seen Form: </h2>
 
+            <h5>Location Seen<span id="required">*</span>:</h5>
+            <p>Are you using your current location or a pin placed on map? </p>
+            &nbsp;&nbsp;&nbsp;<input id=current_location type="radio" name="location_quest" value="currentLocation_question"> Current Location 
+            &nbsp;&nbsp;&nbsp;<input id=current_location type="radio" name="location_quest" value="currentLocation_question"> Map Pin
+
+            <h5>Species<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="Dog"> Dog 
+                              <input id="cat_species" type="radio" name="species_quest" value="Cat"> Cat 
+
+            <br>
+
+            <h5>Breed:</h5>
+            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question">
+            <option value="" selected disabled hidden>Select one</option>
+
+                {% for breed in breeds %}
+                <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
+                {{breed.breed}} 
+                </option>
+                {% endfor %}
+                </select>
+
+            <br>
+
+            <h5>Size<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<input id=size_quest type="radio" name="size_quest" value="X-Small" > X-Small 
+                <input type="radio" name="size_quest" value="Small"> Small 
+                <input type="radio" name="size_quest" value="Medium"> Medium 
+                <input type="radio" name="size_quest" value="Large"> Large 
+                <input type="radio" name="size_quest" value="X-Large"> X-Large 
+
+            <br>
+
+            <h5>Color<span id="required">*</span>:</h5>
+                &nbsp;&nbsp;&nbsp;<select id="color1_quest" name="color1_question" >
+                <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                <br>
+
+                Other Colors:<br>
+                &nbsp;&nbsp;&nbsp;<select id="color2_quest" name="color2_question">
+                    <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                    
+                    <select id="color3_quest" name="color3_question">
+                    <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+
+                <br>
+
+            <h5>Notes about the animal:</h5>
+                &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
+                &nbsp;&nbsp;&nbsp;Max 150 characters
+
+            <h5>Upload Image<span id="required">*</span>:</h5>
+                <input type="file" name="animal_photo" accept="image/*">
+
+                <br>
+                <br>
+
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
+        </form>
+    {% else %}
+    <div id="seen_form" class="col">  
+        <h3>You must log in or create an account in order to submit an animal you've seen to the map!</h3>
+    </div>  
+    {% endif %}
+    </div>  
+  </div>
+</div>
+
+
+
+    <div id="More_Info" class="More_Info">
+        <h1> More Information </h1>
+        <p> When you click on a marker, this div becomes unhidden and populated with that markers info, a larger photo, and a chat box maaaybe?</p>
+    </div>
+
+
+
+<div> 
+    
 {% endblock %}
