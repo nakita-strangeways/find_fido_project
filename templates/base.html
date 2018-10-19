@@ -36,6 +36,7 @@
     <div class="navbar-nav">
       {% if session.get('logged_in_user_email') %}
       <a class="nav-item nav-link active" href="/logout">Log Out</a>
+      <a class="nav-item nav-link active" href="/profile">Profile</a>
       {% else %}
       <a class="nav-item nav-link" href="/login">Log In</a>
       <a class="nav-item nav-link" href="/create_user">Create Account</a>

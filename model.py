@@ -42,9 +42,12 @@ class Animal(db.Model):
                             secondary="animal_colors",
                             backref="animals")
 
+
+
     breed = db.relationship("Breed")
     species = db.relationship("Species")
     size = db.relationship("Size")
+    user = db.relationship("User")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -142,23 +145,39 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    username = db.Column(db.String(64), nullable=True)
-    email = db.Column(db.String(64), nullable=True)
-    password = db.Column(db.String(64), nullable=True)
+    username = db.Column(db.String(64), nullable=False)
+    email = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(64), nullable=False)
+    f_name = db.Column(db.String(64), nullable=True)
+    l_name = db.Column(db.String(64), nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"<User user_id={self.user_id} email={self.email}>"
+        return f"<User user_id={self.user_id} email={self.email} password={self.password} username={self.username} f_name={self.f_name} l_name={self.l_name}>"
 
+# class UserAnimal(db.Model):
+#     """An associations table between animals table and colors table."""
 
+#     __tablename__ = "user_animals"
 
-def get_by_email(email):
-    """Given an email address, return matching user."""
+#     user_animals_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     animal_id = db.Column(db.Integer, 
+#                         db.ForeignKey('animals.animal_id'),
+#                         nullable=False)
+#     user_id = db.Column(db.Integer, 
+#                         db.ForeignKey('users.user_id'),
+#                         nullable=False)
 
-    # This relies on access to the global dictionary `customers`
+#     animals = db.relationship("Animal")
+#     users = db.relationship("User")
+    
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
 
-    return users[email]
+#         return f"<UserAnimals user_animals={self.user_animals} \
+#                         user_id={self.user_id} animal_id={self.animal_id}>"
+
 
 
 ##############################################################################

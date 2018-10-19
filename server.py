@@ -40,13 +40,10 @@ def lost_pet_info():
             "photo": animal.photo,
             "notes": animal.notes,
             "colors": [color.color for color in animal.colors],
-            "user_id": animal.user_id
+            "user_id": animal.user.username
         }
-
         for animal in Animal.query
-
     }
-
     return jsonify(lost)
 
 @app.route("/login", methods=["GET"])
@@ -92,6 +89,12 @@ def show_create_user():
     """Show create_user form."""
 
     return render_template("create_user.html")
+
+@app.route("/profile")
+def show_user_profile():
+    """Show user profile."""
+
+    return render_template("profile.html")
 
 
 @app.route('/create_user', methods=['POST'])

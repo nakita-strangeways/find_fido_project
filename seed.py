@@ -1,8 +1,9 @@
 """Utility file to seed ratings database from MovieLens data in seed_data/"""
 
 from sqlalchemy import func
-from model import Animal, Color, AnimalColor, Species, Size, Breed, User, connect_to_db, db
+from model import Animal, Color, AnimalColor, Species, Size, Breed, User, connect_to_db, db #add userAnimal?
 from server import app
+
 
 
 # ADD LATER: from model import User
@@ -114,11 +115,13 @@ def load_users(users_filename):
     #Read load_users file and insert data
     for row in open(users_filename):
         row = row.rstrip()
-        username, email, password = row.split("|")
+        username, email, password, f_name, l_name = row.split("|")
 
         users = User(username=username,
                         email=email,
-                        password=password)
+                        password=password,
+                        f_name=f_name,
+                        l_name=l_name)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(users)
@@ -186,6 +189,30 @@ def load_animalColors(animalColors_filename):
     #finished the function
     print("Animal Colors inserted")
 
+# def load_userAnimals(userAnimals_filename):
+#     """Load userAnimals from seed_data/userAnimals into database."""
+
+#     # Delete all rows in table, so if we need to run this a second time,
+#     # we won't be trying to add duplicate users
+#     UserAnimal.query.delete()
+
+#     #Read animalColors file and insert data
+#     for row in open(userAnimals_filename):
+#         row = row.rstrip()
+#         user_animals_id, animal_id, user_id = row.split("|")
+
+#         userAnimals = userAnimals(animal_id=animal_id,
+#                                         user_id=user_id)
+
+#         # We need to add to the session or it won't ever be stored
+#         db.session.add(userAnimals)
+
+#     # Once we're done, we should commit our work
+#     db.session.commit()
+
+#     #finished the function
+#     print("User Animals inserted")
+
 
 
 
@@ -203,6 +230,7 @@ if __name__ == "__main__":
     breeds_filename  = "seed_data/all_breeds"
     animalColors_filename = "seed_data/animalColors"
     users_filename = "seed_data/users"
+    # userAnimals_filename = "seed_data/userAnimals"
 
     load_colors(color_filename)
     load_species(species_filename)
@@ -211,3 +239,4 @@ if __name__ == "__main__":
     load_users(users_filename)
     load_animals(animal_filename)
     load_animalColors(animalColors_filename)
+    # load_userAnimals(userAnimals_filename)

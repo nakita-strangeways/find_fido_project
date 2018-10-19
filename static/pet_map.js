@@ -1,7 +1,5 @@
 //for filter option
 var markers = []
-// var filters = {Cat:false, Dog:false}
-
 
 // Get map on webpage
 function initMap() {
@@ -126,321 +124,87 @@ function initMap() {
 
     });
 
-// Filter Form Click Events
-// let filtered_species = []
-// let filtered_colors = []
-// let filtered_sizes = []
-// let filtered_breeds = []
 
+//Filter Checkboxes
+const $filterCheckboxes = $('input[type="checkbox"]');
 
+$filterCheckboxes.on('change', function() {
 
-// bind a change handler to all filter checkboxes, collect values, group by respective names
-var $filterCheckboxes = $( '.filter-checkboxes' );
+  const selectedFilters = {};
+  
 
-$filterCheckboxes.on( 'change', function() {
+  $filterCheckboxes.filter(':checked').each(function() {
 
-  var selectedFilters = {};
-
-  $filterCheckboxes.filter( ':checked' ).each( function() {
-
-    if ( ! selectedFilters.hasOwnProperty( this.name ) ) {
-      selectedFilters[ this.name ] = [];
+    if (!selectedFilters.hasOwnProperty(this.name)) {
+      selectedFilters[this.name] = [];
     }
 
-    selectedFilters[ this.name ].push( this.value );
+    selectedFilters[this.name].push(this.value);
+  });
 
-  } );
+  // create a collection containing all of the filterable elements
+  let filteredResults = markers.slice(); 
 
-} );
+  // loop over the selected filter name -> (array) values pairs
+  $.each(selectedFilters, function(filterName, filterValues) {
 
- // create a collection containing all of the filterable elements
-  // var $filteredResults = $(animal); //<<< Would this be marker or animal? 
+    // filter each element
+    filteredResults = filteredResults.filter(function(marker) {
+        
+        let markerValue = marker.animal[filterName]
+        // If value is an array == True
+        if (Array.isArray(markerValue)) {
 
-  // console.log(filteredResults)
+            for (let filterValue of filterValues){
+                console.log("2nd - Checking inside filterValues:", filterValue)
+                if(markerValue.includes(filterValue)){
+                    return true;
+                }
+            };
+        };
 
-
-
-
-  //Cat checkbox
-    $( '#speciesBox-cat' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.species_id == "Cat") {
-                filtered_species.push(this);
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
+        //if not an array, just check if markerValue is there by checking its index. If no index == false
+        if (filterValues.indexOf(markerValue) >= 0){
+            return true;
         }
-            if(this.checked != true){
-                if (marker.animal.species_id == "Cat") {
-                marker.setVisible(true)
+    });
+  });
 
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
+  markers.forEach(function(marker) {
+    marker.setVisible(false)
+  });
 
-});
-
-  //Dog checkbox
-    $( '#speciesBox-dog' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.species_id == "Dog") {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.species_id == "Dog") {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-  //Colors checkboxes
-  //Black
-    $( '#colorBox-black' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            console.log(marker)
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Black")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Black")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Blue
-    $( '#colorBox-blue' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Blue")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Blue")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Brown
-    $( '#colorBox-brown' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Brown")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Brown")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Cream
-    $( '#colorBox-cream' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Cream")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Cream")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Gray
-    $( '#colorBox-gray' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Gray")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Gray")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Orange
-    $( '#colorBox-orange' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Orange")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Orange")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Red
-    $( '#colorBox-red' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Red")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Red")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //White
-    $( '#colorBox-white' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("White")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("White")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
-});
-
-  //Yellow
-    $( '#colorBox-yellow' ).on( 'change', function(){
-        for (i = 0; i < markers.length; i++) {
-            marker = markers[i];
-            if(this.checked === true){
-                if (marker.animal.colors.includes("Yellow")) {
-                marker.setVisible(true)
-            }
-            else {
-                marker.setVisible(false)
-            }
-        }
-            if(this.checked != true){
-                if (marker.animal.colors.includes("Yellow")) {
-                marker.setVisible(true)
-
-            }
-            else {
-                marker.setVisible(true)
-            }
-        }
-    }
-
+  filteredResults.forEach(function(marker) {
+    marker.setVisible(true)
+  });
 });
 
 
 
+//   //Yellow
+//     $( '#colorBox-yellow' ).on( 'change', function(){
+//         for (i = 0; i < markers.length; i++) {
+//             marker = markers[i];
+//             if(this.checked === true){
+//                 if (marker.animal.colors.includes("Yellow")) {
+//                 marker.setVisible(true)
+//             }
+//             else {
+//                 marker.setVisible(false)
+//             }
+//         }
+//             if(this.checked != true){
+//                 if (marker.animal.colors.includes("Yellow")) {
+//                 marker.setVisible(true)
 
+//             }
+//             else {
+//                 marker.setVisible(true)
+//             }
+//         }
+//     }
+
+// });
 
     //drop a new marker on right click 
     let pin_on = false;
@@ -449,7 +213,6 @@ $filterCheckboxes.on( 'change', function() {
     google.maps.event.addListener(map, 'click', function(event) {
         if (marker) {
             marker.setMap(null)
-
         }
     
 
@@ -488,6 +251,7 @@ $filterCheckboxes.on( 'change', function() {
             infoWindow.open(map, marker);
         });
     };
+
     window.myMap = map
 };
 

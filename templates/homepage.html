@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
-<script async defer
-//       src="https://maps.googleapis.com/maps/api/js?key=GOOGLEAPIKEY"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 
@@ -27,26 +26,28 @@
         <form id='filter_form' action="/filter_lost_animals">
             <h2>Filter Map: </h2>
             <h5>Species:</h5>
-                &nbsp;&nbsp;&nbsp;<input id="speciesBox-dog" type="checkbox" name="speciesBox" value="Dog"> Dog
-                &nbsp;&nbsp;&nbsp;<input id="speciesBox-cat" type="checkbox" name="speciesBox" value="Cat"> Cat
+
+            <label style="font-size:15px;">
+                &nbsp;&nbsp;&nbsp;<input id="Dog" type="checkbox" name="species_id" value="Dog"> Dog
+                &nbsp;&nbsp;&nbsp;<input id="Cat" type="checkbox" name="species_id" value="Cat"> Cat
 
             <h5>Colors:</h5>
-                &nbsp;&nbsp;&nbsp;<input id="colorBox-black" type="checkbox" name="colorBox" value="black"> Black
-                &nbsp;<input id="colorBox-blue" type="checkbox" name="colorBox" value="blue"> Blue<br>
-                &nbsp;&nbsp;&nbsp;<input id="colorBox-brown" type="checkbox" name="colorBox" value="brown"> Brown 
-                &nbsp;<input id="colorBox-cream" type="checkbox" name="colorBox" value="cream"> Cream<br>
-                &nbsp;&nbsp;&nbsp;<input id="colorBox-gray" type="checkbox" name="colorBox" value="gray"> Gray
-                &nbsp;<input id="colorBox-orange" type="checkbox" name="colorBox" value="orange"> Orange<br>
-                &nbsp;&nbsp;&nbsp;<input id="colorBox-red" type="checkbox" name="colorBox" value="red"> Red
-                &nbsp;<input id="colorBox-white" type="checkbox" name="colorBox" value="white"> White<br>
-                &nbsp;&nbsp;&nbsp;<input id="colorBox-yellow" type="checkbox" name="colorBox" value="yellow"> Yellow
+                &nbsp;&nbsp;&nbsp;<input id="Black" type="checkbox" name="colors" value="Black"> Black
+                &nbsp;<input id="Blue" type="checkbox" name="colors" value="Blue"> Blue<br>
+                &nbsp;&nbsp;&nbsp;<input id="Brown" type="checkbox" name="colors" value="Brown"> Brown 
+                &nbsp;<input id="Cream" type="checkbox" name="colors" value="Cream"> Cream<br>
+                &nbsp;&nbsp;&nbsp;<input id="Gray" type="checkbox" name="colors" value="Gray"> Gray
+                &nbsp;<input id="Orange" type="checkbox" name="colors" value="Orange"> Orange<br>
+                &nbsp;&nbsp;&nbsp;<input id="Red" type="checkbox" name="colors" value="Red"> Red
+                &nbsp;<input id="White" type="checkbox" name="colors" value="White"> White<br>
+                &nbsp;&nbsp;&nbsp;<input id="Yellow" type="checkbox" name="colors" value="Yellow"> Yellow
 
                 <h5>Sizes:</h5>
-                &nbsp;&nbsp;&nbsp;<input id="sizeBox-xSmall" type="checkbox" name="sizeBox" value="xSmall"> X-Small
-                &nbsp;<input id="sizeBox-small" type="checkbox" name="sizeBox" value="small"> Small<br>
-                &nbsp;&nbsp;&nbsp;<input id="sizeBox-medium" type="checkbox" name="sizeBox" value="medium"> Medium 
-                &nbsp;<input id="sizeBox-large" type="checkbox" name="sizeBox" value="large"> Large<br>
-                &nbsp;&nbsp;&nbsp;<input id="sizeBox-xLarge" type="checkbox" name="sizeBox" value="xLarge"> X-Large
+                &nbsp;&nbsp;&nbsp;<input id="X-Small" type="checkbox" name="size_id" value="X-Small"> X-Small
+                &nbsp;<input id="Small" type="checkbox" name="size_id" value="Small"> Small<br>
+                &nbsp;&nbsp;&nbsp;<input id="Medium" type="checkbox" name="size_id" value="Medium"> Medium 
+                &nbsp;<input id="Large" type="checkbox" name="size_id" value="Large"> Large<br>
+                &nbsp;&nbsp;&nbsp;<input id="X-Large" type="checkbox" name="size_id" value="X-Large"> X-Large
 
         </form>
     </div>
