@@ -59,9 +59,10 @@ function initMap() {
                               'Error: Your browser doesn\'t support geolocation.');
         }
 
-    // Retrieving the information with AJAX
+
+    // Retrieving the information with AJAX for markers
     $.get('/.json', function (lost_pets) {
-      // Attach markers to each pet location in returned JSON
+      // Using information from the Json file, place makers using Lat/Lng, use correct pin for dog/cat, and populate info window
       let animal, marker, html;
 
       for (let key in lost_pets) {
@@ -118,11 +119,12 @@ function initMap() {
 
             // Inside the loop we call bindInfoWindow passing it the marker,
             // map, infoWindow and contentString
-            bindInfoWindow(marker, map, infoWindow, html);
+            bindInfoWindow(marker, map, infoWindow, html, animal);
             if (marker) {markers.push(marker)}
       }
 
     });
+
 
 
 //Filter Checkboxes
@@ -179,33 +181,6 @@ $filterCheckboxes.on('change', function() {
   });
 });
 
-
-
-//   //Yellow
-//     $( '#colorBox-yellow' ).on( 'change', function(){
-//         for (i = 0; i < markers.length; i++) {
-//             marker = markers[i];
-//             if(this.checked === true){
-//                 if (marker.animal.colors.includes("Yellow")) {
-//                 marker.setVisible(true)
-//             }
-//             else {
-//                 marker.setVisible(false)
-//             }
-//         }
-//             if(this.checked != true){
-//                 if (marker.animal.colors.includes("Yellow")) {
-//                 marker.setVisible(true)
-
-//             }
-//             else {
-//                 marker.setVisible(true)
-//             }
-//         }
-//     }
-
-// });
-
     //drop a new marker on right click 
     let pin_on = false;
     let marker = null;
@@ -244,11 +219,20 @@ $filterCheckboxes.on('change', function() {
     // When a marker is clicked it closes any currently open infowindows
     // Sets the content for the new marker with the content passed through
     // then it open the infoWindow with the new content on the marker that's clicked
-    function bindInfoWindow(marker, map, infoWindow, html) {
+    function bindInfoWindow(marker, map, infoWindow, html, animal) {
         google.maps.event.addListener(marker, 'click', function () {
             infoWindow.close();
             infoWindow.setContent(html);
             infoWindow.open(map, marker);
+
+            setTimeout(function(){
+                $('.window-content').on( 'click', function(){
+                    $( '.moreInfo_class' ).show();
+                    console.log('You clicked a marker!'); 
+                    $('#moreInfo').data('infoWindow_animal',animal);
+                    
+                })
+            },300);
         });
     };
 
@@ -256,3 +240,70 @@ $filterCheckboxes.on('change', function() {
 };
 
 google.maps.event.addDomListener(window, 'load', initMap);
+
+
+// Needed to run click actions
+$(document).ready(function() {
+
+// When species is chosen on lost_pets_form, the breeds are filtered to particular species 
+console.log("filter dog/cat breeds ready")
+$( '#dog_species' ).on( 'click', function(){
+        $( '.cat_breed' ).hide();
+     $( '.dog_breed' ).show();
+});
+
+$( '#cat_species' ).on( 'click', function(){
+        $( '.cat_breed' ).show();
+     $( '.dog_breed' ).hide();
+});
+
+// Get Lat/Long when using current location
+console.log("get current location ready")
+$('#current_location' ).on('click', function(){
+   $( '#current_location' ).data( 'current_location' );
+
+   console.log($('#current_location').data('current_location'))
+});
+
+// Move map to address using address bar
+console.log("address bar ready")
+$('#address_bar').on('submit', function(evt){
+    evt.preventDefault();
+    const addressValue = $('#address').val()
+    const key = GOOGLEAPIKEY
+    const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
+    $.get( googleMapsUrl, function( data ) {
+        var pos = data.results[0].geometry.location;
+
+        window.myMap.setCenter(pos)
+
+    });
+});
+
+// get information from lost pets form to database
+console.log("information from lost pets form to database ready")
+$('#lost_form').submit(function(e) {
+    e.preventDefault();    
+    $( '.submitted_form_class' ).show();
+    $( '.seen_form_class' ).hide();
+
+    var formData = new FormData(this);
+
+    formData.set('lat', $('#current_location').data( 'current_location').lat);
+    formData.set('lng', $('#current_location').data( 'current_location').lng);
+
+    $.ajax({
+        url: '/add_lost_animal',
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            window.location.reload()
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+// end of document.ready function
+});

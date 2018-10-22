@@ -23,7 +23,8 @@ def index():
 
     return render_template("homepage.html", 
                                     colors=colors,
-                                    breeds=breeds)
+                                    breeds=breeds
+                                    )
 
 @app.route('/.json')
 def lost_pet_info():
