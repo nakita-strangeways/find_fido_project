@@ -1,13 +1,6 @@
 /*--------------------------------*/
 /*Form*/
 /*--------------------------------*/
-/*
-#seen_form { 
-    display: inline-block; 
-    height: 100%;
-    width: 25%; 
-    margin: 0 75%;
-}*/
 
 #required {
     color: red;
@@ -27,7 +20,7 @@
 
 
 /*--------------------------------*/
-/*Maps*/
+/*Maps and general layout*/
 /*--------------------------------*/
 #container {
   width:100%;
@@ -50,4 +43,36 @@
   color: #04162b;
   width: 150px;
 }
+
+#filter_form {
+  margin: 5px 20px;
+}
+
+/*--------------------------------*/
+/*More Infot*/
+/*--------------------------------*/
+
+#animal_photo {
+  display: inline-block;
+  margin: 25px 50px;
+}
+
+#animal_info {
+  display: inline-block;
+  margin: 25px 50px;
+}
+
+#moreInfo {
+  margin: 5px 20px;
+}
+
+
+
+
+
+
+
+
+
+
 

@@ -102,20 +102,19 @@ function initMap() {
             icon: dog_icon
         });
       }
-
             // Define the content of the infoWindow - add individual photos to marker
             html = (
               '<div class="window-content">' +
-                    '<img src="/static/seed_photos/' + animal.photo + '" alt="photo" style="width:150px;" class="thumbnail">' +
-                    '<p><b>Species: </b>' + animal.species_id  + '<br>' +
-                    '<b>Size: </b>' + animal.size_id  + '<br>' +
+                    '<font size="3"><center>Lost ' + animal.species_id  + '</center>' +
+                    '<img src="/static/seed_photos/' + animal.photo + '" alt="photo" style="width:150px;" class="thumbnail">' + 
+                    '<b><font size="2">Size: </b>' + animal.size_id  + '<br>' +
                     '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
-                    '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
-                    '<p><b>Seen By: </b>' + animal.user_id + '<br>' +
-                    '<b>Time seen at: </b>' + animal.timestamp  +
+                    '<b>Time seen at: </b>' + animal.timestamp   + '<br>' + '<br>' +
+                    '<b><center>Click photo for more info</b></center>' +
                     // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
+            //PUT THE SHITTY BUTTON IN HERE!!!!!
 
             // Inside the loop we call bindInfoWindow passing it the marker,
             // map, infoWindow and contentString
@@ -228,9 +227,31 @@ $filterCheckboxes.on('change', function() {
             setTimeout(function(){
                 $('.window-content').on( 'click', function(){
                     $( '.moreInfo_class' ).show();
-                    console.log('You clicked a marker!'); 
-                    $('#moreInfo').data('infoWindow_animal',animal);
-                    
+
+                    animal_photo = (
+                        '<img src="/static/seed_photos/' + animal.photo + '"style="width:500px;">'
+                    );
+                    $('#animal_photo').html(animal_photo);  
+
+
+                    animal_info = (
+                        '<p><b>Species: </b>' + animal.species_id  + '<br>' +
+                        '<b>Size: </b>' + animal.size_id  + '<br>' +
+                        '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
+                        '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
+                        '<p><b>Seen By: </b>' + animal.user_id + '<br>' +
+                        '<b>Time seen at: </b>' + animal.timestamp 
+                    );
+                    $('#animal_info').html(animal_info);  
+
+                    // document.getElementById("moreInfo").onclick = function() {scrollToTop()};
+
+                    // var elmnt = document.getElementById("moreInfo");
+
+                    // function scrollToTop() {
+                    //     console.log("Im gonna scroll!")
+                    //     elmnt.scrollIntoView(true); // Scroll to the top of the element
+                    // }
                 })
             },300);
         });
@@ -270,7 +291,7 @@ console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = GOOGLEAPIKEY
+    const key = "GOOGLEAPIKEY"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;
@@ -304,6 +325,7 @@ $('#lost_form').submit(function(e) {
         processData: false
     });
 });
+
 
 // end of document.ready function
 });

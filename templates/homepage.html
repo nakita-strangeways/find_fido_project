@@ -3,7 +3,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=GOOGLEAPIKEY"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
-
 <script src="/static/pet_map.js"></script>
 
 {% endblock %}
@@ -138,17 +137,12 @@
   </div>
 </div>
 
-
-
-    <div id="moreInfo" class="moreInfo_class">
+    <div id="moreInfo" class="moreInfo_class" > <!-- style="position:absolute;top:0;" -->
         <h1> More Information </h1>
-        <p> When you click on a marker, this div becomes unhidden and populated with that markers info, a larger photo, and a chat box maaaybe?</p>
-
-        Photo:
-        Type:
-        
-
-
+        <div id="animal_photo">
+        </div>
+        <div id="animal_info">
+        </div>
     </div>
 
 
