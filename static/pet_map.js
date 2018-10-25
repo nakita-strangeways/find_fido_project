@@ -114,8 +114,6 @@ function initMap() {
                     // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
-            //PUT THE SHITTY BUTTON IN HERE!!!!!
-
             // Inside the loop we call bindInfoWindow passing it the marker,
             // map, infoWindow and contentString
             bindInfoWindow(marker, map, infoWindow, html, animal);
@@ -240,9 +238,13 @@ $filterCheckboxes.on('change', function() {
                         '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
                         '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
                         '<p><b>Seen By: </b>' + animal.user_id + '<br>' +
-                        '<b>Time seen at: </b>' + animal.timestamp 
-                    );
-                    $('#animal_info').html(animal_info);  
+                        '<b>Time seen at: </b>' + animal.timestamp );
+                    $('#animal_info').html(animal_info); 
+
+                    $('#found_button' ).on('click', function(){
+                        console.log("animal_type: ", animal.species_id, "animal size: ", animal.size_id, "Seen By: ", animal.user_id);
+                        //Update table to mark animal as FOUND with user ID
+                    });
 
                     // document.getElementById("moreInfo").onclick = function() {scrollToTop()};
 

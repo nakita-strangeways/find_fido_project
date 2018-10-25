@@ -62,6 +62,11 @@
   margin: 25px 50px;
 }
 
+#found_button_div {
+  display: inline-block;
+  margin: 25px 50px;
+}
+
 #moreInfo {
   margin: 5px 20px;
 }

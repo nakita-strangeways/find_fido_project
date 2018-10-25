@@ -35,8 +35,10 @@ class Animal(db.Model):
     longitude = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
     photo = db.Column(db.String(64), nullable=False)
-
     notes = db.Column(db.String(150), nullable=False)
+    found = db.Column(db.Boolean, server_default=u'false', nullable=False)
+    found_by_user_id = db.Column(db.Integer, 
+                        db.ForeignKey('users.user_id'))
 
     colors = db.relationship("Color",
                             secondary="animal_colors",
@@ -44,10 +46,15 @@ class Animal(db.Model):
 
 
 
+
+
     breed = db.relationship("Breed")
     species = db.relationship("Species")
     size = db.relationship("Size")
-    user = db.relationship("User")
+    user = db.relationship("User", foreign_keys = [user_id])
+    found_user = db.relationship("User", foreign_keys = [found_by_user_id])
+
+
 
     def __repr__(self):
         """Provide helpful representation when printed."""

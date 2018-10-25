@@ -143,7 +143,10 @@ def load_animals(animal_filename):
     #Read generic_colors file and insert data
     for row in open(animal_filename):
         row = row.rstrip()
-        animal_id, species_id, breed_id, size_id, user_id, latitude, longitude, timestamp, photo, notes = row.split("|")
+        animal_id, species_id, breed_id, size_id, user_id, latitude, longitude, timestamp, photo, notes, found, found_by_user_id = row.split("|")
+
+        if found_by_user_id == "None":
+            found_by_user_id = None
 
         animals = Animal(species_id=species_id,
                         breed_id=breed_id,
@@ -153,7 +156,9 @@ def load_animals(animal_filename):
                         longitude=longitude,
                         timestamp=timestamp,
                         photo=photo,
-                        notes=notes)
+                        notes=notes,
+                        found=bool(found),
+                        found_by_user_id = found_by_user_id)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(animals)

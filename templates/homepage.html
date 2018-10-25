@@ -130,7 +130,11 @@
         </form>
     {% else %}
     <div id="seen_form" class="col">  
-        <h3>You must log in or create an account in order to submit an animal you've seen to the map!</h3>
+        <center><h3>Have you seen a lost pet? <br>Want to share to the map? <br> Help find pets and get them home!</h3>
+        <br>
+        <a href="/login" class="button">Sign In</a> or
+        <a href="/create_user" class="button">Create an Account!</a>
+        </center>
     </div>  
     {% endif %}
     </div>  
@@ -139,10 +143,25 @@
 
     <div id="moreInfo" class="moreInfo_class" > <!-- style="position:absolute;top:0;" -->
         <h1> More Information </h1>
-        <div id="animal_photo">
+    <div class="row">
+        <div id="animal_photo" class="col">  
         </div>
-        <div id="animal_info">
+        <div id="animal_info" class="col">
         </div>
+        {% if session.get('logged_in_user_email') %}
+        <div id="found_button_div" class="col">
+        <button id="found_button" type="button">I've been returned to my owner!</button>
+        </div>
+        {% else %}
+        <div id="login" class="col">
+        <div> 
+            <h4>
+            Users can report a seen animal as found if its been returned to its home!
+            </h4>
+        <a href="/login" class="button">Sign In</a> or
+        <a href="/create_user" class="button">Create an Account!</a>
+        </div>
+        {% endif %}
     </div>
 
 

@@ -41,7 +41,9 @@ def lost_pet_info():
             "photo": animal.photo,
             "notes": animal.notes,
             "colors": [color.color for color in animal.colors],
-            "user_id": animal.user.username
+            "user_id": animal.user.username,
+            "found": animal.found,
+            "found_by_user_id": animal.user.username
         }
         for animal in Animal.query
     }
@@ -177,6 +179,22 @@ def lost_pet_form():
     print("submitted lost animal to database!")
     return("it worked. yay")
 
+
+# DO I NEED THIS?
+# @app.route('/found_animal', methods=['POST'])
+# def found_animal_update(): 
+#     """Updates animal columns Found = True, along with user who submitted found."""
+
+#     user_email = session.get('logged_in_user_email')
+
+#     animal = Animal(found = True,
+#                     breed = breed,
+#                     )    
+
+#     db.session.add(animal)
+#     db.session.commit()
+#     print("submitted lost animal to database!")
+#     return("it worked. yay")
 
 if __name__ == "__main__":
     app.debug = True
