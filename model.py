@@ -36,7 +36,7 @@ class Animal(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False)
     photo = db.Column(db.String(64), nullable=False)
     notes = db.Column(db.String(150), nullable=False)
-    found = db.Column(db.Boolean, server_default=u'false', nullable=False)
+    found = db.Column(db.Boolean, server_default='f', default=False, nullable=False)
     found_by_user_id = db.Column(db.Integer, 
                         db.ForeignKey('users.user_id'))
 

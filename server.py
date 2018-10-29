@@ -179,22 +179,27 @@ def lost_pet_form():
     print("submitted lost animal to database!")
     return("it worked. yay")
 
+@app.route('/found_animal', methods=['POST'])
+def found_animal_update(): 
+    """Updates animal columns Found = True, along with user who submitted found."""
 
-# DO I NEED THIS?
-# @app.route('/found_animal', methods=['POST'])
-# def found_animal_update(): 
-#     """Updates animal columns Found = True, along with user who submitted found."""
+    user_email = session.get('logged_in_user_email')
+    
+    found_animal_id = int(request.form.get("found_animal_id"))
+    print(found_animal_id)
 
-#     user_email = session.get('logged_in_user_email')
 
-#     animal = Animal(found = True,
-#                     breed = breed,
-#                     )    
+    found_user_id = User.query.filter(User.email == user_email).one()
+    animal_found = Animal.query.filter(Animal.animal_id == found_animal_id).one()
 
-#     db.session.add(animal)
-#     db.session.commit()
-#     print("submitted lost animal to database!")
-#     return("it worked. yay")
+
+    animal_found.found = True
+    animal_found.found_by_user_id = found_user_id.user_id
+
+    db.session.commit()
+
+    print("changed found to True in animal table!")
+    return("it worked. yay")
 
 if __name__ == "__main__":
     app.debug = True

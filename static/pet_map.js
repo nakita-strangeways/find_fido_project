@@ -82,26 +82,49 @@ function initMap() {
             anchor: new google.maps.Point(25,80)
         };
 
+        const found_pin = {
+            url:"/static/icons/foundPin.svg",
+            scaledSize: new google.maps.Size(50,75),
+            origin: new google.maps.Point(0,0),
+            anchor: new google.maps.Point(25,80)
+        };
 
-      if (animal.species_id=='Cat'){
+      if (animal.species_id=='Cat' && animal.found==false){ //and found == false
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
             title: 'Seen: ' + animal.species_id,
             animal:animal,
             icon: cat_icon
-        });
-      }
+        })
+      } else if (animal.species_id=='Cat' && animal.found==true){ //and found == false
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(animal.latitude, animal.longitude),
+            map: map,
+            title: 'Seen: ' + animal.species_id,
+            animal:animal,
+            icon: found_pin
+        })
+      };
 
-      if (animal.species_id=='Dog'){
+      if (animal.species_id=='Dog' && animal.found==false){ //and found == false
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
             title: 'Seen: ' + animal.species_id,
             animal:animal,
             icon: dog_icon
-        });
-      }
+        })
+      } else if (animal.species_id=='Dog' && animal.found==true){ //and found == false
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(animal.latitude, animal.longitude),
+            map: map,
+            title: 'Seen: ' + animal.species_id,
+            animal:animal,
+            icon: found_pin
+        })
+      };
+
             // Define the content of the infoWindow - add individual photos to marker
             html = (
               '<div class="window-content">' +
@@ -233,6 +256,7 @@ $filterCheckboxes.on('change', function() {
 
 
                     animal_info = (
+                        '<p id="animal_id" hidden>' + animal.animal_id + '</p><br>' +
                         '<p><b>Species: </b>' + animal.species_id  + '<br>' +
                         '<b>Size: </b>' + animal.size_id  + '<br>' +
                         '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
@@ -241,9 +265,16 @@ $filterCheckboxes.on('change', function() {
                         '<b>Time seen at: </b>' + animal.timestamp );
                     $('#animal_info').html(animal_info); 
 
-                    $('#found_button' ).on('click', function(){
-                        console.log("animal_type: ", animal.species_id, "animal size: ", animal.size_id, "Seen By: ", animal.user_id);
-                        //Update table to mark animal as FOUND with user ID
+                    $('#found_button' ).on('click', function(evt){
+                        let animal_id = $('#animal_id').html()
+
+                        found_pet = {
+                            "found_animal_id" : animal_id
+                        }
+
+                        console.log(found_pet)
+
+                        $.post('/found_animal', found_pet, function (data) {window.location.reload()});
                     });
 
                     // document.getElementById("moreInfo").onclick = function() {scrollToTop()};
@@ -293,7 +324,7 @@ console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = "GOOGLEAPIKEY"
+    const key = "GoogleAPIKEY"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;

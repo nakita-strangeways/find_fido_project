@@ -147,6 +147,11 @@ def load_animals(animal_filename):
 
         if found_by_user_id == "None":
             found_by_user_id = None
+            
+        if found == "True":
+            found = True
+        else:
+            found = False
 
         animals = Animal(species_id=species_id,
                         breed_id=breed_id,
