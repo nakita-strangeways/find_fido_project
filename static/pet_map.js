@@ -124,16 +124,27 @@ function initMap() {
             icon: found_pin
         })
       };
+        let found_section = ""
+        let found_title = ""
+        if (animal.found == true) {
+            found_title = 
+            '<font size="3"><center>Found ' + animal.species_id  + '</center>' 
+        } else {
+            found_title = 
+            '<font size="3"><center>Lost ' + animal.species_id  + '</center>' 
+        }
 
             // Define the content of the infoWindow - add individual photos to marker
             html = (
               '<div class="window-content">' +
-                    '<font size="3"><center>Lost ' + animal.species_id  + '</center>' +
+                    found_title +
                     '<img src="/static/seed_photos/' + animal.photo + '" alt="photo" style="width:150px;" class="thumbnail">' + 
                     '<b><font size="2">Size: </b>' + animal.size_id  + '<br>' +
                     '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
                     '<b>Time seen at: </b>' + animal.timestamp   + '<br>' + '<br>' +
                     '<b><center>Click photo for more info</b></center>' +
+                    
+
                     // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
@@ -154,18 +165,33 @@ $filterCheckboxes.on('change', function() {
 
   const selectedFilters = {};
   
-
   $filterCheckboxes.filter(':checked').each(function() {
 
     if (!selectedFilters.hasOwnProperty(this.name)) {
       selectedFilters[this.name] = [];
+      console.log("selectedFilters: ", selectedFilters)
     }
 
+    if (this.value == "true") {
+        console.log("made it here:true")
+        console.log("value: ", this.value)
+        this.value = true
+    }
+
+    if (this.value == "false") {
+    console.log("made it here:false")
+    console.log("value: ", this.value)
+    this.value = false
+    }
+    
+
     selectedFilters[this.name].push(this.value);
+    console.log("selectedFilters: ", selectedFilters)
   });
 
   // create a collection containing all of the filterable elements
   let filteredResults = markers.slice(); 
+  console.log(markers)
 
   // loop over the selected filter name -> (array) values pairs
   $.each(selectedFilters, function(filterName, filterValues) {
@@ -178,7 +204,6 @@ $filterCheckboxes.on('change', function() {
         if (Array.isArray(markerValue)) {
 
             for (let filterValue of filterValues){
-                console.log("2nd - Checking inside filterValues:", filterValue)
                 if(markerValue.includes(filterValue)){
                     return true;
                 }
@@ -255,27 +280,42 @@ $filterCheckboxes.on('change', function() {
                     $('#animal_photo').html(animal_photo);  
 
 
+                    let found_by = ""
+                    if (animal.found == true) {
+                        found_by = 
+                        '<b>Found by: </b>' + animal.found_by_user_id + '<br>'
+                    } 
+
+
                     animal_info = (
-                        '<p id="animal_id" hidden>' + animal.animal_id + '</p><br>' +
                         '<p><b>Species: </b>' + animal.species_id  + '<br>' +
                         '<b>Size: </b>' + animal.size_id  + '<br>' +
                         '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
                         '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
+                        found_by +
                         '<p><b>Seen By: </b>' + animal.user_id + '<br>' +
-                        '<b>Time seen at: </b>' + animal.timestamp );
+                        '<b>Time seen at: </b>' + animal.timestamp +
+                        '<p id="animal_id" hidden>' + animal.animal_id + '</p><br>' +
+                        '<p id="found" hidden>' + animal.found + '</p><br>' 
+                        );
+
+
                     $('#animal_info').html(animal_info); 
 
-                    $('#found_button' ).on('click', function(evt){
-                        let animal_id = $('#animal_id').html()
+                    if (animal.found == false) {
+                        $( '#found_button_div' ).show();
+                        $('#found_button' ).on('click', function(evt){
+                            let animal_id = $('#animal_id').html()
 
-                        found_pet = {
-                            "found_animal_id" : animal_id
-                        }
+                            found_pet = {
+                                "found_animal_id" : animal_id
+                            }
 
-                        console.log(found_pet)
-
-                        $.post('/found_animal', found_pet, function (data) {window.location.reload()});
-                    });
+                            $.post('/found_animal', found_pet, function (data) {window.location.reload()});
+                        });
+                    } else {
+                        $( '#found_button_div' ).hide();
+                    }
 
                     // document.getElementById("moreInfo").onclick = function() {scrollToTop()};
 
@@ -324,7 +364,7 @@ console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = "GoogleAPIKEY"
+    const key = "googleapikey"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;

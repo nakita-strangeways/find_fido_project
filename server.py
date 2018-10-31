@@ -20,10 +20,12 @@ def index():
 
     colors = db.session.query(Color)
     breeds = db.session.query(Breed)
+    animals = db.session.query(Animal)
 
     return render_template("homepage.html", 
                                     colors=colors,
-                                    breeds=breeds
+                                    breeds=breeds,
+                                    animals=animals
                                     )
 
 @app.route('/.json')
@@ -43,7 +45,7 @@ def lost_pet_info():
             "colors": [color.color for color in animal.colors],
             "user_id": animal.user.username,
             "found": animal.found,
-            "found_by_user_id": animal.user.username
+            "found_by_user_id": animal.found_user.username if animal.found_user else None
         }
         for animal in Animal.query
     }
@@ -63,7 +65,7 @@ def process_login():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    user = User.query.filter(User.email == email).one()
+    user = User.query.filter(User.email == email).first()
 
     if not user:
         flash("No such email address.")
@@ -97,7 +99,54 @@ def show_create_user():
 def show_user_profile():
     """Show user profile."""
 
-    return render_template("profile.html")
+    if session.get("logged_in_user_email") == None:
+        flash("Please sign in to go to your profile page")
+        return redirect("/login")
+
+    else:
+        user_email = session.get('logged_in_user_email')
+
+        user = User.query.filter(User.email == user_email).one()
+
+        return render_template("profile.html",
+                                    user=user)
+
+@app.route('/change_password', methods=['POST'])
+def change_password_form(): 
+    """Changes users password."""
+
+    old_password = request.form.get('old_password')
+    new_password = request.form.get('new_password')
+    repeat_new_password = request.form.get('repeat_new_password')
+
+    user_email = session.get('logged_in_user_email')
+    print(user_email)
+
+    found_user_id = User.query.filter(User.email == user_email).one()
+    print(found_user_id)
+
+    #if passwords dont match - this errors. Need to fix.
+    found_user_password = User.query.filter(User.password == old_password).first()
+
+    if found_user_password == None:
+        flash("Old password doesn't match. Please try again")
+        return redirect('/profile') 
+
+    else:
+        if old_password == found_user_password.password:
+            print("They match")
+            if new_password == repeat_new_password:
+                print("both new passwords match")
+                found_user_password.password = new_password
+
+                db.session.commit()
+
+            else:
+                flash("New passwords don't match. Please try again")
+                return redirect('/profile')
+
+    flash("Password has been changed!")
+    return redirect("/profile")
 
 
 @app.route('/create_user', methods=['POST'])
@@ -152,7 +201,6 @@ def lost_pet_form():
 
 
     species = Species.query.filter(Species.species == submitted_species).one()
-    # breed = Breed.query.filter(Breed.breed == submitted_breed).one()
     size = Size.query.filter(Size.size == submitted_size).one()
     for color in colors:
         queried_colors.append(Color.query.filter(Color.color == color).one())
@@ -177,6 +225,7 @@ def lost_pet_form():
     db.session.add(animal)
     db.session.commit()
     print("submitted lost animal to database!")
+    flash("Lost animal has been added to map!")
     return("it worked. yay")
 
 @app.route('/found_animal', methods=['POST'])
@@ -184,12 +233,13 @@ def found_animal_update():
     """Updates animal columns Found = True, along with user who submitted found."""
 
     user_email = session.get('logged_in_user_email')
+    print(user_email)
     
     found_animal_id = int(request.form.get("found_animal_id"))
-    print(found_animal_id)
-
 
     found_user_id = User.query.filter(User.email == user_email).one()
+    print(found_user_id)
+
     animal_found = Animal.query.filter(Animal.animal_id == found_animal_id).one()
 
 
@@ -199,6 +249,7 @@ def found_animal_update():
     db.session.commit()
 
     print("changed found to True in animal table!")
+    flash("Animal has been marked as returned home.")
     return("it worked. yay")
 
 if __name__ == "__main__":
