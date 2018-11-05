@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
-<script src="https://maps.googleapis.com/maps/api/js?key=GOOGLEAPIKEY"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 <script src="/static/pet_map.js"></script>
@@ -19,13 +19,50 @@
 </div>
 <br>
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="row">
+        <div id="animal_photo" class="col"> </div>
+        <div id=seen_animals_modal_html>...</div>
+    
+        {% if session.get('logged_in_user_email') %}
+        <div id="found_button_div" class="col">
+            <div>
+            <center> Has this animal been found and returned home?
+            <br>
+            <button class="found_button_class" id="found_button" type="button">Yes!</button>
+            </center>
+            </div>
+       </div>
+
+        {% else %}
+        <div id="login" class="col">
+            <div> 
+                <h4>
+                Users can report a seen animal as found if its been returned to its home!
+                </h4>
+                <a href="/login" class="button">Sign In</a> or
+                <a href="/create_user" class="button">Create an Account!</a>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+  </div>
+
+</div>
+
+<!-- The filter Form -->
 <div class="row">
     <div id="filter_form_div" class="col">
         <form id='filter_form' action="/filter_lost_animals">
             <h2>Filter Map: </h2>
             <h5>Species:</h5>
 
-            <label style="font-size:15px;">
+            <label style="font-size:15px;"></label> 
                 &nbsp;&nbsp;&nbsp;<input id="Dog" type="checkbox" name="species_id" value="Dog"> Dog
                 &nbsp;&nbsp;&nbsp;<input id="Cat" type="checkbox" name="species_id" value="Cat"> Cat
             <br>
@@ -58,9 +95,10 @@
                 &nbsp;<input id="false" type="checkbox" name="found" value="false"> Seen<br>
         </form>
     </div>
-
+<!-- The map -->
     <div id="pet-map" class="col-6"></div>
 
+<!-- The Seen Animal Form -->
     {% if session.get('logged_in_user_email') %}
     <div id="seen_form" class="col">  
         <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" class="seen_form_class">
@@ -150,8 +188,8 @@
   </div>
 </div>
 
-<div id="moreInfo" class="moreInfo_class" > <!-- style="position:absolute;top:0;" -->
-    <h1> More Information </h1>
+<!-- <div id="moreInfo" class="moreInfo_class" > --> <!-- style="position:absolute;top:0;" -->
+ <!--    <h1> More Information </h1>
     <div class="row">
         <div id="animal_photo" class="col">  
         </div>
@@ -178,8 +216,8 @@
                 <a href="/create_user" class="button">Create an Account!</a>
             </div>
         </div>
-        {% endif %}
+    {% endif %}
     </div>
-</div>
+</div> -->
     
 {% endblock %}

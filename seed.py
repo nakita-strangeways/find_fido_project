@@ -1,7 +1,7 @@
 """Utility file to seed ratings database from MovieLens data in seed_data/"""
 
 from sqlalchemy import func
-from model import Animal, Color, AnimalColor, Species, Size, Breed, User, connect_to_db, db #add userAnimal?
+from model import Animal, Color, AnimalColor, Species, Size, Breed, User, Lost_Pet_Submission, lostPetColor, connect_to_db, db #add userAnimal?
 from server import app
 
 
@@ -199,30 +199,60 @@ def load_animalColors(animalColors_filename):
     #finished the function
     print("Animal Colors inserted")
 
-# def load_userAnimals(userAnimals_filename):
-#     """Load userAnimals from seed_data/userAnimals into database."""
+def load_lostPetPosters(lostPet_filename):
+    """Loads lost animals into lost_pet_posters table."""
 
-#     # Delete all rows in table, so if we need to run this a second time,
-#     # we won't be trying to add duplicate users
-#     UserAnimal.query.delete()
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Lost_Pet_Submission.query.delete()
 
-#     #Read animalColors file and insert data
-#     for row in open(userAnimals_filename):
-#         row = row.rstrip()
-#         user_animals_id, animal_id, user_id = row.split("|")
+    #Read animalColors file and insert data
+    for row in open(lostPet_filename):
+        row = row.rstrip()
+        pet_id, species_id, breed_id, user_id, pet_name, latitude, longitude, date_lost, photo, notes = row.split("|")
 
-#         userAnimals = userAnimals(animal_id=animal_id,
-#                                         user_id=user_id)
+        lost_Pet_Submissions = Lost_Pet_Submission(species_id=species_id,
+                                                    breed_id=breed_id,
+                                                    user_id=user_id,
+                                                    pet_name=pet_name,
+                                                    latitude=latitude,
+                                                    longitude=longitude,
+                                                    date_lost=date_lost,
+                                                    photo=photo,
+                                                    notes=notes)
 
-#         # We need to add to the session or it won't ever be stored
-#         db.session.add(userAnimals)
+        # We need to add to the session or it won't ever be stored
+        db.session.add(lost_Pet_Submissions)
 
-#     # Once we're done, we should commit our work
-#     db.session.commit()
+    # Once we're done, we should commit our work
+    db.session.commit()
 
-#     #finished the function
-#     print("User Animals inserted")
+    #finished the function
+    print("lost pets inserted")
 
+def load_lostPetColors(lostPetColors_filename):
+    """Load lostPetColors from seed_data/lostPetColors into database."""
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    lostPetColor.query.delete()
+
+    #Read lostPetColor file and insert data
+    for row in open(lostPetColors_filename):
+        row = row.rstrip()
+        animal_color_id, pet_id, color_id = row.split("|")
+
+        lostPetColors = lostPetColor(pet_id=pet_id,
+                                        color_id=color_id)
+
+        # We need to add to the session or it won't ever be stored
+        db.session.add(lostPetColors)
+
+    # Once we're done, we should commit our work
+    db.session.commit()
+
+    #finished the function
+    print("lostPet Colors inserted")
 
 
 
@@ -240,7 +270,8 @@ if __name__ == "__main__":
     breeds_filename  = "seed_data/all_breeds"
     animalColors_filename = "seed_data/animalColors"
     users_filename = "seed_data/users"
-    # userAnimals_filename = "seed_data/userAnimals"
+    lostPet_filename = "seed_data/lost_pet_posters_data"
+    lostPetColors_filename = "seed_data/lostPetColors_data"
 
     load_colors(color_filename)
     load_species(species_filename)
@@ -249,4 +280,6 @@ if __name__ == "__main__":
     load_users(users_filename)
     load_animals(animal_filename)
     load_animalColors(animalColors_filename)
-    # load_userAnimals(userAnimals_filename)
+    load_lostPetPosters(lostPet_filename)
+    load_lostPetColors(lostPetColors_filename)
+

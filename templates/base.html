@@ -37,9 +37,11 @@
       {% if session.get('logged_in_user_email') %}
       <a class="nav-item nav-link active" href="/logout">Log Out</a>
       <a class="nav-item nav-link active" href="/profile">Profile</a>
+      <a class="nav-item nav-link active" href="/lost_pet_posters">Missing Pets</a>
       {% else %}
       <a class="nav-item nav-link" href="/login">Log In</a>
       <a class="nav-item nav-link" href="/create_user">Create Account</a>
+      <a class="nav-item nav-link" href="/lost_pet_posters">Missing Pets</a>
       {% endif %}
 
 

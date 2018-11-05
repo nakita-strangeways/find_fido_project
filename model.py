@@ -68,11 +68,7 @@ class Color(db.Model):
 
     color_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     color = db.Column(db.String(30), nullable=False)
-    # species_id = db.Column(db.Integer, 
-    #                     db.ForeignKey('species.species_id'),
-    #                     nullable=False)
 
-    # species = db.relationship("Species")
     
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -163,27 +159,62 @@ class User(db.Model):
 
         return f"<User user_id={self.user_id} email={self.email} password={self.password} username={self.username} f_name={self.f_name} l_name={self.l_name}>"
 
-# class UserAnimal(db.Model):
-#     """An associations table between animals table and colors table."""
+class Lost_Pet_Submission(db.Model):
+    """Owners submit lost pets"""
 
-#     __tablename__ = "user_animals"
+    __tablename__ = "lost_pet_posters"
 
-#     user_animals_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     animal_id = db.Column(db.Integer, 
-#                         db.ForeignKey('animals.animal_id'),
-#                         nullable=False)
-#     user_id = db.Column(db.Integer, 
-#                         db.ForeignKey('users.user_id'),
-#                         nullable=False)
+    pet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    species_id = db.Column(db.Integer, 
+                        db.ForeignKey('species.species_id'),
+                        nullable=False)
+    breed_id = db.Column(db.Integer, 
+                        db.ForeignKey('breeds.breed_id'),
+                        nullable=True)
+    user_id = db.Column(db.Integer, 
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
+    pet_name = db.Column(db.String(20), nullable=False)
+    latitude = db.Column(db.String(20), nullable=False)
+    longitude = db.Column(db.String(20), nullable=False)
+    date_lost = db.Column(db.String(64), nullable=False)
+    photo = db.Column(db.String(64), nullable=False)
+    notes = db.Column(db.String(150), nullable=False)
 
-#     animals = db.relationship("Animal")
-#     users = db.relationship("User")
+    colors = db.relationship("Color",
+                            secondary="lostPet_colors",
+                            backref="lost_pet_posters")
+
+    breed = db.relationship("Breed")
+    species = db.relationship("Species")
+    user = db.relationship("User", foreign_keys = [user_id])
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return f"<Lost_Pet_Submission pet_id={self.pet_id} species_id={self.species_id}>"
+
+class lostPetColor(db.Model):
+    """An associations table between lost_pet_posters table and colors table."""
+
+    __tablename__ = "lostPet_colors"
+
+    animal_color_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    pet_id = db.Column(db.Integer, 
+                        db.ForeignKey('lost_pet_posters.pet_id'),
+                        nullable=False)
+    color_id = db.Column(db.Integer, 
+                        db.ForeignKey('colors.color_id'),
+                        nullable=False)
+
+    lost_pets = db.relationship("Lost_Pet_Submission")
+    colors = db.relationship("Color")
     
-#     def __repr__(self):
-#         """Provide helpful representation when printed."""
+    def __repr__(self):
+        """Provide helpful representation when printed."""
 
-#         return f"<UserAnimals user_animals={self.user_animals} \
-#                         user_id={self.user_id} animal_id={self.animal_id}>"
+        return f"<lostPetColor lostPet_color_id={self.animal_color_id} \
+                        color_id={self.color_id} pet_id={self.pet_id}>"
 
 
 

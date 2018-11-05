@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block head %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"></script>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="/static/mapstyles.js"></script>
+<script src="/static/pet_map.js"></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    {% if session.get('logged_in_user_email') %}
+    <div id="submit_lost_poster" class="col">  
+        <form id='submit_lost_poster_form' enctype="multipart/form-data" action="/lost_poster_form" method="POST" class="submit_lost_poster_form">
+            <h2>Report a lost pet: </h2>
+            <span><h5>Type of pet<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="Dog" required> Dog 
+                              <input id="cat_species" type="radio" name="species_quest" value="Cat" required> Cat 
+            </span>
+            <br>
+
+            <span><h5>Name<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<span class=pet_name_class><input id="pet_name" type="text" name="pet_name">
+            </span>
+            <br>
+
+            <span><h5>Last Seen Address<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<span class=form_address><input id="form_address" type="text" name="address">
+            </span>
+            <br>
+
+            <span><h5>Date Last Seen<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<span class=date_lost_class> Enter Date: <input type="date" id="date_lost" name="date_lost" min="2015-01-01" max="2018-31-12">
+            </span>
+            <br>
+            
+            <span><h5>Breed:</h5>
+            If you are not sure, leave blank or select "Unknown" <br>
+            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question">
+            <option value="" selected disabled hidden>Select one</option>
+
+                {% for breed in breeds %}
+                <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
+                {{breed.breed}} 
+                </option>
+                {% endfor %}
+                </select>
+            </span>
+            <br>
+        
+            <span><h5>Color<span id="required">*</span>:</h5>
+            Select at least one color.<br>
+                &nbsp;&nbsp;&nbsp;<select id="color1_quest" name="color1_question" required>
+                <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+
+                    <select id="color2_quest" name="color2_question">
+                <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                    
+                    <select id="color3_quest" name="color3_question">
+                <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+            </span>
+            <br>
+
+            <span><h5>Any specific descriptions about your pet?</h5>
+                &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
+                &nbsp;&nbsp;&nbsp;<span style="font-size:13px;"> Max 150 characters </span>
+            </span>
+            <br>
+
+            <span><h5>Upload an image<span id="required">*</span>:</h5>
+                &nbsp;&nbsp;&nbsp;<input type="file" name="animal_photo" accept="image/*" required>
+            </span>
+            <br>
+            
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
+        </form>
+    {% else %}
+    <div id="seen_form" class="col">  
+        <center><h3>Has your pet run away? <br>You can create a poster here for others to keep an eye out for your pet</h3>
+        <br>
+        <a href="/login" class="button">Sign In</a> or
+        <a href="/create_user" class="button">Create an Account!</a>
+        </center>
+    </div>  
+    {% endif %}
+    </div> 
+{% endblock %} 

@@ -4,7 +4,7 @@ from flask import (Flask, render_template, redirect, request, flash,
 from flask_debugtoolbar import DebugToolbarExtension
 
 
-from model import Animal, Color, AnimalColor, Species, Breed, Size, User, connect_to_db, db
+from model import Animal, Color, AnimalColor, Species, Breed, Size, User, Lost_Pet_Submission, lostPetColor, connect_to_db, db
 
 from datetime import datetime, date, time
 
@@ -30,12 +30,13 @@ def index():
 
 @app.route('/.json')
 def lost_pet_info():
-    """JSON information about lost pets from lost_pets_data file."""
+    """JSON information about seen animals from lost_pets_data file."""
 
     lost = {
         animal.animal_id: {
             "animal_id": animal.animal_id,
             "species_id": animal.species.species,
+            "breed_id": animal.breed.breed, 
             "size_id": animal.size.size,
             "latitude": animal.latitude,
             "longitude": animal.longitude,
@@ -50,6 +51,29 @@ def lost_pet_info():
         for animal in Animal.query
     }
     return jsonify(lost)
+
+@app.route('/lost_pet_posters.json')
+def missing_pet_poster_info():
+    """JSON information about seen animals from lost_pets_data file."""
+
+    missing_pet = {
+        pet.pet_id: {
+            "pet_id": pet.pet_id,
+            "species_id": pet.species.species,
+            "breed_id": pet.breed.breed,
+            "user_id": pet.user.username,
+            "pet_name": pet.pet_name,
+            "latitude": pet.latitude,
+            "longitude": pet.longitude,
+            "date_lost": pet.date_lost,
+            "photo": pet.photo,
+            "notes": pet.notes,
+            "colors": [color.color for color in pet.colors],
+
+        }
+        for pet in Lost_Pet_Submission.query
+    }
+    return jsonify(missing_pet)
 
 @app.route("/login", methods=["GET"])
 def show_login():
@@ -101,7 +125,7 @@ def show_user_profile():
 
     if session.get("logged_in_user_email") == None:
         flash("Please sign in to go to your profile page")
-        return redirect("/login")
+        return render_template("login.html")
 
     else:
         user_email = session.get('logged_in_user_email')
@@ -251,6 +275,101 @@ def found_animal_update():
     print("changed found to True in animal table!")
     flash("Animal has been marked as returned home.")
     return("it worked. yay")
+
+@app.route('/lost_pet_posters')
+def lost_pet_posters_page():
+    """shows all the lost pet pages."""
+
+    colors = db.session.query(Color)
+    breeds = db.session.query(Breed)
+    lost_pets = db.session.query(Lost_Pet_Submission)
+
+    print(lost_pets)
+
+    return render_template("lost_pet_poster_page.html", 
+                                    colors=colors,
+                                    breeds=breeds,
+                                    lost_pets=lost_pets
+                                    )
+
+@app.route('/lost_poster_form', methods=['POST'])
+def report_lost_pet_form(): 
+    """Adds a lost pet."""
+    colors = []
+    queried_colors = []
+    queried_breed = []
+
+    f = request.files['animal_photo']
+    f.save('static/seed_photos/' + f.filename)
+
+    submitted_species = request.form.get('species_quest')
+    submitted_breed = request.form.get('breed_question')
+    if submitted_breed:
+        submitted_breed = submitted_breed
+    else:
+        submitted_breed = 'Unknown'
+    submitted_name = request.form.get('pet_name')
+    submitted_color1 = request.form.get('color1_question')
+    if submitted_color1:
+        colors.append(submitted_color1)
+    submitted_color2 = request.form.get('color2_question')
+    if submitted_color2:    
+        colors.append(submitted_color2)
+    submitted_color3 = request.form.get('color3_question')
+    if submitted_color3:
+        colors.append(submitted_color3)
+    submitted_notes = request.form.get('notes')
+    submitted_latitude = request.form.get('lat')
+    submitted_longitude = request.form.get('lng')
+    date_lost = request.form.get('date_lost')
+    user_email = session.get('logged_in_user_email')
+
+
+    species = Species.query.filter(Species.species == submitted_species).one()
+    for color in colors:
+        queried_colors.append(Color.query.filter(Color.color == color).one())
+
+    breed = Breed.query.filter(Breed.breed == submitted_breed,
+                                 Breed.species_id == species.species_id).one()
+
+    user = User.query.filter(User.email == user_email).one()
+
+    lost_pet = Lost_Pet_Submission(species = species,
+                                    breed = breed, 
+                                    notes = submitted_notes, 
+                                    photo = str(f.filename),
+                                    latitude = submitted_latitude, 
+                                    longitude = submitted_longitude, 
+                                    pet_name = submitted_name,
+                                    user_id = user.user_id, 
+                                    date_lost = date_lost,
+                                    colors = queried_colors
+                                    )
+
+    db.session.add(lost_pet)
+    db.session.commit()
+    print("submitted lost pet to database!")
+    flash("Pet poster has been created!")
+    return redirect('/lost_pet_posters')
+
+@app.route('/report_a_pet_page')
+def report_a_pet_page():
+    """Allows user to report a lost pet."""
+
+    colors = db.session.query(Color)
+    breeds = db.session.query(Breed)
+
+    if session.get("logged_in_user_email") == None:
+        flash("Please sign in to report a lost pet")
+        return render_template("login.html")
+
+    else:
+        return render_template("report_a_pet_page.html",
+                                    colors=colors,
+                                    breeds=breeds)
+
+
+
 
 if __name__ == "__main__":
     app.debug = True

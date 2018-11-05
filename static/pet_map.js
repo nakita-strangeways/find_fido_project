@@ -136,7 +136,7 @@ function initMap() {
 
             // Define the content of the infoWindow - add individual photos to marker
             html = (
-              '<div class="window-content">' +
+              '<div class="window-content" style="cursor: pointer;">' +
                     found_title +
                     '<img src="/static/seed_photos/' + animal.photo + '" alt="photo" style="width:150px;" class="thumbnail">' + 
                     '<b><font size="2">Size: </b>' + animal.size_id  + '<br>' +
@@ -144,7 +144,6 @@ function initMap() {
                     '<b>Time seen at: </b>' + animal.timestamp   + '<br>' + '<br>' +
                     '<b><center>Click photo for more info</b></center>' +
                     
-
                     // '<p><b>Seen at: </b>' + animal.seen_at_lat + ' ' + animal.seen_at_long + '</p>' +
               '</div>');
 
@@ -169,29 +168,21 @@ $filterCheckboxes.on('change', function() {
 
     if (!selectedFilters.hasOwnProperty(this.name)) {
       selectedFilters[this.name] = [];
-      console.log("selectedFilters: ", selectedFilters)
     }
 
     if (this.value == "true") {
-        console.log("made it here:true")
-        console.log("value: ", this.value)
         this.value = true
     }
 
     if (this.value == "false") {
-    console.log("made it here:false")
-    console.log("value: ", this.value)
-    this.value = false
+        this.value = false
     }
     
-
     selectedFilters[this.name].push(this.value);
-    console.log("selectedFilters: ", selectedFilters)
   });
 
   // create a collection containing all of the filterable elements
   let filteredResults = markers.slice(); 
-  console.log(markers)
 
   // loop over the selected filter name -> (array) values pairs
   $.each(selectedFilters, function(filterName, filterValues) {
@@ -211,7 +202,7 @@ $filterCheckboxes.on('change', function() {
         };
 
         //if not an array, just check if markerValue is there by checking its index. If no index == false
-        if (filterValues.indexOf(markerValue) >= 0){
+        if (filterValues.indexOf(String(markerValue)) >= 0){
             return true;
         }
     });
@@ -272,13 +263,20 @@ $filterCheckboxes.on('change', function() {
 
             setTimeout(function(){
                 $('.window-content').on( 'click', function(){
-                    $( '.moreInfo_class' ).show();
+
+                // Does the modal thing for my map markers
+                    var modal = document.getElementById('myModal');
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks the button, open the modal 
+                    modal.style.display = "block";
 
                     animal_photo = (
                         '<img src="/static/seed_photos/' + animal.photo + '"style="width:500px;">'
                     );
                     $('#animal_photo').html(animal_photo);  
-
 
                     let found_by = ""
                     if (animal.found == true) {
@@ -286,10 +284,10 @@ $filterCheckboxes.on('change', function() {
                         '<b>Found by: </b>' + animal.found_by_user_id + '<br>'
                     } 
 
-
                     animal_info = (
                         '<p><b>Species: </b>' + animal.species_id  + '<br>' +
                         '<b>Size: </b>' + animal.size_id  + '<br>' +
+                        '<b>Assumed Breed: </b>' + animal.breed_id + '<br>' +
                         '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
                         '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
                         found_by +
@@ -299,34 +297,23 @@ $filterCheckboxes.on('change', function() {
                         '<p id="found" hidden>' + animal.found + '</p><br>' 
                         );
 
+                        $('#seen_animals_modal_html').html(animal_info); 
 
-                    $('#animal_info').html(animal_info); 
-
-                    if (animal.found == false) {
-                        $( '#found_button_div' ).show();
-                        $('#found_button' ).on('click', function(evt){
-                            let animal_id = $('#animal_id').html()
-
-                            found_pet = {
-                                "found_animal_id" : animal_id
-                            }
-
-                            $.post('/found_animal', found_pet, function (data) {window.location.reload()});
-                        });
-                    } else {
-                        $( '#found_button_div' ).hide();
+                // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                        modal.style.display = "none";
                     }
 
-                    // document.getElementById("moreInfo").onclick = function() {scrollToTop()};
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
 
-                    // var elmnt = document.getElementById("moreInfo");
-
-                    // function scrollToTop() {
-                    //     console.log("Im gonna scroll!")
-                    //     elmnt.scrollIntoView(true); // Scroll to the top of the element
-                    // }
-                })
-            },300);
+                });
+            },300); 
+            // this is the end of the setTimeout Fuction
         });
     };
 
@@ -352,7 +339,7 @@ $( '#cat_species' ).on( 'click', function(){
 });
 
 // Get Lat/Long when using current location
-console.log("get current location ready")
+console.log("current location ready")
 $('#current_location' ).on('click', function(){
    $( '#current_location' ).data( 'current_location' );
 
@@ -360,11 +347,41 @@ $('#current_location' ).on('click', function(){
 });
 
 // Move map to address using address bar
+console.log("search bar ready")
+$('#submit_lost_poster_form').on('submit', function(evt){
+    evt.preventDefault();
+    var formData = new FormData(this); 
+
+    const addressValue = $('#address').val()
+    const key = "AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"
+    const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
+    $.get( googleMapsUrl, function( data ) {
+        var pos = data.results[0].geometry.location;
+
+    console.log(pos)
+    formData.set('lat', pos.lat);
+    formData.set('lng', pos.lng);
+
+    $.ajax({
+        url: '/lost_poster_form',
+        type: 'POST',
+        data: formData,
+        success: function (data){
+            window.location="/lost_pet_posters"
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+});
+
 console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = "googleapikey"
+    const key = "AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;
@@ -397,6 +414,62 @@ $('#lost_form').submit(function(e) {
         contentType: false,
         processData: false
     });
+});
+
+
+$.get('/lost_pet_posters.json', function (missing_pet) {
+// Does the modal thing for my pet posters
+  let pet ;
+
+  for (let key in missing_pet) {
+        pet = missing_pet[key];
+  }
+
+
+
+$( ".pet-list" ).on("click", function(evt) {
+  // Get the modal
+  console.log(this.id)
+    var modal = document.getElementById('myModal');
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    modal.style.display = "block";
+
+        pet_photo = (
+            '<img src="/static/seed_photos/' + pet.photo + '"style="width:300px;">'
+        );
+        $('#pet_photo').html(pet_photo); 
+
+        pet_info = (
+        '<b>PetID: </b>' + pet.pet_id  + '<br>' +
+        '<b>Name: </b>' + pet.pet_name + '<br>' +
+        '<b>Breed: </b>' + pet.breed_id + '<br>' +
+        '<b>Colors: </b>' + pet.colors.join(', ') + '<br>' +
+        '<b>Notes: </b>' + pet.notes + '<br>' + 
+        '<b>Owner: </b>' + pet.user_id + '<br>' +
+        '<b>Missing Since: </b>' + pet.date_lost + '<br>' +
+        '<b>Last Seen: ADD A MAP HERE </b>' 
+        );
+
+        $('#lost_pet_modal_html').html(pet_info);
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+});
+
 });
 
 
