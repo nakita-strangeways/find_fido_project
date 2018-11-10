@@ -1,0 +1,17 @@
+<!-- for article in request  -->
+  {% for pet in lost_pets %}
+    <div class="col-md-4">
+    <div class="shadow p-3 mb-5 rounded" id="missing_pet_icons">
+      <div class="pet-list" id={{pet.pet_id}} >
+      <p class="text-center"> 
+          <span style="color:#015249;">Name: {{pet.pet_name}}</span> <br>
+          <span style="color:#015249;">PetID: {{pet.pet_id}}</span><br>
+          <img src="/static/seed_photos/{{pet.photo}}" alt="photo" style="width:200px;">
+      </p>
+          <div class="pet-detail">
+          <p class="text-center" style="color:#015249;">Lost on {{pet.date_lost}}</p>
+          </div>
+      </div>
+    </div>
+    </div>
+  {% endfor %}

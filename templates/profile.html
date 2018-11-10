@@ -5,15 +5,23 @@
   Profile
 </title>
 
-<h1> Welcome {{user.username}}! </h1>
+<h1 style="color:#015249"> Welcome {{user.username}}! </h1>
+<br>
+<br>
+
 {% endblock %}
 
 {% block body %}
-    <div class="col">
-        <br>
+<div class="row">
+<div class="col-1">
+</div>
+
+    <div class="col-5">
+      <div>
+      <h5 style="color:#015249"> You can change your password here:</h5>
+      </div>
         <form class="form-update_password" method="POST" action="/change_password">
-            <h3> You can change your password here:</h3>
-            <h4 class="form-signin-heading">Enter your old password:</h4>
+            <h6 class="form-signin-heading" style="color:#015249">Enter your old password:</h6>
 
             <div class="form-group">
                 <label for="old-password-field" class="sr-only">Old Password</label>
@@ -24,7 +32,7 @@
                        required>
             </div>
 
-            <h4 class="form-signin-heading">Enter a new password:</h4>
+            <h6 class="form-signin-heading" style="color:#015249">Enter a new password:</h6>
 
             <div class="form-group">
                 <label for="new-password-field" class="sr-only">New Password</label>
@@ -42,10 +50,9 @@
                        class="form-control input-lg"
                        placeholder="Repeat New Password"
                        required>
+                       <br>
+                  <button class="btn btn-lg btn-primary btn-block change_password" type="submit">Change Password</button>
             </div>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Change Password
-            </button>
 
         </form>
     </div>

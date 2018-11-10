@@ -284,13 +284,60 @@ def lost_pet_posters_page():
     breeds = db.session.query(Breed)
     lost_pets = db.session.query(Lost_Pet_Submission)
 
-    print(lost_pets)
 
     return render_template("lost_pet_poster_page.html", 
                                     colors=colors,
                                     breeds=breeds,
                                     lost_pets=lost_pets
                                     )
+
+@app.route('/lost_pet_posters_searchbox', methods=['POST'])
+def lost_pet_posters_searchbox():
+    """."""
+
+    print(request.form)
+
+    searched_species = int(request.form.get('PetType'))
+    searched_zipcode = request.form.get('Zipcode')
+    searched_name_or_id = request.form.get('SearchByNameID')
+    searched_breed = request.form.get('SearchByBreed')
+    searched_color = request.form.get('SearchByColor')
+
+    print(searched_zipcode)
+    print(searched_name_or_id)
+    print(searched_species)
+    print(searched_breed)
+    print(searched_color)
+
+
+    query = Lost_Pet_Submission.query
+
+# Working
+    if searched_species:
+        query = query.filter(Lost_Pet_Submission.species_id == searched_species)
+
+## Working
+    if searched_breed:
+        breed_id = Breed.query.filter(Breed.breed == searched_breed).one()
+        query = query.filter(Lost_Pet_Submission.breed_id == breed_id.breed_id)
+
+#Not Working
+    if searched_color:
+        query = query.join(lostPetColor).join(Color) \
+            .filter(Color.color == searched_color)
+
+
+
+    # if searched_name_or_id:
+
+
+
+
+    results = query.all()
+
+
+    return jsonify({'data':render_template('petPoster_searchBar_temp.html', lost_pets = results)})
+
 
 @app.route('/lost_poster_form', methods=['POST'])
 def report_lost_pet_form(): 

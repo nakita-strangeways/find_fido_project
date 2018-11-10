@@ -65,9 +65,11 @@ function initMap() {
       // Using information from the Json file, place makers using Lat/Lng, use correct pin for dog/cat, and populate info window
       let animal, marker, html;
 
+      //Assigning keys to ajax information
       for (let key in lost_pets) {
             animal = lost_pets[key];
 
+        //Assigning variables to my pin icons for easy use
         const dog_icon = {
             url:"/static/icons/dog-pin.png",
             scaledSize: new google.maps.Size(50,75),
@@ -83,13 +85,14 @@ function initMap() {
         };
 
         const found_pin = {
-            url:"/static/icons/foundPin.svg",
-            scaledSize: new google.maps.Size(50,75),
+            url:"/static/icons/found_pin.png",
+            scaledSize: new google.maps.Size(45,60),
             origin: new google.maps.Point(0,0),
-            anchor: new google.maps.Point(25,80)
+            anchor: new google.maps.Point(15,70)
         };
 
-      if (animal.species_id=='Cat' && animal.found==false){ //and found == false
+      //Making the markers with if statments to assign correct icons
+      if (animal.species_id=='Cat' && animal.found==false){ 
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
@@ -97,7 +100,7 @@ function initMap() {
             animal:animal,
             icon: cat_icon
         })
-      } else if (animal.species_id=='Cat' && animal.found==true){ //and found == false
+      } else if (animal.species_id=='Cat' && animal.found==true){ 
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
@@ -107,7 +110,7 @@ function initMap() {
         })
       };
 
-      if (animal.species_id=='Dog' && animal.found==false){ //and found == false
+      if (animal.species_id=='Dog' && animal.found==false){ 
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
@@ -115,7 +118,7 @@ function initMap() {
             animal:animal,
             icon: dog_icon
         })
-      } else if (animal.species_id=='Dog' && animal.found==true){ //and found == false
+      } else if (animal.species_id=='Dog' && animal.found==true){ 
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(animal.latitude, animal.longitude),
             map: map,
@@ -124,6 +127,8 @@ function initMap() {
             icon: found_pin
         })
       };
+
+        //Filling in Window with HTML information using data from Ajax call
         let found_section = ""
         let found_title = ""
         if (animal.found == true) {
@@ -166,9 +171,12 @@ $filterCheckboxes.on('change', function() {
   
   $filterCheckboxes.filter(':checked').each(function() {
 
+
     if (!selectedFilters.hasOwnProperty(this.name)) {
       selectedFilters[this.name] = [];
     }
+
+    console.log(selectedFilters)
 
     if (this.value == "true") {
         this.value = true
@@ -217,7 +225,7 @@ $filterCheckboxes.on('change', function() {
   });
 });
 
-    //drop a new marker on right click 
+//drop a new marker on right click 
     let pin_on = false;
     let marker = null;
 
@@ -251,10 +259,7 @@ $filterCheckboxes.on('change', function() {
 
 
 
-    // This function is outside the for loop.
-    // When a marker is clicked it closes any currently open infowindows
-    // Sets the content for the new marker with the content passed through
-    // then it open the infoWindow with the new content on the marker that's clicked
+    //This holds the Modal for more information!
     function bindInfoWindow(marker, map, infoWindow, html, animal) {
         google.maps.event.addListener(marker, 'click', function () {
             infoWindow.close();
@@ -302,15 +307,18 @@ $filterCheckboxes.on('change', function() {
                 // When the user clicks on <span> (x), close the modal
                     span.onclick = function() {
                         modal.style.display = "none";
+                        $(".map_filter_button").attr("disabled",false)
                     }
 
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
                         if (event.target == modal) {
                             modal.style.display = "none";
+                            $(".map_filter_button").attr("disabled",false)
                         }
                     }
 
+                    $(".map_filter_button").attr("disabled",true)
                 });
             },300); 
             // this is the end of the setTimeout Fuction
@@ -321,6 +329,9 @@ $filterCheckboxes.on('change', function() {
 };
 
 google.maps.event.addDomListener(window, 'load', initMap);
+
+
+
 
 
 // Needed to run click actions
@@ -353,7 +364,7 @@ $('#submit_lost_poster_form').on('submit', function(evt){
     var formData = new FormData(this); 
 
     const addressValue = $('#address').val()
-    const key = "AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"
+    const key = "AIzaSyBd1ClxGIvFUILXpnFq1Pe5I-WCgXhPMzo"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;
@@ -377,11 +388,12 @@ $('#submit_lost_poster_form').on('submit', function(evt){
 
 });
 
+//Makes address bar work
 console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = "AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"
+    const key = "AIzaSyBd1ClxGIvFUILXpnFq1Pe5I-WCgXhPMzo"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;
@@ -416,7 +428,7 @@ $('#lost_form').submit(function(e) {
     });
 });
 
-
+//Ajax calles all the lost pets info to be used on missing pet posters
 $.get('/lost_pet_posters.json', function (missing_pet) {
 // Does the modal thing for my pet posters
   let pet ;
@@ -425,52 +437,94 @@ $.get('/lost_pet_posters.json', function (missing_pet) {
         pet = missing_pet[key];
   }
 
+    $( "#pet_posters" ).on("click",'.pet-list', function(evt) {
+      // Get the modal
+
+      pet = missing_pet[this.id]
+        let modal = document.getElementById('myModal');
+
+        // Get the <span> element that closes the modal
+        let span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        modal.style.display = "block";
+
+            pet_photo = (
+                '<img src="/static/seed_photos/' + pet.photo + '"style="width:400px;">'
+            );
+            $('#pet_photo').html(pet_photo); 
+
+            pet_info = (
+            '<b>PetID: </b>' + pet.pet_id  + '<br>' +
+            '<b>Name: </b>' + pet.pet_name + '<br>' +
+            '<b>Breed: </b>' + pet.breed_id + '<br>' +
+            '<b>Colors: </b>' + pet.colors.join(', ') + '<br>' +
+            '<b>Notes: </b>' + pet.notes + '<br>' + 
+            '<b>Owner: </b>' + pet.user_id + '<br>' +
+            '<b>Missing Since: </b>' + pet.date_lost + '<br>'
+            );
+
+            $('#lost_pet_modal_html').html(pet_info);
+
+            // let pet_lat = pet.latitude
+            // let pet_lng = pet.longitude
+            let map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('lost_pet_mapbox'), {
+                  center: new google.maps.LatLng(pet.latitude, pet.longitude),
+                  zoom: 17
+                });
+            }
+            initMap()
 
 
-$( ".pet-list" ).on("click", function(evt) {
-  // Get the modal
-  console.log(this.id)
-    var modal = document.getElementById('myModal');
+            let found_pin = {
+                url:"/static/icons/missing_pet_pin.png",
+                scaledSize: new google.maps.Size(50,75),
+                origin: new google.maps.Point(0,0),
+                anchor: new google.maps.Point(25,80)
+            };
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+            let marker = new google.maps.Marker({
+                position: new google.maps.LatLng(pet.latitude, pet.longitude),
+                map: map,
+                title: 'Last Seen Here',
+                icon: found_pin
+            });
 
-    // When the user clicks the button, open the modal 
-    modal.style.display = "block";
-
-        pet_photo = (
-            '<img src="/static/seed_photos/' + pet.photo + '"style="width:300px;">'
-        );
-        $('#pet_photo').html(pet_photo); 
-
-        pet_info = (
-        '<b>PetID: </b>' + pet.pet_id  + '<br>' +
-        '<b>Name: </b>' + pet.pet_name + '<br>' +
-        '<b>Breed: </b>' + pet.breed_id + '<br>' +
-        '<b>Colors: </b>' + pet.colors.join(', ') + '<br>' +
-        '<b>Notes: </b>' + pet.notes + '<br>' + 
-        '<b>Owner: </b>' + pet.user_id + '<br>' +
-        '<b>Missing Since: </b>' + pet.date_lost + '<br>' +
-        '<b>Last Seen: ADD A MAP HERE </b>' 
-        );
-
-        $('#lost_pet_modal_html').html(pet_info);
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
 
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+    });
 });
 
+
+$('#searchBar_btn').click(function(e){
+    console.log("I clicked")
+    e.preventDefault();   
+    $.ajax({
+        data: $('#search_pet_posters').serialize(),
+        url: "/lost_pet_posters_searchbox",
+        type: "POST",
+        success: function(resp){
+            $('#pet_posters').html(resp.data)
+        }
+    })
 });
+
+
+
+
+
 
 
 // end of document.ready function

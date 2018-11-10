@@ -1,5 +1,5 @@
 /*--------------------------------*/
-/*Form*/
+/*Maps and general layout*/
 /*--------------------------------*/
 
 #required {
@@ -18,10 +18,23 @@
   display: none;
 }
 
+.navbar-brand {
+  font-size: 40px;
+  margin: 0px;
+}
 
-/*--------------------------------*/
-/*Maps and general layout*/
-/*--------------------------------*/
+.bg-light {
+    background-color: #77c9d4;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #77c9d4; 
+    color: #015249;
+}
+
+.navbar-light .navbar-brand {
+  color: #015249;
+}
 
 #container {
   width:100%;
@@ -30,13 +43,23 @@
 #pet-map {
   padding-left: 10px;
   display: inline-block; 
-  height: 800px;
+  height: 900px;
   width: 100%;
+  border-style: solid;
+  border-width: 7px;
+  border-color: #DCB239;
 }
 
 #seen_form {
+  margin: 5px 10px;
   display: inline-block; 
   height: 800px;
+  padding-left: 30px;
+
+}
+
+#map_filter_button{
+  margin: 0px 0px 0px 10px;
 }
 
 
@@ -46,7 +69,68 @@
 }
 
 #filter_form {
-  margin: 5px 20px;
+  margin: 5px 0px 5px 20px;
+}
+
+body {
+    background-color: #8FD8D2;
+}
+
+.filter_form_div {
+  background-color: #FEDCD2;
+  border: solid;
+  border-width: 5px 5px 5px 0px;
+  border-color: #DF744A;
+
+}
+
+
+/*--------------------------------*/
+/*Filter Map Button*/
+/*--------------------------------*/
+
+.map_filter_button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #DF744A;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  height: 100%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.map_filter_button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.map_filter_button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.map_filter_button:hover span {
+  padding-right: 25px;
+}
+
+.map_filter_button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.map_filter_button_div {
+
 }
 
 /*--------------------------------*/
@@ -72,6 +156,7 @@
   margin: 5px 20px;
 }
 
+
 /*--------------------------------*/
 /*Report Lost Pet page*/
 /*--------------------------------*/
@@ -88,9 +173,53 @@ div.pet-detail {
 
 div.search_btn {border-style: solid;}
 
+#search_pet_posters {
+  margin: 0px 0px 0px 15px;
+}
+
+.form-control {
+  margin: 0px 0px 0px 20px;
+}
+
+#pet_photo {
+  padding: 30px; 
+}
+
+#missing_pet_icons {
+    background-color: #FEDCD2;
+    border-style: solid;
+    border-width: 7px;
+    border-color: #DF744A;
+}
+
+.report_btn {
+    background-color: #DCB239;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.change_password {
+    background-color: #DCB239;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
 
 /*--------------------------------*/
-/*Modal*/
+/* Profile */
+/*--------------------------------*/
+
+/*--------------------------------*/
+/* Modal */
 /*--------------------------------*/
 
 /* The Modal (background) */
@@ -134,12 +263,16 @@ div.search_btn {border-style: solid;}
 
 #lost_pet_modal_html {
   display: inline-block;
-  margin: 25px 50px;
+  margin: 100px 50px;
 }
 
 
 
-
-
+#lost_pet_mapbox {
+  padding-left: 10px;
+  display: inline-block; 
+  height: 400px;
+  width: 400px;
+}
 
 

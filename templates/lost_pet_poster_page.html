@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt-YhP-EJFaBB09VBt_qRtwnZB93IcxGc"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBd1ClxGIvFUILXpnFq1Pe5I-WCgXhPMzo"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 <script src="/static/pet_map.js"></script>
@@ -9,8 +9,8 @@
 {% block body %}
 <div class="row justify-content-md-center">
     <div class="col-md-auto">
-        <h5> Do you need to report a missing pet?</h5>
-        <center><a href="/report_a_pet_page" class="btn btn-default">Report Here!</a></center>
+        <h5 style="color:#015249;"> Do you need to report a missing pet?</h5>
+        <center><a href="/report_a_pet_page" class="btn btn-default report_btn" id="report_button">Report Here!</a></center>
     </div>
 </div>
 
@@ -23,34 +23,37 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <div class="row">
-        <div id="pet_photo" class="col"> </div>
-        <div id=lost_pet_modal_html>...</div>
+        <div id="pet_photo"> </div>
+        <div id=lost_pet_modal_html class="col-3">...</div>
+        <div><h4><center> Last Seen Here: </center></h4>
+            <div id="lost_pet_mapbox" ></div>
+        </div>
     </div>
   </div>
 </div>
 
 <div class="row">
-    <form>
+    <form id="search_pet_posters" action="/lost_pet_posters_searchbox" method="POST">
         <div class="col-lg-12 plan featured" style="padding: 0px 0px 0px 5px;">
-            <h3 style="color: black; padding-left: 15px;"> Search Pet Posters </h3>
-            <div class="col-lg-2">
-                <label style="padding-top:5px; color:black;"> Pet Type</label>
-                <select size="1" name="PetType" class="form-control" style="width: 90%; height: 44px;" onchange="submit()">
-                    <option value="1">Cat</option>
-                    <option value="2">Dog</option>
+            <h3 style="color:#015249; padding-left: 15px;"> Search Pet Posters </h3>
+            <div class="col-lg-10">
+                <label style="padding-top:5px; color:#015249;"> Pet Type</label>
+                <select size="1" name="PetType" class="form-control" style="width: 110%; height: 44px;"> 
+                    <option id="cat" value="1">Cat</option>
+                    <option id="dog"value="2">Dog</option>
                 </select>
             </div>
-            <div class="col-lg-2">
-                <label style="padding-top:5px; color:black;"> Zipcode</label>
-                <input type="TEXT" name="Zipcode" class="form-control input-field" value="Zipcode" maxlength="5" style="width: 150px;">
+            <div class="col-lg-10">
+                <label style="padding-top:5px; color:#015249;"> Zipcode</label>
+                <input type="TEXT" name="Zipcode" class="form-control input-field" placeholder="Zipcode" maxlength="5" style="width: 270px;">
             </div>
-            <div class="col-lg-2">
-                <label style="padding-top:5px; color:black;"> Search by Pet Name or Pet ID</label>
-                <input type="TEXT" name="SearchByNameID" placeholder="e.g. Fido or 3" class="form-control input-field" value="Zipcode" maxlength="20" style="width: 150px;">
+            <div class="col-lg-10">
+                <label style="padding-top:5px; color:#015249;"> Search by Name or ID</label>
+                <input type="TEXT" name="SearchByNameID" placeholder="e.g. Fido or 3" class="form-control input-field" maxlength="20" style="width: 270px;">
             </div>
-            <div class="col-lg-2">
-                <label style="padding-top:5px; color:black;"> Search by Breed</label>
-                <select size="1" name="SearchByBreed" class="form-control input-field" style="width: 90%; height: 44px;">
+            <div class="col-lg-10">
+                <label style="padding-top:5px; color:#015249;"> Search by Breed</label>
+                <select size="1" name="SearchByBreed" class="form-control input-field" style="width: 110%; height: 44px;">
                         <option value="" selected disabled hidden>Select one</option>
                         {% for breed in breeds %}
                         <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
@@ -59,9 +62,9 @@
                         {% endfor %}
                 </select>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-10">
                 <label style="padding-top:5px; color:black;"> Search by Color</label>
-                <select size="1" name="SearchByColor" class="form-control input-field" style="width: 90%; height: 44px;">
+                <select size="1" name="SearchByColor" class="form-control input-field" style="width: 110%; height: 44px;">
                         <option value="" selected disabled hidden>Select one</option>
                             {% for color in colors %}
                         <option value="{{ color.color }}">{{ color.color }}</option>
@@ -70,25 +73,24 @@
             </div>
             <br>
             <div>
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
+                <center><input id="searchBar_btn" type="submit" value="Search"></center>
             </div>
         </div>
     </form>
 
     <div class="col-md-9">
-        <div class="row">
-        <!-- for article in request  -->
+        <div class="row" id="pet_posters">
         {% for pet in lost_pets %}
           <div class="col-md-4">
-          <div class="shadow p-3 mb-5 bg-white rounded">
+          <div class="shadow p-3 mb-5 rounded" id="missing_pet_icons">
             <div class="pet-list" id={{pet.pet_id}} >
             <p class="text-center"> 
-                <span>Name: {{pet.pet_name}}</span> <br>
-                <span>PetID: {{pet.pet_id}}</span><br>
+                <span style="color:#015249;">Name: {{pet.pet_name}}</span> <br>
+                <span style="color:#015249;">PetID: {{pet.pet_id}}</span><br>
                 <img src="/static/seed_photos/{{pet.photo}}" alt="photo" style="width:200px;">
             </p>
                 <div class="pet-detail">
-                <p class="text-center">Lost on {{pet.date_lost}}</p>
+                <p class="text-center" style="color:#015249;">Lost on {{pet.date_lost}}</p>
                 </div>
             </div>
           </div>

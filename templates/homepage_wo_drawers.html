@@ -11,18 +11,19 @@
 <div class="row justify-content-md-center">
     <div class="col-md-auto">
       <form id='address_bar' action="#">
-        <span class=address_bar> Enter Address&nbsp;&nbsp;&nbsp;<input id="address" type="text" name="address" style="width: 350px;">
+        <span class=address_bar> Enter Address &nbsp;&nbsp;&nbsp;<input id="address" type="text" name="address" style="width: 350px;">
         <input id=address_bar_submit type="submit">
         </span>
       </form>
     </div>
 </div>
+<br>
 <div class="row justify-content-md-center">
     <h3 style="color:#015249;">Click the map where you saw the runaway or stray pet!</h3>
 </div> 
-
 <!-- The Modal -->
 <div id="myModal" class="modal">
+
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -35,7 +36,7 @@
             <div>
             <center> Has this animal been found and returned home?
             <br>
-            <button class="found_button_class" id="found_button" type="button" action="/found_animal">Yes!</button>
+            <button class="found_button_class" id="found_button" type="button">Yes!</button>
             </center>
             </div>
        </div>
@@ -53,74 +54,57 @@
     {% endif %}
     </div>
   </div>
+
 </div>
 
 <!-- The filter Form -->
 <div class="row">
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2 collapse filter_form_div" id="collapseExample">
-        <div id="filter_form_div">
-            <form id='filter_form' action="/filter_lost_animals">
-                <h3>Filter By </h3>
-                <h5>Species:</h5>
+    <div id="filter_form_div" class="col filter_form_div">
+        <form id='filter_form' action="/filter_lost_animals">
+            <h2>Filter Map: </h2>
+            <h5>Species:</h5>
 
-                <label style="font-size:15px;"></label> 
-                    &nbsp;&nbsp;&nbsp;<input id="Dog" type="checkbox" name="species_id" value="Dog"> Dog
-                    &nbsp;&nbsp;&nbsp;<input id="Cat" type="checkbox" name="species_id" value="Cat"> Cat
-                <br>
-                <br>
+            <label style="font-size:15px;"></label> 
+                &nbsp;&nbsp;&nbsp;<input id="Dog" type="checkbox" name="species_id" value="Dog"> Dog
+                &nbsp;&nbsp;&nbsp;<input id="Cat" type="checkbox" name="species_id" value="Cat"> Cat
+            <br>
+            <br>
 
-                <h5>Colors:</h5>
-                    &nbsp;&nbsp;&nbsp;<input id="Black" type="checkbox" name="colors" value="Black"> Black
-                    &nbsp;<input id="Blue" type="checkbox" name="colors" value="Blue"> Blue<br>
-                    &nbsp;&nbsp;&nbsp;<input id="Brown" type="checkbox" name="colors" value="Brown"> Brown 
-                    &nbsp;<input id="Cream" type="checkbox" name="colors" value="Cream"> Cream<br>
-                    &nbsp;&nbsp;&nbsp;<input id="Gray" type="checkbox" name="colors" value="Gray"> Gray
-                    &nbsp;<input id="Orange" type="checkbox" name="colors" value="Orange"> Orange<br>
-                    &nbsp;&nbsp;&nbsp;<input id="Red" type="checkbox" name="colors" value="Red"> Red
-                    &nbsp;<input id="White" type="checkbox" name="colors" value="White"> White<br>
-                    &nbsp;&nbsp;&nbsp;<input id="Yellow" type="checkbox" name="colors" value="Yellow"> Yellow
-                <br>
-                <br>
+            <h5>Colors:</h5>
+                &nbsp;&nbsp;&nbsp;<input id="Black" type="checkbox" name="colors" value="Black"> Black
+                &nbsp;<input id="Blue" type="checkbox" name="colors" value="Blue"> Blue<br>
+                &nbsp;&nbsp;&nbsp;<input id="Brown" type="checkbox" name="colors" value="Brown"> Brown 
+                &nbsp;<input id="Cream" type="checkbox" name="colors" value="Cream"> Cream<br>
+                &nbsp;&nbsp;&nbsp;<input id="Gray" type="checkbox" name="colors" value="Gray"> Gray
+                &nbsp;<input id="Orange" type="checkbox" name="colors" value="Orange"> Orange<br>
+                &nbsp;&nbsp;&nbsp;<input id="Red" type="checkbox" name="colors" value="Red"> Red
+                &nbsp;<input id="White" type="checkbox" name="colors" value="White"> White<br>
+                &nbsp;&nbsp;&nbsp;<input id="Yellow" type="checkbox" name="colors" value="Yellow"> Yellow
+            <br>
+            <br>
 
-                    <h5>Sizes:</h5>
-                    &nbsp;&nbsp;&nbsp;<input id="X-Small" type="checkbox" name="size_id" value="X-Small"> X-Small
-                    &nbsp;<input id="Small" type="checkbox" name="size_id" value="Small"> Small<br>
-                    &nbsp;&nbsp;&nbsp;<input id="Medium" type="checkbox" name="size_id" value="Medium"> Medium 
-                    &nbsp;<input id="Large" type="checkbox" name="size_id" value="Large"> Large<br>
-                    &nbsp;&nbsp;&nbsp;<input id="X-Large" type="checkbox" name="size_id" value="X-Large"> X-Large
-                <br>
-                <br>
+                <h5>Sizes:</h5>
+                &nbsp;&nbsp;&nbsp;<input id="X-Small" type="checkbox" name="size_id" value="X-Small"> X-Small
+                &nbsp;<input id="Small" type="checkbox" name="size_id" value="Small"> Small<br>
+                &nbsp;&nbsp;&nbsp;<input id="Medium" type="checkbox" name="size_id" value="Medium"> Medium 
+                &nbsp;<input id="Large" type="checkbox" name="size_id" value="Large"> Large<br>
+                &nbsp;&nbsp;&nbsp;<input id="X-Large" type="checkbox" name="size_id" value="X-Large"> X-Large
+            <br>
+            <br>
 
-                    <h5>Status:</h5>
-                    &nbsp;&nbsp;&nbsp;<input id="true" type="checkbox" name="found" value="true"> Returned Home
-                    &nbsp;<input id="false" type="checkbox" name="found" value="false"> Seen<br>
-            </form>
+                <h5>Status:</h5>
+                &nbsp;&nbsp;&nbsp;<input id="true" type="checkbox" name="found" value="true"> Returned Home
+                &nbsp;<input id="false" type="checkbox" name="found" value="false"> Seen<br>
+        </form>
     </div>
-    </div>
-    <div class="col">
-      <div class="row">
-        <div class="col-1" style="padding-left: 0px;">
-          <button class="btn sticky-top map_filter_button" data-toggle="collapse" href="#collapseExample" role="button" id="map_filter_button">
-            <center><span>Map <br>Filter</span></center>
-          </button>   
-        </div>
-        <!-- This is where the map goes so it fits in -->
-        <!-- The map -->
-        <div class="col" style="padding-left: 0px;">
-            <div id="pet-map" class="col-8"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+<!-- The map -->
+    <div id="pet-map" class="col-6"></div>
 
 <!-- The Seen Animal Form -->
     {% if session.get('logged_in_user_email') %}
-    <div id="seen_form" class="col -3"> 
+    <div id="seen_form" class="col">  
         <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" class="seen_form_class">
+            <h2>Animal Seen Form: </h2>
 
             <h5>Location Seen<span id="required">*</span>:</h5>
             <p>Are you using your current location or a pin placed on map? </p>
@@ -204,5 +188,7 @@
     {% endif %}
     </div>  
   </div>
+</div>
 
+    
 {% endblock %}

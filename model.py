@@ -43,11 +43,6 @@ class Animal(db.Model):
     colors = db.relationship("Color",
                             secondary="animal_colors",
                             backref="animals")
-
-
-
-
-
     breed = db.relationship("Breed")
     species = db.relationship("Species")
     size = db.relationship("Size")
@@ -192,7 +187,7 @@ class Lost_Pet_Submission(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"<Lost_Pet_Submission pet_id={self.pet_id} species_id={self.species_id}>"
+        return f"<Lost_Pet_Submission pet_id={self.pet_id} pet_name={self.pet_name} species_id={self.species_id} colors={self.colors}>"
 
 class lostPetColor(db.Model):
     """An associations table between lost_pet_posters table and colors table."""
