@@ -259,7 +259,7 @@ def found_animal_update():
     user_email = session.get('logged_in_user_email')
     print(user_email)
     
-    found_animal_id = int(request.form.get("found_animal_id"))
+    found_animal_id = int(request.json.get("found_animal_id"))
 
     found_user_id = User.query.filter(User.email == user_email).one()
     print(found_user_id)

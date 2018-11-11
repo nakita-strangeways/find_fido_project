@@ -55,10 +55,14 @@
   </div>
 </div>
 
+
+
 <!-- The filter Form -->
 <div class="row">
 <div class="container-fluid">
   <div class="row">
+
+<!-- DRAWER ON LEFT -->
     <div class="col-2 collapse filter_form_div" id="collapseExample">
         <div id="filter_form_div">
             <form id='filter_form' action="/filter_lost_animals">
@@ -106,19 +110,130 @@
             <center><span>Map <br>Filter</span></center>
           </button>   
         </div>
+
+
+
         <!-- This is where the map goes so it fits in -->
         <!-- The map -->
-        <div class="col" style="padding-left: 0px;">
-            <div id="pet-map" class="col-8"></div>
+        <div class="col" style="padding-left: 0px; padding-right: 0px;">
+            <div id="pet-map" class="col"></div>
         </div>
       </div>
     </div>
+
+
+<!-- drawer on the right -->
+
+        <div class="col-1" style="padding-right: 0px;padding-left: 0px;">
+          <button class="btn sticky-top animal_form_drawer" data-toggle="collapse" href="#collapseExample" role="button" id="animal_form_drawer">
+            <center><span>Animal <br>Form</span></center>
+          </button>   
+        </div>
+
+
+    <div class="col-2 collapse seen_form_div" id="collapseExample">
+
+
+        {% if session.get('logged_in_user_email') %}
+    <div id="seen_form"> 
+        <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" class="seen_form_class">
+
+            <div hidden>
+            <h5>Location Seen<span id="required">*</span>:</h5>
+            <p>Are you using your current location or a pin placed on map? </p>
+            &nbsp;&nbsp;&nbsp;<input id=current_location type="radio" name="location_quest" value="currentLocation_question" hidden> Current Location 
+            &nbsp;&nbsp;&nbsp;<input id=current_location type="radio" name="location_quest" value="currentLocation_question"> Map Pin
+            </div>
+
+            <h5>Species<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="Dog" required> Dog 
+                              <input id="cat_species" type="radio" name="species_quest" value="Cat" required> Cat 
+
+            <br>
+
+            <h5>Breed:</h5>
+            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question">
+            <option value="" selected disabled hidden>Select one</option>
+
+                {% for breed in breeds %}
+                <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
+                {{breed.breed}} 
+                </option>
+                {% endfor %}
+                </select>
+
+            <br>
+
+            <h5>Size<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<input id=size_quest type="radio" name="size_quest" value="X-Small" required> X-Small 
+                <input type="radio" name="size_quest" value="Small" required> Small 
+                <input type="radio" name="size_quest" value="Medium" required> Medium 
+                <input type="radio" name="size_quest" value="Large" required> Large 
+                <input type="radio" name="size_quest" value="X-Large" required> X-Large 
+
+            <br>
+
+            <h5>Color<span id="required">*</span>:</h5>
+                &nbsp;&nbsp;&nbsp;<select id="color1_quest" name="color1_question" required>
+                <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                <br>
+
+                Other Colors:<br>
+                &nbsp;&nbsp;&nbsp;<select id="color2_quest" name="color2_question">
+                    <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+                    
+                    <select id="color3_quest" name="color3_question">
+                    <option value="" selected disabled hidden>Select one</option>
+                    {% for color in colors %}
+                    <option value="{{ color.color }}">{{ color.color }}</option>
+                    {% endfor %}
+                    </select>
+
+                <br>
+
+            <h5>Notes about the animal:</h5>
+                &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
+                &nbsp;&nbsp;&nbsp;Max 150 characters
+
+            <h5>Upload Image<span id="required">*</span>:</h5>
+                <input type="file" name="animal_photo" accept="image/*" required>
+
+                <br>
+                <br>
+
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id=submitBtn type="submit">
+        </form>
+    {% else %}
+    <div id="seen_form" class="col">  
+        <center><h3>Have you seen a lost pet? <br>Want to share to the map? <br> Help find pets and get them home!</h3>
+        <br>
+        <a href="/login" class="button">Sign In</a> or
+        <a href="/create_user" class="button">Create an Account!</a>
+        </center>
+    </div>  
+    {% endif %}
+    </div>  
+  </div>
+
+    
+
+
+
+
   </div>
 </div>
 
 
 <!-- The Seen Animal Form -->
-    {% if session.get('logged_in_user_email') %}
+    <!-- {% if session.get('logged_in_user_email') %}
     <div id="seen_form" class="col -3"> 
         <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" class="seen_form_class">
 
@@ -203,6 +318,6 @@
     </div>  
     {% endif %}
     </div>  
-  </div>
+  </div> -->
 
 {% endblock %}

@@ -54,7 +54,7 @@
   margin: 5px 10px;
   display: inline-block; 
   height: 800px;
-  padding-left: 30px;
+  padding-left: 0px;
 
 }
 
@@ -132,6 +132,57 @@ body {
 .map_filter_button_div {
 
 }
+
+
+
+/*--------------------------------*/
+/*animal_form_drawer Button*/
+/*--------------------------------*/
+
+.animal_form_drawer {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #DF744A;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  height: 100%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.animal_form_drawer span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.animal_form_drawer span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.animal_form_drawer:hover span {
+  padding-right: 25px;
+}
+
+.animal_form_drawer:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.animal_form_drawer {
+
+}
+
 
 /*--------------------------------*/
 /*More Info*/

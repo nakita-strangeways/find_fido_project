@@ -522,6 +522,26 @@ $('#searchBar_btn').click(function(e){
 });
 
 
+$('.found_button_class').click(function(e) {
+    e.preventDefault();    
+    let found_animal = document.querySelector('#animal_id')
+    console.log(found_animal)
+
+    $.ajax({
+        url: '/found_animal',
+        headers: {
+            "Content-Type":"application/json"
+        },
+        type: 'POST',
+        data: JSON.stringify({'found_animal_id': found_animal.innerHTML}),
+            success: function (data) {
+            window.location.reload()
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
 
 
 
