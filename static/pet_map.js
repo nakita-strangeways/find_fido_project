@@ -364,7 +364,7 @@ $('#submit_lost_poster_form').on('submit', function(evt){
     var formData = new FormData(this); 
 
     const addressValue = $('#address').val()
-    const key = "AIzaSyBd1ClxGIvFUILXpnFq1Pe5I-WCgXhPMzo"
+    const key = "AIzaSyD52RrA9gfZqgo8twZNm92r0bxMIT9poR4"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;
@@ -393,7 +393,7 @@ console.log("address bar ready")
 $('#address_bar').on('submit', function(evt){
     evt.preventDefault();
     const addressValue = $('#address').val()
-    const key = "AIzaSyBd1ClxGIvFUILXpnFq1Pe5I-WCgXhPMzo"
+    const key = "AIzaSyD52RrA9gfZqgo8twZNm92r0bxMIT9poR4"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
         var pos = data.results[0].geometry.location;

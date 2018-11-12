@@ -1,16 +1,14 @@
+import os
 from jinja2 import StrictUndefined
 from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
-
-
 from model import Animal, Color, AnimalColor, Species, Breed, Size, User, Lost_Pet_Submission, lostPetColor, connect_to_db, db
-
 from datetime import datetime, date, time
 
 
 app = Flask(__name__)
-app.secret_key = "ABC"
+app.secret_key = os.environ['APP_SECRET_KEY']
 app.jinja_env.undefined = StrictUndefined
 
 
