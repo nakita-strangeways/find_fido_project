@@ -417,7 +417,7 @@ def report_a_pet_page():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.debug = True
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)

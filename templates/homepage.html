@@ -11,8 +11,8 @@
 <div class="row justify-content-md-center">
     <div class="col-md-auto">
       <form id='address_bar' action="#">
-        <span class=address_bar> Enter Address&nbsp;&nbsp;&nbsp;<input id="address" type="text" name="address" style="width: 350px;">
-        <input id=address_bar_submit type="submit">
+        <span class=address_bar style="width: 350px; color:#015249;"> Enter Address&nbsp;&nbsp;&nbsp;<input id="address" type="text" name="address" style="width: 350px;">
+        <input class="search_address_btn" id=address_bar_submit type="submit">
         </span>
       </form>
     </div>
@@ -27,7 +27,7 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <div class="row">
-        <div id="animal_photo" class="col"> </div>
+        <div id="animal_photo" class="col" > </div>
         <div id=seen_animals_modal_html>...</div>
     
         {% if session.get('logged_in_user_email') %}
@@ -63,7 +63,7 @@
   <div class="row">
 
 <!-- DRAWER ON LEFT -->
-    <div class="col-2 collapse filter_form_div" id="collapseExample">
+    <div class="col-2 collapse filter_form_div" id="filter_form_div">
         <div id="filter_form_div">
             <form id='filter_form' action="/filter_lost_animals">
                 <h3>Filter By </h3>
@@ -103,11 +103,12 @@
             </form>
     </div>
     </div>
+
     <div class="col">
       <div class="row">
-        <div class="col-1" style="padding-left: 0px;">
-          <button class="btn sticky-top map_filter_button" data-toggle="collapse" href="#collapseExample" role="button" id="map_filter_button">
-            <center><span>Map <br>Filter</span></center>
+        <div class="col-1" style="padding-left: 5px;">
+          <button class="btn sticky-top map_filter_button" data-toggle="collapse" href="#filter_form_div" role="button" id="map_filter_button">
+            <center><span>Map<br>Filter</span></center>
           </button>   
         </div>
 
@@ -125,13 +126,13 @@
 <!-- drawer on the right -->
 
         <div class="col-1" style="padding-right: 0px;padding-left: 0px;">
-          <button class="btn sticky-top animal_form_drawer" data-toggle="collapse" href="#collapseExample" role="button" id="animal_form_drawer">
-            <center><span>Animal <br>Form</span></center>
+          <button class="btn sticky-top animal_form_drawer" data-toggle="collapse" href="#seen_form_div" role="button" id="seen_form_drawer">
+            <center><span>Seen<br>An<br>Animal?</span></center>
           </button>   
         </div>
 
 
-    <div class="col-2 collapse seen_form_div" id="collapseExample">
+    <div class="col-2 collapse seen_form_div" id="seen_form_div">
 
 
         {% if session.get('logged_in_user_email') %}
@@ -152,8 +153,8 @@
             <br>
 
             <h5>Breed:</h5>
-            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question">
-            <option value="" selected disabled hidden>Select one</option>
+            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question" style="width: 200px;">
+            <option value="" selected disabled hidden" >Select one</option>
 
                 {% for breed in breeds %}
                 <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
@@ -167,8 +168,8 @@
             <h5>Size<span id="required">*</span>:</h5>
             &nbsp;&nbsp;&nbsp;<input id=size_quest type="radio" name="size_quest" value="X-Small" required> X-Small 
                 <input type="radio" name="size_quest" value="Small" required> Small 
-                <input type="radio" name="size_quest" value="Medium" required> Medium 
-                <input type="radio" name="size_quest" value="Large" required> Large 
+                <input type="radio" name="size_quest" value="Medium" required> Medium <br>
+            &nbsp;&nbsp;&nbsp;<input type="radio" name="size_quest" value="Large" required> Large 
                 <input type="radio" name="size_quest" value="X-Large" required> X-Large 
 
             <br>
@@ -200,7 +201,7 @@
                 <br>
 
             <h5>Notes about the animal:</h5>
-                &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
+                &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150" style="width: 200px;"></textarea><br>
                 &nbsp;&nbsp;&nbsp;Max 150 characters
 
             <h5>Upload Image<span id="required">*</span>:</h5>

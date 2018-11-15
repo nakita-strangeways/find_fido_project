@@ -55,6 +55,22 @@
   display: inline-block; 
   height: 800px;
   padding-left: 0px;
+}
+
+.seen_form_div {
+  background-color: #FEDCD2;
+  border: solid;
+  border-width: 5px 0px 5px 5px;
+  border-color: #DF744A;
+  padding: 0px 50px 0px 0px;
+}
+
+.filter_form_div {
+  background-color: #FEDCD2;
+  border: solid;
+  border-width: 5px 5px 5px 0px;
+  border-color: #DF744A;
+  padding: 0px 20px;
 
 }
 
@@ -76,14 +92,20 @@ body {
     background-color: #8FD8D2;
 }
 
-.filter_form_div {
-  background-color: #FEDCD2;
-  border: solid;
-  border-width: 5px 5px 5px 0px;
-  border-color: #DF744A;
-
+.collapse {
+  flex-grow: 0;
 }
 
+.search_address_btn {
+    background-color: #DCB239;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
 
 /*--------------------------------*/
 /*Filter Map Button*/
@@ -101,7 +123,7 @@ body {
   height: 100%;
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;
+  margin: 0px 5px 0px 0px;
 }
 
 .map_filter_button span {
@@ -151,7 +173,7 @@ body {
   height: 100%;
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;
+  margin: 0px 0px 0px 5px;
 }
 
 .animal_form_drawer span {
@@ -162,21 +184,21 @@ body {
 }
 
 .animal_form_drawer span:after {
-  content: '\00bb';
+  content: '\00AB';
   position: absolute;
   opacity: 0;
   top: 0;
-  right: -20px;
+  left: -20px;
   transition: 0.5s;
 }
 
 .animal_form_drawer:hover span {
-  padding-right: 25px;
+  padding-left: 25px;
 }
 
 .animal_form_drawer:hover span:after {
   opacity: 1;
-  right: 0;
+  left: 0;
 }
 
 .animal_form_drawer {
@@ -254,6 +276,18 @@ div.search_btn {border-style: solid;}
     font-size: 16px;
 }
 
+
+.search_btn {
+    background-color: #DCB239;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
 .change_password {
     background-color: #DCB239;
     border: none;
@@ -268,6 +302,31 @@ div.search_btn {border-style: solid;}
 /*--------------------------------*/
 /* Profile */
 /*--------------------------------*/
+
+
+/*--------------------------------*/
+/* Missing Pet poster form page */
+/*--------------------------------*/
+
+.submit_lost_poster_div {
+    background-color: #FEDCD2;
+    border-style: solid;
+    border-width: 7px;
+    border-color: #DF744A;
+    padding: 30px; 
+    margin: 0px 20px 0px 10px;
+}
+
+.tips_div {
+    background-color: #FEDCD2;
+    border-style: solid;
+    border-width: 7px;
+    border-color: #DF744A;
+    padding: 30px; 
+    margin: 0px 10px 0px 20px;
+}
+
+
 
 /*--------------------------------*/
 /* Modal */

@@ -70,21 +70,21 @@ function initMap() {
             animal = lost_pets[key];
 
         //Assigning variables to my pin icons for easy use
-        const dog_icon = {
+        let dog_icon = {
             url:"/static/icons/dog-pin.png",
             scaledSize: new google.maps.Size(50,75),
             origin: new google.maps.Point(0,0),
             anchor: new google.maps.Point(25,80)
         };
 
-        const cat_icon = {
+        let cat_icon = {
             url:"/static/icons/cat-pin.png",
             scaledSize: new google.maps.Size(50,75),
             origin: new google.maps.Point(0,0),
             anchor: new google.maps.Point(25,80)
         };
 
-        const found_pin = {
+        let found_pin = {
             url:"/static/icons/found_pin.png",
             scaledSize: new google.maps.Size(45,60),
             origin: new google.maps.Point(0,0),
@@ -279,7 +279,7 @@ $filterCheckboxes.on('change', function() {
                     modal.style.display = "block";
 
                     animal_photo = (
-                        '<img src="/static/seed_photos/' + animal.photo + '"style="width:500px;">'
+                        '<img src="/static/seed_photos/' + animal.photo + '"style="width:400px; max-height: 500px;">'
                     );
                     $('#animal_photo').html(animal_photo);  
 
@@ -348,6 +348,18 @@ $( '#cat_species' ).on( 'click', function(){
         $( '.cat_breed' ).show();
      $( '.dog_breed' ).hide();
 });
+
+// sorts breeds list on missing pet posters page
+$('#species_select').change(function() {
+    if ($(this).val() === '1') {
+        $( '.cat_breed' ).show();
+        $( '.dog_breed' ).hide();
+    } else {
+        $( '.cat_breed' ).hide();
+        $( '.dog_breed' ).show();        
+    }
+});
+
 
 // Get Lat/Long when using current location
 console.log("current location ready")
@@ -450,7 +462,7 @@ $.get('/lost_pet_posters.json', function (missing_pet) {
         modal.style.display = "block";
 
             pet_photo = (
-                '<img src="/static/seed_photos/' + pet.photo + '"style="width:400px;">'
+                '<img src="/static/seed_photos/' + pet.photo + '"style="width: 400px;">'
             );
             $('#pet_photo').html(pet_photo); 
 
@@ -478,19 +490,40 @@ $.get('/lost_pet_posters.json', function (missing_pet) {
             initMap()
 
 
-            let found_pin = {
-                url:"/static/icons/missing_pet_pin.png",
+            let dog_icon = {
+                url:"/static/icons/dog-pin.png",
                 scaledSize: new google.maps.Size(50,75),
                 origin: new google.maps.Point(0,0),
                 anchor: new google.maps.Point(25,80)
             };
 
-            let marker = new google.maps.Marker({
-                position: new google.maps.LatLng(pet.latitude, pet.longitude),
-                map: map,
-                title: 'Last Seen Here',
-                icon: found_pin
-            });
+            let cat_icon = {
+                url:"/static/icons/cat-pin.png",
+                scaledSize: new google.maps.Size(50,75),
+                origin: new google.maps.Point(0,0),
+                anchor: new google.maps.Point(25,80)
+            };
+
+
+
+
+            if (pet.species_id=='Cat'){ 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(pet.latitude, pet.longitude),
+                    map: map,
+                    title: 'Last Seen Here',
+                    icon: cat_icon
+                })
+            }
+
+            if (pet.species_id=='Dog'){ 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(pet.latitude, pet.longitude),
+                    map: map,
+                    title: 'Last Seen Here',
+                    icon: dog_icon
+                })
+            }
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
@@ -507,7 +540,7 @@ $.get('/lost_pet_posters.json', function (missing_pet) {
     });
 });
 
-
+// Sends search bar selections to server.py to reload posters
 $('#searchBar_btn').click(function(e){
     console.log("I clicked")
     e.preventDefault();   
@@ -521,7 +554,7 @@ $('#searchBar_btn').click(function(e){
     })
 });
 
-
+// Sends data from seen pet modal page to datatables and updates found to true
 $('.found_button_class').click(function(e) {
     e.preventDefault();    
     let found_animal = document.querySelector('#animal_id')
