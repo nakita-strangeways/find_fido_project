@@ -243,6 +243,13 @@ $filterCheckboxes.on('change', function() {
         title:"Drag me to change location!"
     });
 
+    // GET DRAWER TO OPEN WHEN YOU CLICK IT
+    console.log("map clicked!")
+    // $("#seen_form_drawer").removeClass(".collapsed");
+
+    // $('#seen_form_drawer').collapse('show', true);
+
+
 
     function updatePosition() {
         const pos = {
@@ -408,6 +415,7 @@ $('#address_bar').on('submit', function(evt){
     const key = "AIzaSyD52RrA9gfZqgo8twZNm92r0bxMIT9poR4"
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressValue}&key=${key}`
     $.get( googleMapsUrl, function( data ) {
+        console.log("hi!", data)
         var pos = data.results[0].geometry.location;
 
         window.myMap.setCenter(pos)

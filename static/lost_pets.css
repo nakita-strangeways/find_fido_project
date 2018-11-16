@@ -58,10 +58,10 @@
 }
 
 .seen_form_div {
-  background-color: #FEDCD2;
-  border: solid;
-  border-width: 5px 0px 5px 5px;
-  border-color: #DF744A;
+  /*background-color: #FEDCD2;*/
+  /*border: solid;*/
+  /*border-width: 5px 0px 5px 5px;*/
+  /*border-color: #DF744A;*/
   padding: 0px 50px 0px 0px;
 }
 
@@ -107,6 +107,15 @@ body {
     font-size: 16px;
 }
 
+
+.alert-container {
+  text-align: center;
+}
+  /*background-color: #FEDCD2;*/
+  /*border: solid;*/
+  /*border-width: 5px 0px 5px 5px;*/
+  /*border-color: #DF744A;*/
+
 /*--------------------------------*/
 /*Filter Map Button*/
 /*--------------------------------*/
@@ -114,13 +123,16 @@ body {
 .map_filter_button {
   display: inline-block;
   border-radius: 4px;
-  background-color: #DF744A;
-  border: none;
-  color: #FFFFFF;
+  background-color: #FEDCD2;
+  border: solid;
+  border-width: 7px;
+  border-color: #DF744A;
+  color: #015249;
   text-align: center;
   font-size: 20px;
   padding: 20px;
   height: 100%;
+  width: 100%;
   transition: all 0.5s;
   cursor: pointer;
   margin: 0px 5px 0px 0px;
@@ -151,12 +163,6 @@ body {
   right: 0;
 }
 
-.map_filter_button_div {
-
-}
-
-
-
 /*--------------------------------*/
 /*animal_form_drawer Button*/
 /*--------------------------------*/
@@ -164,13 +170,16 @@ body {
 .animal_form_drawer {
   display: inline-block;
   border-radius: 4px;
-  background-color: #DF744A;
-  border: none;
-  color: #FFFFFF;
+  background-color: #FEDCD2;
+  border: solid;
+  border-width: 7px;
+  border-color: #DF744A;
+  color: #015249;
   text-align: center;
   font-size: 20px;
   padding: 20px;
   height: 100%;
+  width: 100%;
   transition: all 0.5s;
   cursor: pointer;
   margin: 0px 0px 0px 5px;
@@ -288,6 +297,10 @@ div.search_btn {border-style: solid;}
     font-size: 16px;
 }
 
+
+/*--------------------------------*/
+/* Profile */
+/*--------------------------------*/
 .change_password {
     background-color: #DCB239;
     border: none;
@@ -297,12 +310,8 @@ div.search_btn {border-style: solid;}
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 550px;
 }
-
-/*--------------------------------*/
-/* Profile */
-/*--------------------------------*/
-
 
 /*--------------------------------*/
 /* Missing Pet poster form page */
@@ -314,7 +323,7 @@ div.search_btn {border-style: solid;}
     border-width: 7px;
     border-color: #DF744A;
     padding: 30px; 
-    margin: 0px 20px 0px 10px;
+    margin: 0px 10px 0px 30px;
 }
 
 .tips_div {
@@ -323,9 +332,26 @@ div.search_btn {border-style: solid;}
     border-width: 7px;
     border-color: #DF744A;
     padding: 30px; 
-    margin: 0px 10px 0px 20px;
+    margin: 0px 20px 0px 10px;
 }
 
+#submitBtn {
+    background-color: #DCB239;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#tip_headers {
+    background-color: #DCB239;
+    border: solid;
+    border-color: #DF744A;
+    color: white;
+}
 
 
 /*--------------------------------*/
