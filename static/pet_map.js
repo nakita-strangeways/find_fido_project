@@ -7,7 +7,7 @@ function initMap() {
     // Defining this variable outside of the map optios markers
     // it easier to dynamically change if you need to recenter
     // Centered on San Francisco 
-    let myLatLng = {lat: 37.731304, lng: -122.433121};
+    let myLatLng = {lat: 37.728648, lng: -122.430740};
 
     // Create a map object and specify the DOM element for display.
     let map = new google.maps.Map(document.getElementById('pet-map'), {
@@ -133,7 +133,7 @@ function initMap() {
         let found_title = ""
         if (animal.found == true) {
             found_title = 
-            '<font size="3"><center>Found ' + animal.species_id  + '</center>' 
+            '<font size="3"><center>Returned Home: ' + animal.species_id  + '</center>' 
         } else {
             found_title = 
             '<font size="3"><center>Lost ' + animal.species_id  + '</center>' 
@@ -233,7 +233,10 @@ $filterCheckboxes.on('change', function() {
         if (marker) {
             marker.setMap(null)
         }
-    
+    // GET DRAWER TO OPEN WHEN YOU CLICK MAP
+    if($('#seen_form_div').hasClass("my-hide")){
+        $('#seen_form_div').toggleClass("my-hide")
+    }
 
     marker = new google.maps.Marker({
         position: event.latLng, //map Coordinates where user clicked
@@ -243,11 +246,7 @@ $filterCheckboxes.on('change', function() {
         title:"Drag me to change location!"
     });
 
-    // GET DRAWER TO OPEN WHEN YOU CLICK IT
-    console.log("map clicked!")
-    // $("#seen_form_drawer").removeClass(".collapsed");
-
-    // $('#seen_form_drawer').collapse('show', true);
+    
 
 
 
@@ -315,6 +314,7 @@ $filterCheckboxes.on('change', function() {
                     span.onclick = function() {
                         modal.style.display = "none";
                         $(".map_filter_button").attr("disabled",false)
+                        $(".animal_form_drawer-button").attr("disabled",false)
                     }
 
                     // When the user clicks anywhere outside of the modal, close it
@@ -322,10 +322,16 @@ $filterCheckboxes.on('change', function() {
                         if (event.target == modal) {
                             modal.style.display = "none";
                             $(".map_filter_button").attr("disabled",false)
+                            $(".animal_form_drawer-button").attr("disabled",false)
+                            $('#seen_form_div').toggleClass("my-hide")
+                            $('#filter_form_container').toggleClass("my-hide")
                         }
                     }
 
                     $(".map_filter_button").attr("disabled",true)
+                    $(".animal_form_drawer-button").attr("disabled",true)
+                    $('#seen_form_div').toggleClass("my-hide")
+                    $('#filter_form_container').toggleClass("my-hide")
                 });
             },300); 
             // this is the end of the setTimeout Fuction
@@ -343,6 +349,7 @@ google.maps.event.addDomListener(window, 'load', initMap);
 
 // Needed to run click actions
 $(document).ready(function() {
+
 
 // When species is chosen on lost_pets_form, the breeds are filtered to particular species 
 console.log("filter dog/cat breeds ready")
@@ -584,6 +591,15 @@ $('.found_button_class').click(function(e) {
     });
 });
 
+// TOGGLE HORIZONTALLY ATTEMPT
+$('#seen_form_drawer-button').on('click', function(target){
+    $('#seen_form_div').toggleClass("my-hide")
+}
+)
+$('#map_filter_drawer').on('click', function(target){
+    $('#filter_form_container').toggleClass("my-hide")
+}
+)
 
 
 

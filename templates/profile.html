@@ -5,57 +5,56 @@
   Profile
 </title>
 
-<h1 style="color:#015249"> Welcome {{user.username}}! </h1>
+<h1 id="welcome-user-title"> Welcome {{user.username}}! </h1>
 <br>
 <br>
 
 {% endblock %}
 
 {% block body %}
-<div class="row">
-<div class="col-1">
+
+
+<div id="profile-div" class="col-5">
+  <div id="change-pass-title">
+  <h5> You can change your password here:</h5>
+  </div>
+    <form class="form-update_password" method="POST" action="/change_password">
+        <h6 class="form-signin-heading" style="color:#015249">Enter your old password:</h6>
+
+        <div class="form-group">
+            <label for="old-password-field" class="sr-only">Old Password</label>
+            <input type="password"
+                   name="old_password"
+                   class="form-control input-lg"
+                   placeholder="Old Password"
+                   required>
+        </div>
+
+        <h6 class="form-signin-heading" style="color:#015249">Enter a new password:</h6>
+
+        <div class="form-group">
+            <label for="new-password-field" class="sr-only">New Password</label>
+            <input type="password"
+                   name="new_password"
+                   class="form-control input-lg"
+                   placeholder="New Password"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="repeat-new-password-field" class="sr-only">Repeat Password</label>
+            <input type="password"
+                   name="repeat_new_password"
+                   class="form-control input-lg"
+                   placeholder="Repeat New Password"
+                   required>
+                   <br>
+              <button class="btn btn-lg btn-primary btn-block change_password" type="submit">Change Password</button>
+        </div>
+
+    </form>
 </div>
 
-    <div class="col-5">
-      <div>
-      <h5 style="color:#015249"> You can change your password here:</h5>
-      </div>
-        <form class="form-update_password" method="POST" action="/change_password">
-            <h6 class="form-signin-heading" style="color:#015249">Enter your old password:</h6>
-
-            <div class="form-group">
-                <label for="old-password-field" class="sr-only">Old Password</label>
-                <input type="password"
-                       name="old_password"
-                       class="form-control input-lg"
-                       placeholder="Old Password"
-                       required>
-            </div>
-
-            <h6 class="form-signin-heading" style="color:#015249">Enter a new password:</h6>
-
-            <div class="form-group">
-                <label for="new-password-field" class="sr-only">New Password</label>
-                <input type="password"
-                       name="new_password"
-                       class="form-control input-lg"
-                       placeholder="New Password"
-                       required>
-            </div>
-
-            <div class="form-group">
-                <label for="repeat-new-password-field" class="sr-only">Repeat Password</label>
-                <input type="password"
-                       name="repeat_new_password"
-                       class="form-control input-lg"
-                       placeholder="Repeat New Password"
-                       required>
-                       <br>
-                  <button class="btn btn-lg btn-primary btn-block change_password" type="submit">Change Password</button>
-            </div>
-
-        </form>
-    </div>
 
 
 

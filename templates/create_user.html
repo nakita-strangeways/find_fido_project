@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div id="login_div" class="col-3">
+
+
+<title>
+  Create Your Account
+</title>
+
+
+<div id="create-user-div" class="col-3">
     <form class="form-create_user" method="POST">
 
+      <div id="create-user-title">
         <h2 class="form-create_user-heading">Please Create Your Find Fido Account!</h2>
-
+      </div>
         <div class="form-group">
             <label for="username-field" class="sr-only">Username</label>
             <input type="username"
@@ -34,7 +42,7 @@
                    required>
         </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In
+        <button class="btn btn-lg btn-primary btn-block create-user-submit" type="submit">Sign In
         </button>
 
     </form>

@@ -319,12 +319,10 @@ def lost_pet_posters_searchbox():
         breed_id = Breed.query.filter(Breed.breed == searched_breed).one()
         query = query.filter(Lost_Pet_Submission.breed_id == breed_id.breed_id)
 
-#Not Working
+## Working
     if searched_color:
         query = query.join(lostPetColor).join(Color) \
             .filter(Color.color == searched_color)
-
-
 
     # if searched_name_or_id:
 
@@ -417,7 +415,7 @@ def report_a_pet_page():
 
 
 if __name__ == "__main__":
-    app.debug = True
+    # app.debug = True
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)

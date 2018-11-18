@@ -8,6 +8,12 @@
 {% endblock %}
 
 {% block body %}
+
+<title>
+  Find Fido
+</title>
+
+
 <div class="row justify-content-md-center">
     <div class="col-md-auto">
       <form id='address_bar' action="#">
@@ -59,11 +65,9 @@
 
 <!-- The filter Form -->
 <div class="row">
-<!-- <div class="container-fluid"> -->
-  <!-- <div class="row"> -->
 
 <!-- DRAWER ON LEFT -->
-    <div class="col-2 collapse filter_form_div" id="filter_form_div">
+    <div class="col-2 my-drawer my-hide filter_form_div" id="filter_form_container">
         <div id="filter_form_div">
             <form id='filter_form' action="/filter_lost_animals">
                 <h3>Filter By </h3>
@@ -106,17 +110,15 @@
 
     <div class="col">
       <div class="row">
-        <div class="col-1" style="padding-left: 5px;">
-          <button class="btn sticky-top map_filter_button" data-toggle="collapse" href="#filter_form_div" role="button" id="map_filter_button">
+        <div class="col-1" style="padding-left: 0px; padding-right: 0px;">
+          <button class="btn sticky-top map_filter_button" href="#filter_form_div" role="button" id="map_filter_drawer">
             <center><span>Map<br>Filter</span></center>
           </button>   
         </div>
 
-
-
         <!-- This is where the map goes so it fits in -->
         <!-- The map -->
-        <div class="col" style="padding-left: 0px; padding-right: 0px;">
+        <div class="col" style="padding-left: 0px; padding-right: 0px; margin-left: 5px;">
             <div id="pet-map" class="col"></div>
         </div>
       </div>
@@ -126,16 +128,16 @@
 <!-- drawer on the right -->
 
         <div class="col-1" style="padding-right: 0px;padding-left: 0px;">
-          <button class="btn sticky-top animal_form_drawer" data-toggle="collapse" href="#seen_form_div" role="button" id="seen_form_drawer">
-            <center><span>Seen<br>An<br>Animal?</span></center>
+          <button class="btn sticky-top animal_form_drawer-button" href="#seen_form_div" role="button" id="seen_form_drawer-button">
+            <span>Seen<br>An<br>Animal?</span>
           </button>   
         </div>
 
 
-    <div class="col-2 collapse seen_form_div" id="seen_form_div">
+    <div class="col-2 my-hide seen_form_div my-drawer" id="seen_form_div">
 
         {% if session.get('logged_in_user_email') %}
-    <div id="seen_form"> 
+    <div id="seen_form" > 
         <form id='lost_form' enctype="multipart/form-data" action="/add_lost_animal" method="POST" class="seen_form_class">
 
             <div hidden>

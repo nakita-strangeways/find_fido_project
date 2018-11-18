@@ -7,6 +7,10 @@
 
 
 {% block body %}
+<title>
+  Report a Lost Pet
+</title>
+
 <div class="row">
     {% if session.get('logged_in_user_email') %}
     <div id="submit_lost_poster" class="col-4 submit_lost_poster_div">  
@@ -97,18 +101,25 @@
     </div> 
 
     <div class="col tips_div"> 
-        <div><h2> Tips to consider when your pet has gone missing </h2>
+        <div id="tips-title"> Tips to consider when your pet has gone missing!
         </div>
+        <br>
         
-        <div>
+        <div id="tips">
         <h4 id="tip_headers">Contact local animal shelters and animal control agencies.</h4>
         <p>File a lost pet report with every shelter within a 60-mile radius of your home and visit the nearest shelters daily, if possible.</p>
-        <br>
+        &deg; &deg; &deg;
+        </div>
+
+      
+        <div id="tips">
         <h4 id="tip_headers">Search the neighborhood.</h4>
-        <p>Walk or drive through your neighborhood several times each day. Ask neighbors, letter carriers and delivery people if they have seen your pet. Hand out a recent photograph of your pet and information on how you can be reached if your pet is found.</p>
-        <br>
+        <p>Walk or drive through your neighborhood several times each day. Ask neighbors, letter carriers and delivery people about your pet.</p>&deg; &deg; &deg;
+        </div>
+        
+        <div id="tips">
         <h4 id="tip_headers">Don't give up your search!</h4>
-        <p>Animals who have been lost for months have been reunited with their owners.</p>
+        <p>Animals who have been lost for months have been reunited with their owners.</p>&deg; &deg; &deg;
 
         <p>A pet—even an indoor pet—has a better chance of being returned if she always wears a collar and an ID tag with your name, address and telephone number. Ask your local animal shelter or veterinarian if permanent methods of identification (such as microchips) are available in your area.</p>
         </div>
