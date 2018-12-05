@@ -30,9 +30,9 @@ I created this project to help solve that problem, and to more directly involve 
 <img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/found_pin.png" alt="FindFido_FoundPin" title="FoundPin" height="70" align="right" />
 
 Find Fido is a web app that utilizes the community, photos, and google maps to create a network of stray or lost animals. The markers on the map reflect the animal species, as well as if it has been successfully found and returned home.
- 
 
-If a user has lost a pet, all they need to do is check their neighborhood, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description! 
+
+If a user has lost a pet, all they need to do is check the pets last seen location, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description. They can click on the map pin, which opens a window with a photo and some information. 
 
 ## Getting Started
 
