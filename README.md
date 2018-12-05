@@ -1,7 +1,8 @@
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/Logo_2.png" alt="Aimeos logo" title="Aimeos" align="right" height="60" />
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/Logo_2.png" alt="Aimeos logo" title="Aimeos" height="60" />
 
 # FIND FIDO
 A website that allows a community to come together to find their lost pets. If a person sees a stray animal, they can take a photo and  submit a form of the animals description. 
+======================
 
 ## Tech Stack
 * Python 
@@ -20,9 +21,6 @@ I originally studied the more technical side of animation for four years at the 
 Around that time, my little sister lost her cat, Raven. The biggest problem was there was no way to tell if anyone in the community had seen Raven as well as pinpoint where or how far she had gone. Putting up posters wasn’t enough.
 
 I created this project to help solve that problem, and to more directly involve the community in returning pets home.
-
-***
-***
 
 ## Lets walk through this!
 
@@ -102,13 +100,15 @@ $ python3 server.py
 
 ## Author
 
-* **Nakita Strangeways** - *Initial work* - [Github](https://github.com/nakita-strangeways)
+* **Nakita Strangeways** - *Initial work* - [Github](https://github.com/nakita-strangeways) [LinkedIn](https://www.linkedin.com/in/nakita-strangeways/)
 
 ## Acknowledgments
 
 * Hackbright Instructors: [Dave Galbraith](https://github.com/davidvgalbraith), [Karin Hawley](https://github.com/khawley), and [Allian Roman](https://github.com/allianRoman)
 
 * Mentors: [Dana Fallon](https://github.com/danafallon) and [Jeuel Wilkerson](https://github.com/JeuelyFish)
+
+I couldn't have done it without you!
 
 ***
 
