@@ -27,9 +27,9 @@ I created this project to help solve that problem, and to more directly involve 
 
 Find Fido is a web app that utilizes the community, photos, and google maps to create a network of stray or lost animals. The markers on the map reflect the animal species, as well as if it has been successfully found and returned home. 
 
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/cat-pin.png" alt="FindFido_CatPin" title="CatPin" height="70" style="float: left;" /> - Cat Pin
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/dog-pin.png" alt="FindFido_DogPin" title="DogPin" height="70" style="float: left;" /> Dog Pin
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/found_pin.png" alt="FindFido_FoundPin" title="FoundPin" height="70" style="float: left;" /> Found Pin
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/cat-pin.png" alt="FindFido_CatPin" title="CatPin" height="70" style="float: center;" /> Cat Pin
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/dog-pin.png" alt="FindFido_DogPin" title="DogPin" height="70" style="float: center;" /> Dog Pin
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/found_pin.png" alt="FindFido_FoundPin" title="FoundPin" height="70" style="float: center;" /> Found Pin
 
 If a user has lost a pet, all they need to do is check their neighborhood, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description! 
 
