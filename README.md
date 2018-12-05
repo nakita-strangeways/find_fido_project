@@ -34,9 +34,6 @@ Find Fido is a web app that utilizes the community, photos, and google maps to c
 
 If a user has lost a pet, all they need to do is check the pets last seen location, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description. They can click on the map pin, which opens a window with a photo and some information. 
 
-
-MORE COMING SOON - making more updates!
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for testing purposes.
