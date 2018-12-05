@@ -1,4 +1,5 @@
-![alt text](https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/Logo_2.png "Find Fido Logo")
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/Logo_2.png" alt="Aimeos logo" title="Aimeos" align="right" height="60" />
+
 # FIND FIDO
 A website that allows a community to come together to find their lost pets. If a person sees a stray animal, they can take a photo and  submit a form of the animals description. 
 
@@ -105,10 +106,10 @@ $ python3 server.py
 
 ## Acknowledgments
 
-* Hackbright:
-* My Instructors [DAVE GALBRAITH](https://github.com/davidvgalbraith), [KARIN HAWLEY](https://github.com/khawley), and [ALLIAN ROMAN](https://github.com/allianRoman)
+* Hackbright Instructors: [Dave Galbraith](https://github.com/davidvgalbraith), [Karin Hawley](https://github.com/khawley), and [Allian Roman](https://github.com/allianRoman)
+
+* Mentors: [Dana Fallon](https://github.com/danafallon) and [Jeuel Wilkerson](https://github.com/JeuelyFish)
+
 ***
-* Mentors:
-* [DANA FALLON](https://github.com/danafallon) and [JEUEL WILKERSON](https://github.com/JeuelyFish)
-***
+
 In memory of Raven
