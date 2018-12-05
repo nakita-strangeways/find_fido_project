@@ -156,9 +156,9 @@ def change_password_form():
 
     else:
         if old_password == found_user_password.password:
-            print("They match")
+            print("Old passwords match")
             if new_password == repeat_new_password:
-                print("both new passwords match")
+                print("New passwords match")
                 found_user_password.password = new_password
 
                 db.session.commit()
@@ -368,7 +368,8 @@ def report_lost_pet_form():
     user_email = session.get('logged_in_user_email')
 
 
-    species = Species.query.filter(Species.species == submitted_species).one()
+    species = Species.query.filter(Species.species_id == submitted_species).one()
+
     for color in colors:
         queried_colors.append(Color.query.filter(Color.color == color).one())
 

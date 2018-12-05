@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD52RrA9gfZqgo8twZNm92r0bxMIT9poR4"></script>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="/static/mapstyles.js"></script>
 <script src="/static/pet_map.js"></script>
@@ -17,8 +18,8 @@
         <form id='submit_lost_poster_form' enctype="multipart/form-data" action="/lost_poster_form" method="POST" class="submit_lost_poster_form">
             <h2>Report a lost pet: </h2>
             <span><h5>Type of pet<span id="required">*</span>:</h5>
-            &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="Dog" required> Dog 
-                              <input id="cat_species" type="radio" name="species_quest" value="Cat" required> Cat 
+            &nbsp;&nbsp;&nbsp;<input id="dog_species" type="radio" name="species_quest" value="2" required> Dog 
+                              <input id="cat_species" type="radio" name="species_quest" value="1" required> Cat 
             </span>
             <br>
 
