@@ -1,8 +1,7 @@
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/Logo_2.png" alt="Aimeos logo" title="Aimeos" height="60" />
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/Logo_2.png" alt="Find Fido logo" title="FindFido" align="right" height="100" />
 
 # FIND FIDO
-A website that allows a community to come together to find their lost pets. If a person sees a stray animal, they can take a photo and  submit a form of the animals description. 
-======================
+A website that allows a community to come together to find their lost pets. 
 
 ## Tech Stack
 * Python 
