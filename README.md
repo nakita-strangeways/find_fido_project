@@ -34,8 +34,7 @@ Find Fido is a web app that utilizes the community, photos, and google maps to c
 
 If a user has lost a pet, all they need to do is check the pets last seen location, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description. 
 
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/map_window.png" alt="map_window_pin" title="map_window_pin" height="300" align="right"/>
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal.png" alt="map_window_pin" title="map_window_pin" height="300" />
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/map_window.png" alt="map_window_pin" title="map_window_pin" height="300" align="left"/><img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal.png" alt="map_window_pin" title="map_window_pin" height="300" />
 Clicking one of the map pins opens a small window for quick glance searches. It contains a small image, the size, colors, and date/time seen. This way, a user looking for a lost pet can quickly check if it might be theirs. Because this is so small, users can click the window and open a modal with a larger image, and more information. <br>
 
 
