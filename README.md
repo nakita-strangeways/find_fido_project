@@ -45,15 +45,13 @@ The Modal has the same information as the window, and then some more, like notes
 
 <img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/missing_pets_page.png" alt="missing_pets_poster" title="missing posters" height="500" />
 
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal2.png" alt="modal2" title="modal2" height="150" align="right"/>
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal2.png" alt="modal2" title="modal2" height="170" align="right"/>
 
 
 Lastly, there is a page where owners can submit their missing pets, like a missing pet poster. This lets the community know to what pets to keep an eye out for. Each "poster" has the pets name, an image of the pet, and the last date it was seen. Users can filter through the results to find particular pets, or pets in their neighborhood. When you click on a "poster," it opens a modal with more information, and a map of where it was lost at. 
 
 
 Owners can report a missing pet poster by clicking the "Report Here!" button, which will direct them to a form. Once completed, the form will automatically redirect them to the missing posters page with their pet poster now created.
-<br>
-<br>
 
 ## Getting Started
 
