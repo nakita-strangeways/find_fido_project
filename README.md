@@ -34,11 +34,22 @@ Find Fido is a web app that utilizes the community, photos, and google maps to c
 
 If a user has lost a pet, all they need to do is check the pets last seen location, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description. 
 
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/map_window.png" alt="map_window_pin" title="map_window_pin" height="250" align="left"/><img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal.png" alt="map_window_pin" title="map_window_pin" width="700" /><br>
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/map_window.png" alt="map_window" title="map_window" height="250" align="left"/><img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal.png" alt="modal1" title="modal1" width="700" /><br>
 
 
-Clicking one of the map pins opens a small window for quick glance searches. It contains a small image, the size, colors, and date/time seen. This way, a user looking for a lost pet can quickly check if it might be theirs. Because this is so small, users can click the window and open a modal with a larger image, and more information. <br>
 
+Clicking one of the map pins opens a small window for quick glance searches. It contains a small image, the size, colors, and date/time seen. This way, a user looking for a lost pet can quickly check if it might be theirs. Because this is so small, users can click the window and open a modal with a larger image, and more information. 
+
+The Modal has the same information as the window, and then some more, like notes about the sighting, and the username of the person who saw the animal/took the photo. Theres also a button that, if this is the users dog, and he is reunited with his family, can be clicked, and it will change the map pin to the green checkmark. 
+
+
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/missing_pets_page.png" alt="missing_pets_poster" title="missing posters" height="500" />
+
+Lastly, there is a page where owners can submit their missing pets, like a missing pet poster. This lets the community know to what pets to keep an eye out for. Each "poster" has the pets name, an image of the pet, and the last date it was seen. Users can filter through the results to find particular pets, or pets in their neighborhood. When you click on a "poster," it opens a modal with more information, and a map of where it was lost at. 
+
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal2.png" alt="modal2" title="modal2" height="250" align="left"/>
+
+Owners can report a missing pet poster by clicking the "Report Here!" button, which will direct them to a form. Once completed, the form will automatically redirect them to the missing posters page with their pet poster now created.
 
 ## Getting Started
 
