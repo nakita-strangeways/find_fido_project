@@ -123,7 +123,7 @@ I couldn't have done it without you!
 ***
 
 <p style="text-align: center;">
-In memory of Raven
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300" />
+In memory of Raven <br>
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300" style="border-radius: 25px;" />
 </p>
 
