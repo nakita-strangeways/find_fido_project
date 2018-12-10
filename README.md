@@ -32,7 +32,11 @@ I created this project to help solve that problem, and to more directly involve 
 Find Fido is a web app that utilizes the community, photos, and google maps to create a network of stray or lost animals. The markers on the map reflect the animal species, as well as if it has been successfully found and returned home.
 
 
-If a user has lost a pet, all they need to do is check the pets last seen location, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description. They can click on the map pin, which opens a window with a photo and some information. 
+If a user has lost a pet, all they need to do is check the pets last seen location, either using their current location (if allowed), the address bar, or dragging the map. Once there, they can filter the map to fit their pets description. 
+
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/map_window.png" alt="map_window_pin" title="map_window_pin" height="80" align="left" />
+Clicking one of the map pins opens a small window for quick glance searches. It contains a small image, the size, colors, and date/time seen. This way, a user looking for a lost pet can quickly check if it might be theirs. Because this is so small, users can click the window and open a modal with a larger image, and more information. 
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/modal.png" alt="map_window_pin" title="map_window_pin" height="100" />
 
 ## Getting Started
 
@@ -123,7 +127,7 @@ I couldn't have done it without you!
 ***
 
 
-<center> In memory of Raven <br> <br>
+In memory of Raven <br> <br>
 <img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300"/> 
 </center>
 
