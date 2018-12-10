@@ -123,7 +123,7 @@ I couldn't have done it without you!
 ***
 
 
-<p align="justify"> In memory of Raven <br> <br>
+<center> In memory of Raven <br> <br>
 <img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300"/> 
-</p>
+</center>
 
