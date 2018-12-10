@@ -123,10 +123,7 @@ I couldn't have done it without you!
 ***
 
 
--> In memory of Raven <br> <br>
-<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300"/> <-
+<p align="justify"> In memory of Raven <br> <br>
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300"/> 
+</p>
 
-
-img[alt="Raven"] {
-    border-radius: 50px;
-}
