@@ -14,14 +14,14 @@ A website that allows a community to come together to find their lost pets.
 
 * [Google Maps API](https://developers.google.com/maps/documentation/) - API 
 
-## A note from the author
+## A Note From The Author
 I originally studied the more technical side of animation for four years at the Academy of Art University. It's here that I got my first taste of python, which drove me to enroll at Hackbright Academy.
 
 Around that time, my little sister lost her cat, Raven. The biggest problem was there was no way to tell if anyone in the community had seen Raven as well as pinpoint where or how far she had gone. Putting up posters wasn’t enough.
 
 I created this project to help solve that problem, and to more directly involve the community in returning pets home.
 
-## Lets walk through this!
+## Lets Walk Through This!
 
 <img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/homepage.png" alt="FindFido_homepage" title="FindFido_Homepage" height="500" />
 
@@ -116,8 +116,14 @@ $ python3 server.py
 
 * Mentors: [Dana Fallon](https://github.com/danafallon) and [Jeuel Wilkerson](https://github.com/JeuelyFish)
 
+* Icon Designer/Artist: [Gus Gutierrez](https://www.instagram.com/gogogoose/?hl=en)
+
 I couldn't have done it without you!
 
 ***
 
+<p style="text-align: center;">
 In memory of Raven
+<img src="https://github.com/nakita-strangeways/find_fido_project/blob/master/static/icons/raven.png" alt="Raven" title="Raven" height="300" />
+</p>
+
