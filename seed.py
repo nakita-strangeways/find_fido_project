@@ -1,7 +1,7 @@
 """Utility file to seed ratings database from MovieLens data in seed_data/"""
 
 from sqlalchemy import func
-from model import Animal, Color, AnimalColor, Species, Size, Breed, User, Lost_Pet_Submission, lostPetColor, connect_to_db, db #add userAnimal?
+from model import Animal, Color, AnimalColor, Species, Size, Breed, Gender, User, Lost_Pet_Submission, lostPetColor, connect_to_db, db #add userAnimal?
 from server import app
 
 
@@ -105,6 +105,30 @@ def load_breeds(breeds_filename):
     #finished the function
     print("Breeds inserted")
 
+def load_genders(genders_filename):
+    """Load breeds from seed_data/all_breeds into database."""
+
+    # Delete all rows in table, so if we need to run this a second time,
+    # we won't be trying to add duplicate users
+    Gender.query.delete()
+
+    #Read sizes file and insert data
+    for row in open(genders_filename):
+        row = row.rstrip()
+        gender_id, gender = row.split("|")
+
+        genders = Gender(gender_id=gender_id,
+                    gender=gender)
+
+        # We need to add to the session or it won't ever be stored
+        db.session.add(genders)
+
+    # Once we're done, we should commit our work
+    db.session.commit()
+
+    #finished the function
+    print("Genders inserted")
+
 def load_users(users_filename):
     """Load load_users from seed_data/load_users into database."""
 
@@ -143,7 +167,7 @@ def load_animals(animal_filename):
     #Read generic_colors file and insert data
     for row in open(animal_filename):
         row = row.rstrip()
-        animal_id, species_id, breed_id, size_id, user_id, latitude, longitude, timestamp, photo, notes, found, found_by_user_id = row.split("|")
+        animal_id, species_id, breed_id, size_id, user_id, latitude, longitude, timestamp, photo, notes, found, found_by_user_id, gender_id = row.split("|")
 
         if found_by_user_id == "None":
             found_by_user_id = None
@@ -163,7 +187,8 @@ def load_animals(animal_filename):
                         photo=photo,
                         notes=notes,
                         found=bool(found),
-                        found_by_user_id = found_by_user_id)
+                        found_by_user_id = found_by_user_id,
+                        gender_id = gender_id)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(animals)
@@ -209,7 +234,7 @@ def load_lostPetPosters(lostPet_filename):
     #Read animalColors file and insert data
     for row in open(lostPet_filename):
         row = row.rstrip()
-        pet_id, species_id, breed_id, user_id, pet_name, latitude, longitude, date_lost, photo, notes = row.split("|")
+        pet_id, species_id, breed_id, user_id, pet_name, latitude, longitude, date_lost, photo, notes, gender_id = row.split("|")
 
         lost_Pet_Submissions = Lost_Pet_Submission(species_id=species_id,
                                                     breed_id=breed_id,
@@ -219,7 +244,8 @@ def load_lostPetPosters(lostPet_filename):
                                                     longitude=longitude,
                                                     date_lost=date_lost,
                                                     photo=photo,
-                                                    notes=notes)
+                                                    notes=notes,
+                                                    gender_id=gender_id)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(lost_Pet_Submissions)
@@ -268,6 +294,7 @@ if __name__ == "__main__":
     species_filename = "seed_data/species"
     sizes_filename = "seed_data/sizes"
     breeds_filename  = "seed_data/all_breeds"
+    genders_filename = "seed_data/gender"
     animalColors_filename = "seed_data/animalColors"
     users_filename = "seed_data/users"
     lostPet_filename = "seed_data/lost_pet_posters_data"
@@ -277,6 +304,7 @@ if __name__ == "__main__":
     load_species(species_filename)
     load_sizes(sizes_filename)
     load_breeds(breeds_filename)
+    load_genders(genders_filename)
     load_users(users_filename)
     load_animals(animal_filename)
     load_animalColors(animalColors_filename)

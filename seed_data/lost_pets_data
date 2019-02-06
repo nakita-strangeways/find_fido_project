@@ -1,12 +1,12 @@
-1|2|190|4|1|37.731022|-122.433129|2018-09-13 12:32:03|sycamore.jpg|Large brown dog, shy but friendly, no collar|False|None
-2|2|232|2|2|37.729692|-122.431420|2018-09-10 16:09:03|koopa.jpg|Super cute shiba inu found! Has a brown/green/red collar! Caught, call if yours: 123-456-7890|False|None
-3|2|61|3|3|37.729176|-122.435394|2018-09-6 11:46:03|momo.jpg|Blue heeler seen. Skittish and wouldnt come close. Could not catch. Was running towards cotter st.|False|None
-4|1|45|3|1|37.730898|-122.435125|2018-09-10 17:02:03|stray_cat.jpg|big rough lookin cat seen, ears chipped up. wont let me pet it, but isnt afraid of me ether.|True|4
-5|1|36|1|6|37.731882|-122.429547|2018-09-10 10:15:04|stray_cat2.jpg|found a siamese(I think?) kitten. Its very friendly so Im going to take it to SFSPCA|False|None
-6|2|45|2|8|37.730282|-122.429404|2018-11-10 20:15:04|white_brown_dog1.jpg|Little dog running around the parking lot! Cant catch him.|False|None
-7|2|45|2|5|37.730511|-122.428771|2018-11-10 23:45:39|white_brown_dog2.jpg|Saw a white dog with dark spots in the parking lot. Has collar but is skittish|False|None
-8|1|45|3|6|37.727001|-122.429511|2018-11-15 13:15:19|orange_cat1.jpg|Orange cat wandering around the neighborhood. It hangs out in my garage. Anyone know who it belongs to?|False|None
-9|1|45|3|1|37.725762|-122.430680|2018-11-07 15:05:03|orange_cat2.jpg|saw this beautiful cat on the street, very friendly|False|None
-10|1|45|3|2|37.725696|-122.428621|2018-11-13 16:36:55|orange_cat3.jpg|found this kitty, declawed, it must have wandered too far from home. Has to be someones missing cat|False|None
-11|2|189|4|4|37.728415|-122.425742|2018-11-17 12:23:55|husky_dog.jpg|INTACT male I just spent the last hour tracking and capturing. Call me: 987-654-3210|False|None
-12|2|45|4|3|37.726659|-122.436681|2018-11-03 14:23:55|black_dog.jpg|Black dog running around, pretty girl, taken to spca|True|7
+1|2|190|4|1|37.731022|-122.433129|2018-09-13 12:32:03|sycamore.jpg|Large brown dog, shy but friendly, no collar|False|None|1
+2|2|232|2|2|37.729692|-122.431420|2018-09-10 16:09:03|koopa.jpg|Super cute shiba inu found! Has a brown/green/red collar! Caught, call if yours: 123-456-7890|False|None|1
+3|2|61|3|3|37.729176|-122.435394|2018-09-6 11:46:03|momo.jpg|Blue heeler seen. Skittish and wouldnt come close. Could not catch. Was running towards cotter st.|False|None|1
+4|1|45|3|1|37.730898|-122.435125|2018-09-10 17:02:03|stray_cat.jpg|big rough lookin cat seen, ears chipped up. wont let me pet it, but isnt afraid of me ether.|True|4|2
+5|1|36|1|6|37.731882|-122.429547|2018-09-10 10:15:04|stray_cat2.jpg|found a siamese(I think?) kitten. Its very friendly so Im going to take it to SFSPCA|False|None|2
+6|2|45|2|8|37.730282|-122.429404|2018-11-10 20:15:04|white_brown_dog1.jpg|Little dog running around the parking lot! Cant catch him.|False|None|1
+7|2|45|2|5|37.730511|-122.428771|2018-11-10 23:45:39|white_brown_dog2.jpg|Saw a white dog with dark spots in the parking lot. Has collar but is skittish|False|None|3
+8|1|45|3|6|37.727001|-122.429511|2018-11-15 13:15:19|orange_cat1.jpg|Orange cat wandering around the neighborhood. It hangs out in my garage. Anyone know who it belongs to?|False|None|3
+9|1|45|3|1|37.725762|-122.430680|2018-11-07 15:05:03|orange_cat2.jpg|saw this beautiful cat on the street, very friendly|False|None|2
+10|1|45|3|2|37.725696|-122.428621|2018-11-13 16:36:55|orange_cat3.jpg|found this kitty, declawed, it must have wandered too far from home. Has to be someones missing cat|False|None|1
+11|2|189|4|4|37.728415|-122.425742|2018-11-17 12:23:55|husky_dog.jpg|INTACT male I just spent the last hour tracking and capturing. Call me: 987-654-3210|False|None|1
+12|2|45|4|3|37.726659|-122.436681|2018-11-03 14:23:55|black_dog.jpg|Black dog running around, pretty girl, taken to spca|True|7|2

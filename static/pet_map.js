@@ -283,6 +283,7 @@ $filterCheckboxes.on('change', function() {
           '<p><b>Species: </b>' + animal.species_id  + '<br>' +
           '<b>Size: </b>' + animal.size_id  + '<br>' +
           '<b>Assumed Breed: </b>' + animal.breed_id + '<br>' +
+          '<b>Gender: </b>' + animal.gender_id + '<br>' +
           '<b>Colors: </b>' + animal.colors.join(', ') + '<br>' +
           '<b>Notes: </b>' + animal.notes + '<br>' + '</p>' +
           found_by +
@@ -306,8 +307,8 @@ $filterCheckboxes.on('change', function() {
             modal.style.display = "none";
             $(".map_filter_button").attr("disabled",false)
             $(".animal_form_drawer-button").attr("disabled",false)
-            $('#seen_form_div').toggleClass("my-hide")
-            $('#filter_form_container').toggleClass("my-hide")
+            // $('#seen_form_div').toggleClass("my-hide")
+            // $('#filter_form_container').toggleClass("my-hide")
           }
         }
 
@@ -323,6 +324,7 @@ $filterCheckboxes.on('change', function() {
         $('#filter_form_container').toggleClass("my-hide")
         }
       }); // End of window content function - start line 
+
     },300); // this is the end of the setTimeout fuction - start line 260
     }); //end of google maps listener - start line 254
   }; // End of the Modal for more information - start line 253
@@ -450,8 +452,8 @@ $.get('/lost_pet_posters.json', function (missing_pet) {
     $('#pet_photo').html(pet_photo); 
 
     pet_info = (
-    '<b>PetID: </b>' + pet.pet_id  + '<br>' +
     '<b>Name: </b>' + pet.pet_name + '<br>' +
+    '<b>Gender: </b>' + pet.gender_id + '<br>' +
     '<b>Breed: </b>' + pet.breed_id + '<br>' +
     '<b>Colors: </b>' + pet.colors.join(', ') + '<br>' +
     '<b>Notes: </b>' + pet.notes + '<br>' + 
@@ -531,6 +533,11 @@ $('#searchBar_btn').click(function(e){
   })
 });
 
+// refresh button click event for pet poster page to refresh icons after search
+$('.refresh_btn').click(function(event) {
+  window.location.reload(false);
+});// end of refresh button click event
+
 // Sends data from seen pet modal page to datatables and updates found to true
 $('.found_button_class').click(function(e) {
   e.preventDefault();    
@@ -551,6 +558,7 @@ $('.found_button_class').click(function(e) {
       processData: false
   }); // end of ajax call
 }); // end of found button function - start line 537
+
 
 
 // TO DO LATER!!!

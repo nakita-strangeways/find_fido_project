@@ -39,12 +39,17 @@ class Animal(db.Model):
     found = db.Column(db.Boolean, server_default='f', default=False, nullable=False)
     found_by_user_id = db.Column(db.Integer, 
                         db.ForeignKey('users.user_id'))
+    gender_id = db.Column(db.Integer, 
+                        db.ForeignKey('genders.gender_id'),
+                        nullable=False) 
 
     colors = db.relationship("Color",
                             secondary="animal_colors",
                             backref="animals")
+
     breed = db.relationship("Breed")
     species = db.relationship("Species")
+    gender = db.relationship("Gender")
     size = db.relationship("Size")
     user = db.relationship("User", foreign_keys = [user_id])
     found_user = db.relationship("User", foreign_keys = [found_by_user_id])
@@ -92,6 +97,18 @@ class AnimalColor(db.Model):
         return f"<AnimalColor animal_color_id={self.animal_color_id} \
                         color_id={self.color_id} animal_id={self.animal_id}>"
 
+class Gender(db.Model):
+    """Gender options of animals."""
+
+    __tablename__ = "genders"
+
+    gender_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    gender = db.Column(db.String(10), nullable=False)
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return f"<Genders gender_id={self.gender_id} gender={self.gender}>"
 
 class Species(db.Model):
     """Species options of animals."""
@@ -175,6 +192,9 @@ class Lost_Pet_Submission(db.Model):
     date_lost = db.Column(db.String(64), nullable=False)
     photo = db.Column(db.String(64), nullable=False)
     notes = db.Column(db.String(150), nullable=False)
+    gender_id = db.Column(db.Integer, 
+                    db.ForeignKey('genders.gender_id'),
+                    nullable=False) 
 
     colors = db.relationship("Color",
                             secondary="lostPet_colors",
@@ -182,6 +202,7 @@ class Lost_Pet_Submission(db.Model):
 
     breed = db.relationship("Breed")
     species = db.relationship("Species")
+    gender = db.relationship("Gender")
     user = db.relationship("User", foreign_keys = [user_id])
 
     def __repr__(self):

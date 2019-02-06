@@ -3,7 +3,7 @@ from jinja2 import StrictUndefined
 from flask import (Flask, render_template, redirect, request, flash,
                    session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
-from model import Animal, Color, AnimalColor, Species, Breed, Size, User, Lost_Pet_Submission, lostPetColor, connect_to_db, db
+from model import Animal, Color, AnimalColor, Species, Breed, Size, User, Gender, Lost_Pet_Submission, lostPetColor, connect_to_db, db
 from datetime import datetime, date, time
 
 
@@ -44,7 +44,8 @@ def lost_pet_info():
             "colors": [color.color for color in animal.colors],
             "user_id": animal.user.username,
             "found": animal.found,
-            "found_by_user_id": animal.found_user.username if animal.found_user else None
+            "found_by_user_id": animal.found_user.username if animal.found_user else None,
+            "gender_id": animal.gender.gender
         }
         for animal in Animal.query
     }
@@ -67,6 +68,7 @@ def missing_pet_poster_info():
             "photo": pet.photo,
             "notes": pet.notes,
             "colors": [color.color for color in pet.colors],
+            "gender_id":pet.gender.gender
 
         }
         for pet in Lost_Pet_Submission.query
@@ -215,6 +217,11 @@ def lost_pet_form():
     submitted_color3 = request.form.get('color3_question')
     if submitted_color3:
         colors.append(submitted_color3)
+    submitted_gender = request.form.get('gender_question')
+    if submitted_gender:
+        submitted_gender = submitted_gender
+    else:
+        submitted_gender = 'Unknown'
     submitted_notes = request.form.get('notes')
     submitted_latitude = request.form.get('lat')
     submitted_longitude = request.form.get('lng')
@@ -232,6 +239,9 @@ def lost_pet_form():
 
     user = User.query.filter(User.email == user_email).one()
 
+    gender = Gender.query.filter(Gender.gender == submitted_gender).one()
+
+
     animal = Animal(species = species,
                     breed = breed,
                     size = size, 
@@ -241,7 +251,8 @@ def lost_pet_form():
                     longitude = submitted_longitude, 
                     user_id = user.user_id, 
                     timestamp = timestamp,
-                    colors = queried_colors
+                    colors = queried_colors,
+                    gender = gender
                     )
 
     db.session.add(animal)
@@ -324,10 +335,7 @@ def lost_pet_posters_searchbox():
         query = query.join(lostPetColor).join(Color) \
             .filter(Color.color == searched_color)
 
-    # if searched_name_or_id:
-
-
-
+# if searched_name:
 
     results = query.all()
 
@@ -361,6 +369,7 @@ def report_lost_pet_form():
     submitted_color3 = request.form.get('color3_question')
     if submitted_color3:
         colors.append(submitted_color3)
+    submitted_gender = request.form.get('gender_quest')
     submitted_notes = request.form.get('notes')
     submitted_latitude = request.form.get('lat')
     submitted_longitude = request.form.get('lng')
@@ -368,7 +377,10 @@ def report_lost_pet_form():
     user_email = session.get('logged_in_user_email')
 
 
+
     species = Species.query.filter(Species.species_id == submitted_species).one()
+
+    gender = Gender.query.filter(Gender.gender == submitted_gender).one()
 
     for color in colors:
         queried_colors.append(Color.query.filter(Color.color == color).one())
@@ -387,7 +399,8 @@ def report_lost_pet_form():
                                     pet_name = submitted_name,
                                     user_id = user.user_id, 
                                     date_lost = date_lost,
-                                    colors = queried_colors
+                                    colors = queried_colors,
+                                    gender = gender
                                     )
 
     db.session.add(lost_pet)
@@ -416,7 +429,7 @@ def report_a_pet_page():
 
 
 if __name__ == "__main__":
-    # app.debug = True
+    app.debug = True
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)

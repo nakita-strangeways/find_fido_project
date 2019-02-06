@@ -92,7 +92,7 @@
                 <br>
                 <br>
 
-                    <h5>Sizes:</h5>
+                <h5>Sizes:</h5>
                     &nbsp;&nbsp;&nbsp;<input id="X-Small" type="checkbox" name="size_id" value="X-Small"> X-Small
                     &nbsp;<input id="Small" type="checkbox" name="size_id" value="Small"> Small<br>
                     &nbsp;&nbsp;&nbsp;<input id="Medium" type="checkbox" name="size_id" value="Medium"> Medium 
@@ -101,9 +101,17 @@
                 <br>
                 <br>
 
-                    <h5>Status:</h5>
+                <h5>Gender:</h5>
+                    &nbsp;&nbsp;&nbsp;<input id="Male" type="checkbox" name="Male" value="Male"> Male
+                    &nbsp;<input id="Female" type="checkbox" name="Female" value="Female"> Female
+
+                <br>
+                <br>
+                <h5>Status:</h5>
                     &nbsp;&nbsp;&nbsp;<input id="true" type="checkbox" name="found" value="true"> Returned Home
-                    &nbsp;<input id="false" type="checkbox" name="found" value="false"> Seen<br>
+                    &nbsp;<input id="false" type="checkbox" name="found" value="false"> Seen <br>
+
+
             </form>
     </div>
     </div>
@@ -152,18 +160,6 @@
                               <input id="cat_species" type="radio" name="species_quest" value="Cat" required> Cat 
 
             <br>
-
-            <h5>Breed:</h5>
-            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question" style="width: 200px;">
-            <option value="" selected disabled hidden" >Select one</option>
-
-                {% for breed in breeds %}
-                <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
-                {{breed.breed}} 
-                </option>
-                {% endfor %}
-                </select>
-
             <br>
 
             <h5>Size<span id="required">*</span>:</h5>
@@ -174,6 +170,7 @@
                 <input type="radio" name="size_quest" value="X-Large" required> X-Large 
 
             <br>
+            <br>
 
             <h5>Color<span id="required">*</span>:</h5>
                 &nbsp;&nbsp;&nbsp;<select id="color1_quest" name="color1_question" required>
@@ -182,6 +179,7 @@
                     <option value="{{ color.color }}">{{ color.color }}</option>
                     {% endfor %}
                     </select>
+
                 <br>
 
                 Other Colors:<br>
@@ -200,10 +198,35 @@
                     </select>
 
                 <br>
+                <br>
+
+            <h5>Gender:</h5>
+            &nbsp;&nbsp;&nbsp;<input id=gender_quest type="radio" name="gender_question" value="Male"> Male 
+                <input type="radio" name="gender_question" value="Female"> Female 
+
+            <br>
+            <br>
+
+            <h5>Breed:</h5>
+            &nbsp;&nbsp;&nbsp;<select id="breed_quest" name="breed_question" style="width: 200px;">
+            <option value="" selected disabled hidden" >Select one</option>
+
+                {% for breed in breeds %}
+                <option class="{% if breed.species_id == 1%}cat_breed{%else%}dog_breed{%endif%}">
+                {{breed.breed}} 
+                </option>
+                {% endfor %}
+                </select>
+
+            <br>
+            <br>
 
             <h5>Notes about the animal:</h5>
                 &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150" style="width: 200px;"></textarea><br>
                 &nbsp;&nbsp;&nbsp;Max 150 characters
+
+                <br>
+                <br>
 
             <h5>Upload Image<span id="required">*</span>:</h5>
                 <input type="file" name="animal_photo" accept="image/*" required>

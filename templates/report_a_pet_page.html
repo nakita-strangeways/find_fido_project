@@ -22,20 +22,31 @@
                               <input id="cat_species" type="radio" name="species_quest" value="1" required> Cat 
             </span>
             <br>
+            <br>
 
             <span><h5>Name<span id="required">*</span>:</h5>
             &nbsp;&nbsp;&nbsp;<span class=pet_name_class><input id="pet_name" type="text" name="pet_name">
             </span>
+            <br>
             <br>
 
             <span><h5>Last Seen Address<span id="required">*</span>:</h5>
             &nbsp;&nbsp;&nbsp;<span class=form_address><input id="form_address" type="text" name="address">
             </span>
             <br>
+            <br>
 
             <span><h5>Date Last Seen<span id="required">*</span>:</h5>
             &nbsp;&nbsp;&nbsp;<span class=date_lost_class> Enter Date: <input type="date" id="date_lost" name="date_lost" min="2015-01-01" max="2018-31-12">
             </span>
+            <br>
+            <br>
+
+            <span><h5>Gender<span id="required">*</span>:</h5>
+            &nbsp;&nbsp;&nbsp;<input id="male_gender" type="radio" name="gender_quest" value="Male" required> Male
+                              <input id="female_gender" type="radio" name="gender_quest" value="Fema" required> Female
+            </span>
+            <br>
             <br>
             
             <span><h5>Breed:</h5>
@@ -50,6 +61,7 @@
                 {% endfor %}
                 </select>
             </span>
+            <br>
             <br>
         
             <span><h5>Color<span id="required">*</span>:</h5>
@@ -76,11 +88,13 @@
                     </select>
             </span>
             <br>
+            <br>
 
             <span><h5>Any specific descriptions about your pet?</h5>
                 &nbsp;&nbsp;&nbsp;<textarea id="notes_quest" name="notes" rows="2" cols="30" maxlength="150"></textarea><br>
                 &nbsp;&nbsp;&nbsp;<span style="font-size:13px;"> Max 150 characters </span>
             </span>
+            <br>
             <br>
 
             <span><h5>Upload an image<span id="required">*</span>:</h5>
